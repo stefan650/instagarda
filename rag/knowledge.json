@@ -1,0 +1,178 @@
+{
+  "scraped_at": "2026-03-06T12:00:00.000Z",
+  "base_url": "https://instagarda.net",
+  "source": "manual",
+  "pages_scraped": 20,
+  "pages_errors": 0,
+  "total_chunks": 24,
+  "chunks": [
+    {
+      "id": "chunk_001",
+      "url": "https://instagarda.net/destinazioni/sirmione",
+      "title": "Sirmione - La Perla del Lago di Garda",
+      "content": "Sirmione e una delle destinazioni piu iconiche del Lago di Garda, situata su una penisola stretta che si protende per circa 4 km nelle acque del lago, nella sponda meridionale lombarda. Conosciuta come la Perla del Lago di Garda, Sirmione attira ogni anno milioni di visitatori grazie al suo mix unico di storia, terme e paesaggi mozzafiato. Il Castello Scaligero, costruito nel XIII secolo dalla famiglia Della Scala di Verona, domina l'ingresso al centro storico. E uno dei castelli meglio conservati d'Italia e l'unico castello lacustre. Il ponte levatoio e l'unico accesso al borgo antico. Le Grotte di Catullo sono i resti di una grande villa romana del I secolo a.C., tra i piu importanti siti archeologici del nord Italia. Si trovano sulla punta della penisola con vista panoramica sul lago. Le Terme di Sirmione sfruttano un'acqua sulfurea che sgorga a 69 gradi dal fondo del lago. Due stabilimenti: Terme Virgilio (centro storico) e Aquaria (spa moderna). Ideale per relax, cure termali e benessere. Il centro storico e un labirinto di viuzze medievali con negozi, gelaterie e ristoranti. La passeggiata lungolago offre tramonti spettacolari. Sirmione e raggiungibile in auto dall'autostrada A4 (uscita Sirmione), in treno (stazione Desenzano del Garda, poi bus) o in battello dal lago.",
+      "words": 185
+    },
+    {
+      "id": "chunk_002",
+      "url": "https://instagarda.net/destinazioni/peschiera-del-garda",
+      "title": "Peschiera del Garda - La Cittadella Fortificata",
+      "content": "Peschiera del Garda si trova all'estremita sud-orientale del Lago di Garda, dove il fiume Mincio esce dal lago. La sua fortezza a stella, costruita dai Veneziani nel XVI secolo e ampliata dagli Austriaci, e Patrimonio dell'Umanita UNESCO dal 2017 come parte delle Opere di Difesa Veneziane. Le mura bastionate racchiudono un centro storico vivace con ristoranti, bar e negozi affacciati sui canali. Peschiera e il punto di partenza ideale per famiglie: Gardaland (il parco divertimenti piu grande d'Italia) si trova a soli 2 km, insieme a Movieland, il SEA LIFE Aquarium e il parco acquatico Caneva. La ciclabile Peschiera-Mantova (43 km) segue il fiume Mincio attraverso le colline moreniche fino a Mantova, un percorso pianeggiante e panoramico adatto a tutti. Le spiagge di Peschiera sono ampie e sabbiose, perfette per famiglie. La Spiaggia Lido Campanello e la Brema Beach sono le piu popolari. Il mercato settimanale del lunedi e uno dei piu grandi della zona. La stazione ferroviaria di Peschiera e sulla linea Milano-Venezia, rendendo la citta facilmente raggiungibile in treno.",
+      "words": 175
+    },
+    {
+      "id": "chunk_003",
+      "url": "https://instagarda.net/destinazioni/lazise",
+      "title": "Lazise - Il Borgo dei Mille Colori",
+      "content": "Lazise e uno dei borghi piu belli della sponda veneta del Lago di Garda. Il suo porto pittoresco, le mura medievali intatte e la dogana veneziana lo rendono un gioiello storico. Il centro storico si sviluppa attorno a Piazza Vittorio Emanuele II, cuore pulsante del paese con bar, ristoranti e la Chiesa di San Nicolo (XII secolo) con affreschi medievali. Le mura scaligere circondano completamente il borgo e sono percorribili a piedi. La Dogana Veneta, un edificio del XIV secolo affacciato sul porto, ospita oggi eventi e mostre. Il lungolago di Lazise e perfetto per passeggiate al tramonto. Cola di Lazise ospita il Parco Termale del Garda, un parco con un lago termale naturale dove l'acqua sgorga a 37 gradi in mezzo a un parco secolare. Vicino a Lazise si trovano anche Caneva World (parco acquatico e cinema) e il Gardaland Resort. Il mercato settimanale del mercoledi attira visitatori da tutto il lago. Lazise e famosa anche per l'olio d'oliva extravergine prodotto nelle colline circostanti.",
+      "words": 168
+    },
+    {
+      "id": "chunk_004",
+      "url": "https://instagarda.net/destinazioni/bardolino",
+      "title": "Bardolino - Tra Vino e Lago",
+      "content": "Bardolino e la capitale enologica del Lago di Garda, famosa in tutto il mondo per il vino Bardolino DOC e il Chiaretto, un rose delicato e fresco. Il centro storico si sviluppa lungo un vivace lungolago con ristoranti, enoteche e gelaterie. La Chiesa di San Zeno (IX secolo) e uno dei piu importanti esempi di architettura carolingia in Italia. La Chiesa di San Severo conserva affreschi romanici del XII secolo. Il Museo del Vino, ospitato nella cantina Zeni, offre un percorso gratuito sulla storia della viticoltura gardesana. Il Museo dell'Olio d'Oliva Cisano racconta la tradizione olearia del territorio. Ogni ottobre, la Festa dell'Uva e del Vino Bardolino attira migliaia di visitatori con degustazioni gratuite, musica e spettacoli. Il Bardolino DOC e un rosso leggero perfetto con pesce di lago, mentre il Chiaretto e ideale come aperitivo. Il lungolago di Bardolino e uno dei piu belli del Garda, con panchine, aiuole fiorite e vista sulle montagne. Le spiagge di ciottoli sono balneabili e attrezzate.",
+      "words": 170
+    },
+    {
+      "id": "chunk_005",
+      "url": "https://instagarda.net/destinazioni/malcesine",
+      "title": "Malcesine - Il Borgo del Monte Baldo",
+      "content": "Malcesine e un borgo incantevole sulla sponda orientale del Lago di Garda, dominato dal Castello Scaligero che si erge su uno sperone roccioso a picco sul lago. Goethe lo visito nel 1786 durante il suo viaggio in Italia e ne resto affascinato. Il castello ospita oggi il Museo di Storia Naturale del Monte Baldo e il Museo della Pesca. La funivia Malcesine-Monte Baldo porta in 10 minuti dai 90 metri del lago ai 1760 metri della vetta, con cabine rotanti a 360 gradi che offrono panorami mozzafiato. In cima, trekking estivo e sci invernale. Il Palazzo dei Capitani del Lago, in stile veneziano, si affaccia sul porticciolo antico. Malcesine e la mecca del windsurf e della vela grazie al Peler (vento del mattino dal nord) e all'Ora (vento del pomeriggio dal sud). Le scuole di vela e windsurf sono attive da aprile a ottobre. Il centro storico e un labirinto di vicoli fioriti con botteghe artigiane, ristoranti e limonaie. Il traghetto da Malcesine collega direttamente Limone sul Garda sulla sponda opposta.",
+      "words": 180
+    },
+    {
+      "id": "chunk_006",
+      "url": "https://instagarda.net/destinazioni/riva-del-garda",
+      "title": "Riva del Garda - La Citta del Nord Lago",
+      "content": "Riva del Garda e la citta piu grande della sponda settentrionale del lago, in Trentino-Alto Adige. Circondata da montagne imponenti, offre un mix perfetto di sport, cultura e natura. La Torre Apponale (XIII secolo) domina Piazza III Novembre, il salotto della citta affacciato sul lago. Dal suo belvedere a 34 metri si gode una vista a 360 gradi. La Rocca di Riva, fortezza medievale circondata dall'acqua, ospita il MAG - Museo Alto Garda con collezioni archeologiche e artistiche. Il Bastione Veneziano, arroccato sulla montagna sopra la citta, offre panorami spettacolari raggiungibili con una breve camminata. La Cascata del Varone, a 3 km dal centro, e una cascata alta 100 metri all'interno di una gola naturale visitabile. Riva e il paradiso degli sport: vela, windsurf, kitesurf, arrampicata, mountain bike, canyoning e trekking. Il Garda Trentino e una delle destinazioni outdoor piu complete d'Europa. Le spiagge di Riva sono di sassi e ciottoli con acqua cristallina. La Spiaggia dei Pini e la Spiaggia Sabbioni sono le piu frequentate. Riva ospita eventi internazionali come il Bike Festival e la regata Centomiglia.",
+      "words": 190
+    },
+    {
+      "id": "chunk_007",
+      "url": "https://instagarda.net/destinazioni/torbole",
+      "title": "Torbole - Capitale del Windsurf",
+      "content": "Torbole sul Garda (Nago-Torbole) e la capitale europea del windsurf e del kitesurf. Situata all'estremita nord del lago, gode di condizioni di vento perfette grazie al Peler (vento termico del mattino, da nord, costante e prevedibile) e all'Ora (vento del pomeriggio, da sud). Queste condizioni uniche attirano sportivi da tutto il mondo, da marzo a ottobre. Il porto antico di Torbole e un gioiello con barche colorate, ristoranti sul lago e una vista spettacolare sulle Dolomiti di Brenta. Goethe arrivo qui nel settembre 1786 e scrisse nel suo diario: 'Che spettacolo meraviglioso!'. Le scuole di windsurf e kitesurf offrono corsi per tutti i livelli, dal principiante all'esperto. Si puo noleggiare l'attrezzatura direttamente sulle spiagge. Il Sentiero del Ponale, che parte dalla vicina Riva del Garda, e una delle passeggiate panoramiche piu belle d'Europa: un'antica strada militare scavata nella roccia a strapiombo sul lago.",
+      "words": 152
+    },
+    {
+      "id": "chunk_008",
+      "url": "https://instagarda.net/destinazioni/desenzano-del-garda",
+      "title": "Desenzano del Garda - Il Capoluogo del Lago",
+      "content": "Desenzano del Garda e la citta piu grande e popolosa del Lago di Garda, sulla sponda meridionale lombarda. E il centro commerciale e della vita notturna del lago, con un lungolago vivace pieno di bar, ristoranti e locali. Il porto vecchio e il cuore della citta, con la sua piazza che ospita un mercato antiquario ogni prima domenica del mese. La Villa Romana, scoperta nel 1921, conserva mosaici pavimentali del IV secolo d.C. tra i piu importanti del nord Italia, con scene di caccia, nature morte e figure mitologiche. Il Castello di Desenzano, sulla collina che domina la citta, offre una vista panoramica sul lago e ospita eventi culturali estivi. Il Duomo di Santa Maria Maddalena custodisce un'Ultima Cena di Giambattista Tiepolo. Desenzano e la porta d'accesso al lago: la stazione ferroviaria sulla linea Milano-Venezia e l'uscita autostradale A4 la rendono facilmente raggiungibile. Il mercato del martedi, lungo il porto e il centro, e uno dei piu grandi della regione con oltre 300 bancarelle. La vita notturna e la piu vivace del Garda, con discoteche, cocktail bar e locali aperti fino a tardi.",
+      "words": 190
+    },
+    {
+      "id": "chunk_009",
+      "url": "https://instagarda.net/destinazioni/salo",
+      "title": "Salo - Perla della Riviera Bresciana",
+      "content": "Salo e la citta piu elegante della sponda occidentale del Lago di Garda, capoluogo della Riviera dei Limoni. Il suo lungolago, il piu lungo del Garda (quasi 1 km), e fiancheggiato da palazzi storici, portici con negozi e caffe. Il Duomo di Salo, dedicato a Sant'Annunziata, e un capolavoro tardo-gotico con opere di Romanino e Moretto. Piazza della Vittoria e il salotto della citta, con la sua fontana e i portici rinascimentali. Il MuSa (Museo di Salo) documenta la storia della citta, incluso il periodo della Repubblica Sociale Italiana (1943-1945) quando Salo fu capitale della RSI. Il mercato del sabato mattina anima il lungolago con prodotti locali, formaggi, salumi e l'olio DOP del Garda. Salo e il punto di partenza per esplorare la riviera occidentale: da qui partono i battelli per Gardone Riviera, Gargnano, Maderno e le altre localita della costa bresciana. L'Isola del Garda, la piu grande isola del lago con la sua villa neogotica-veneziana, e raggiungibile in barca da Salo con visite guidate da marzo a ottobre.",
+      "words": 178
+    },
+    {
+      "id": "chunk_010",
+      "url": "https://instagarda.net/destinazioni/gardone-riviera",
+      "title": "Gardone Riviera - Tra Giardini e Poesia",
+      "content": "Gardone Riviera e una delle localita piu raffinate del Lago di Garda, famosa per il suo microclima mite che permette la crescita di piante tropicali e mediterranee. Il Vittoriale degli Italiani e la residenza monumentale di Gabriele D'Annunzio, trasformata in un museo-cittadella con giardini, un anfiteatro all'aperto (2500 posti), la nave Puglia incastonata nella collina e le stanze del poeta ricche di oggetti e opere d'arte. E il monumento piu visitato del Lago di Garda. Il Giardino Botanico Andre Heller (ex Giardino Hruska) ospita oltre 3000 specie vegetali da tutto il mondo in un percorso artistico con sculture contemporanee di Keith Haring, Roy Lichtenstein e altri. Gardone Sopra e la parte alta del paese, un borgo tranquillo con ville liberty e panorami sul lago. Il Grand Hotel Gardone, aperto dal 1884, e uno degli hotel storici piu prestigiosi del lago. Gardone e raggiungibile in battello da Salo, Desenzano e Riva del Garda, oppure dalla strada Gardesana occidentale.",
+      "words": 162
+    },
+    {
+      "id": "chunk_011",
+      "url": "https://instagarda.net/destinazioni/limone-sul-garda",
+      "title": "Limone sul Garda - Terra dei Limoni",
+      "content": "Limone sul Garda e un borgo pittoresco incastonato tra le scogliere della sponda occidentale del Lago di Garda, famoso per le sue limonaie storiche (serre a terrazze per la coltivazione dei limoni). La Limonaia del Castel, restaurata e visitabile, mostra come i limoni venivano coltivati dal XIII secolo in questo microclima unico, il punto piu settentrionale al mondo per la coltivazione degli agrumi. Il centro storico e un dedalo di vicoli stretti, scalinate e case color pastello affacciate sul lago. Il porto e il lungolago sono il cuore della vita sociale, con ristoranti che servono specialita al limone: risotto al limone, pesce con salsa al limone, limoncello artigianale e torta al limone. Limone e famosa anche per una scoperta scientifica: nel 1979 si scopri che molti abitanti avevano una proteina nel sangue (ApoA-1 Milano) che li proteggeva dall'aterosclerosi. La Ciclopedonale del Garda, una pista ciclabile a sbalzo sulla roccia a picco sul lago, collega Limone a Riva del Garda ed e una delle piste ciclabili piu spettacolari del mondo.",
+      "words": 175
+    },
+    {
+      "id": "chunk_012",
+      "url": "https://instagarda.net/destinazioni/gargnano",
+      "title": "Gargnano - Il Borgo Autentico",
+      "content": "Gargnano e uno dei borghi piu autentici e meno turistici del Lago di Garda, sulla sponda bresciana. Amato da scrittori e artisti, D.H. Lawrence visse qui nel 1912-1913 e scrisse parte di 'Twilight in Italy'. Il borgo conserva un'atmosfera genuina con il suo porticciolo, le case colorate e i vicoli silenziosi. Villa Feltrinelli, una villa neogotica del 1892, e oggi un hotel di lusso a 5 stelle (Grand Hotel a Villa Feltrinelli) frequentato da celebrita internazionali. Fu la residenza di Mussolini durante la RSI. Il Chiostro di San Francesco (XIII secolo) conserva capitelli scolpiti con limoni, unici in Italia, testimonianza della tradizione agrumicola. Gargnano e circondato da uliveti che producono l'olio extravergine DOP del Garda Bresciano, considerato tra i migliori al mondo. Le frazioni di Gargnano (Bogliaco, Villa, Muslone) offrono panorami e tranquillita. La Centomiglia, la regata velica piu importante del Garda, parte ogni anno da Gargnano a settembre. Il paese ospita anche l'Universita degli Studi di Milano - sede distaccata per corsi estivi.",
+      "words": 172
+    },
+    {
+      "id": "chunk_013",
+      "url": "https://instagarda.net/destinazioni/tremosine",
+      "title": "Tremosine sul Garda - L'Altopiano dei Panorami",
+      "content": "Tremosine sul Garda e un comune sparso composto da 18 frazioni distribuite sull'altopiano a 350-700 metri sopra il lago, nella sponda bresciana. Offre alcuni dei panorami piu spettacolari dell'intero Lago di Garda. La Terrazza del Brivido a Pieve di Tremosine e una piattaforma panoramica a strapiombo sul lago, a 350 metri di altezza, raggiungibile dal centro del borgo. La vista e mozzafiato e include tutto il lago fino alle Alpi. La Strada della Forra e una strada scavata nella roccia di una gola stretta e vertiginosa che collega il lago all'altopiano. Winston Churchill la defini l'ottava meraviglia del mondo. E stata set di un inseguimento in auto nel film di James Bond 'Quantum of Solace' (2008). L'altopiano di Tremosine e ideale per trekking, mountain bike e parapendio. I sentieri attraversano boschi, prati alpini e borghi medievali con viste costanti sul lago. La produzione locale include formaggi di malga, miele, salumi e l'olio d'oliva. Il Parco Avventura Rimbalzello offre percorsi tra gli alberi per famiglie.",
+      "words": 173
+    },
+    {
+      "id": "chunk_014",
+      "url": "https://instagarda.net/destinazioni/brenzone",
+      "title": "Brenzone sul Garda - Il Villaggio dei Pescatori",
+      "content": "Brenzone sul Garda e un comune della sponda veronese composto da 16 frazioni che si susseguono lungo la riva orientale del lago, ai piedi del Monte Baldo. E una delle zone piu tranquille e autentiche del Garda, ideale per chi cerca relax lontano dalla folla. Castelletto di Brenzone e la frazione piu caratteristica, un borgo medievale raggiungibile solo a piedi, con case in pietra, vicoli stretti e una chiesa romanica. Le acque di Brenzone sono tra le piu cristalline del lago, perfette per snorkeling e immersioni. Il fondale roccioso ospita una ricca fauna lacustre. Il Monte Baldo, raggiungibile con sentieri da Brenzone, e il Giardino Botanico d'Europa per la sua straordinaria biodiversita: oltre 2000 specie vegetali, molte endemiche. I sentieri partono dal lago e salgono fino a 2218 metri. La pesca e ancora una tradizione viva a Brenzone. I ristoranti locali servono pesce di lago freschissimo: lavarello (coregone), trota lacustre, anguilla e sardina di lago (aole). Brenzone e collegata dal servizio di navigazione del lago e dalla Gardesana orientale.",
+      "words": 180
+    },
+    {
+      "id": "chunk_015",
+      "url": "https://instagarda.net/destinazioni/arco",
+      "title": "Arco - La Citta dell'Arrampicata",
+      "content": "Arco e una citta del Trentino a 5 km dal Lago di Garda, famosa in tutto il mondo come capitale dell'arrampicata sportiva. Ogni anno ospita il Rock Master Festival, una delle competizioni di climbing piu prestigiose al mondo. Le pareti rocciose attorno ad Arco offrono oltre 2000 vie di arrampicata di ogni difficolta, dalle falesie per principianti alle grandi pareti per esperti. Il Castello di Arco, arroccato su uno sperone roccioso a 273 metri, domina la valle del Sarca con i suoi resti medievali e affreschi del XIV secolo. La salita al castello (20 minuti a piedi) offre una vista panoramica su tutto il Garda Trentino. L'Arboreto di Arco e un parco con piante mediterranee e subtropicali grazie al microclima mite: palme, cedri, sequoie e olivi crescono a questa latitudine nordica. Il centro storico di Arco ha un'eleganza asburgica, con viali alberati, ville storiche e l'atmosfera di una citta di cura ottocentesca. La valle del Sarca e perfetta per mountain bike, canyoning e kayak. Arco ospita anche eventi culturali, festival musicali e un vivace mercato il mercoledi.",
+      "words": 180
+    },
+    {
+      "id": "chunk_016",
+      "url": "https://instagarda.net/destinazioni/manerba-del-garda",
+      "title": "Manerba del Garda - Natura e Spiagge Selvagge",
+      "content": "Manerba del Garda si trova sulla sponda bresciana del basso lago, caratterizzata dalla Rocca di Manerba, un promontorio roccioso alto 216 metri che si protende nel lago offrendo panorami a 360 gradi. La Riserva Naturale della Rocca e un'area protetta con sentieri tra macchia mediterranea, ulivi e resti di un castello medievale. In cima, la vista spazia dal Monte Baldo a Sirmione. Le spiagge di Manerba sono tra le piu belle e selvagge del Garda: Spiaggia Pisenze, Baia dei Venti, Spiaggia della Romantica. Acqua cristallina e fondali bassi le rendono perfette per famiglie. L'Isola di San Biagio (Isola dei Conigli) e un isolotto raggiungibile a piedi quando il livello dell'acqua e basso, un'esperienza unica. Si puo anche raggiungere in kayak o sup. Manerba e zona di produzione del Groppello DOC, un vino rosso autoctono della Valtenesi, e dell'olio DOP del Garda. Le cantine della zona offrono degustazioni e visite guidate tra i vigneti con vista lago.",
+      "words": 170
+    },
+    {
+      "id": "chunk_017",
+      "url": "https://instagarda.net/vivi-il-lago/dove-dormire",
+      "title": "Dove Dormire al Lago di Garda - Guida agli Alloggi",
+      "content": "Il Lago di Garda offre oltre 150 strutture ricettive per ogni budget e stile di vacanza. Hotel di lusso con spa e vista lago si trovano principalmente a Gardone Riviera, Sirmione, Salo e Gargnano. Hotel 5 stelle come il Grand Hotel a Villa Feltrinelli (Gargnano), il Lefay Resort (Gargnano) e l'Hotel Villa Cortine Palace (Sirmione) sono tra i piu esclusivi. B&B e agriturismi sono diffusi nell'entroterra collinare, perfetti per chi cerca tranquillita e autenticita. Le zone di Bardolino, Lazise e la Valtenesi offrono agriturismi con produzione propria di vino e olio. I campeggi sono una tradizione del Garda, soprattutto nella zona sud (Peschiera, Lazise, Manerba). Camping Village Du Parc (Lazise), Camping Bella Italia (Peschiera) e Camping San Francesco (Desenzano) sono tra i piu attrezzati con piscine, animazione e accesso diretto al lago. Per famiglie, la zona sud (Peschiera, Lazise, Desenzano) offre le strutture piu adatte con spiagge dolci e parchi divertimento vicini. Per coppie, la zona ovest (Salo, Gardone, Gargnano) offre romanticismo. Per sportivi, la zona nord (Riva, Torbole, Arco) e perfetta.",
+      "words": 185
+    },
+    {
+      "id": "chunk_018",
+      "url": "https://instagarda.net/vivi-il-lago/dove-mangiare",
+      "title": "Dove Mangiare al Lago di Garda - Guida Gastronomica",
+      "content": "La cucina del Lago di Garda e un incrocio unico di tradizioni lombarde, venete e trentine, arricchita da prodotti locali eccezionali. Pesce di lago: il lavarello (coregone) e il pesce piu pregiato del Garda, servito alla griglia, in carpione o affumicato. La trota lacustre, l'anguilla, il luccio e le sardine di lago (aole) sono altre specialita. Il luccio in salsa verde e un piatto iconico. Olio DOP del Garda: l'olio extravergine del Garda e tra i piu pregiati d'Italia, con tre DOP: Garda Bresciano, Garda Orientale e Garda Trentino. Fruttato e delicato, perfetto su pesce e insalate. Vini: Bardolino DOC e Chiaretto (sponda veronese), Lugana DOC (zona sud, uno dei migliori bianchi d'Italia), Groppello DOC (Valtenesi), Nosiola e Marzemino (Trentino). Piatti tipici: tortellini di Valeggio sul Mincio, bigoli con le sarde, risotto con la tinca (Clusane d'Iseo), polenta e missoltini, casoncelli. Dolci: torta di rose mantovana, sbrisolona, gelato artigianale (ogni paese ha la sua gelateria storica). Per mangiare bene spendendo poco, cercate le trattorie dell'entroterra, lontane dal lungolago turistico.",
+      "words": 185
+    },
+    {
+      "id": "chunk_019",
+      "url": "https://instagarda.net/vivi-il-lago/attivita",
+      "title": "Attivita e Sport al Lago di Garda",
+      "content": "Il Lago di Garda e una delle destinazioni outdoor piu complete d'Europa, con oltre 100 esperienze sportive e ricreative. Sport acquatici: windsurf e kitesurf (Torbole e Malcesine sono i punti migliori grazie ai venti Peler e Ora), vela (regate internazionali, noleggio barche a vela), kayak e SUP (stand up paddle, perfetto per esplorare le coste e le grotte), wakeboard e sci nautico, immersioni e snorkeling (acque cristalline, relitti sommersi). Escursioni in barca: tour del lago in battello (servizio pubblico Navigarda con traghetti e aliscafi), noleggio barche a motore (senza patente fino a 40 CV), tour privati al tramonto, gite all'Isola del Garda. Sport terrestri: trekking (sentieri sul Monte Baldo, Sentiero del Ponale, Alta Via del Garda), mountain bike (Garda Trentino Bike Area con 100+ trail), ciclismo su strada (Giro del Garda, 140 km), arrampicata sportiva (Arco, 2000+ vie), canyoning (Valle del Sarca, Rio Nero). Esperienze: degustazioni di vino e olio con visita in cantina, cooking class di cucina gardesana, tour in Vespa o e-bike tra i borghi, parapendio dal Monte Baldo con atterraggio a Malcesine.",
+      "words": 185
+    },
+    {
+      "id": "chunk_020",
+      "url": "https://instagarda.net/vivi-il-lago/cosa-vedere",
+      "title": "Cosa Vedere al Lago di Garda - Attrazioni e Monumenti",
+      "content": "Il Lago di Garda racchiude oltre 80 attrazioni tra castelli, ville storiche, musei, giardini botanici e meraviglie naturali. Castelli: Castello Scaligero di Sirmione (l'unico castello lacustre d'Italia), Castello Scaligero di Malcesine (museo e panorami), Castello di Arco (resti medievali con affreschi), Castello di Desenzano (vista panoramica), Castello di Lazise, Rocca di Riva del Garda (MAG museo). Ville e giardini: Vittoriale degli Italiani a Gardone Riviera (residenza di D'Annunzio), Giardino Botanico Andre Heller (Gardone), Villa Romana di Desenzano (mosaici del IV secolo), Isola del Garda (villa neogotica visitabile in barca). Siti UNESCO: Fortezza di Peschiera del Garda (Opere di Difesa Veneziane, dal 2017), Siti palafitticoli preistorici dell'arco alpino (presenti sulle sponde del Garda). Meraviglie naturali: Grotte di Catullo (Sirmione), Cascata del Varone (Riva del Garda), Strada della Forra (Tremosine), Terrazza del Brivido (Pieve di Tremosine), Monte Baldo (Giardino Botanico d'Europa), Rocca di Manerba (riserva naturale). Parchi divertimento: Gardaland, Movieland, Caneva World, SEA LIFE Aquarium, Parco Natura Viva (zoo-safari a Bussolengo).",
+      "words": 185
+    },
+    {
+      "id": "chunk_021",
+      "url": "https://instagarda.net/blog/spiagge-lago-di-garda",
+      "title": "Le Migliori Spiagge del Lago di Garda",
+      "content": "Il Lago di Garda offre spiagge per tutti i gusti, dalle ampie distese sabbiose del sud alle calette nascoste del nord. Spiagge sabbiose (zona sud): Jamaica Beach a Sirmione (spiaggia libera con acqua cristallina e vista sulle Grotte di Catullo, raggiungibile a piedi dal centro), Spiaggia Brema a Peschiera (ampia, attrezzata, ideale per famiglie), Baia delle Sirene a Punta San Vigilio (una delle piu belle d'Italia, ingresso a pagamento). Spiagge per famiglie: Lido delle Bionde a Sirmione (attrezzata, fondale basso), Spiaggia Sabbioni a Riva del Garda (ampia, con parco giochi), spiagge di Lazise e Bardolino (lungolago accessibile). Spiagge selvagge: Spiaggia della Romantica a Manerba (nascosta tra le rocce), Baia dei Venti a Manerba (raggiungibile a piedi dalla Rocca), Spiaggia di Pai a Torri del Benaco. Spiagge per sport: spiagge di Torbole e Riva (windsurf e kitesurf), Campione del Garda (vento costante, spot leggendario). Isola di San Biagio: raggiungibile a piedi quando l'acqua e bassa, un'esperienza magica. Consiglio: le spiagge libere migliori si trovano al mattino presto, soprattutto in luglio e agosto.",
+      "words": 190
+    },
+    {
+      "id": "chunk_022",
+      "url": "https://instagarda.net/blog/come-arrivare-lago-di-garda",
+      "title": "Come Arrivare al Lago di Garda - Guida Trasporti",
+      "content": "Il Lago di Garda e facilmente raggiungibile da tutta Europa. In auto: autostrada A4 Milano-Venezia (uscite Desenzano, Peschiera, Sirmione), A22 del Brennero (uscite Riva del Garda, Rovereto Sud, Affi per la sponda est). Parcheggi disponibili in tutte le localita, ma in alta stagione (luglio-agosto) sono molto affollati. In treno: stazione di Desenzano del Garda-Sirmione sulla linea Milano-Venezia (treni ogni 30 minuti), stazione di Peschiera del Garda (stessa linea). Da Desenzano, autobus per Salo, Gardone e la sponda ovest. Da Peschiera, autobus per Lazise, Bardolino e la sponda est. Stazione di Rovereto per la zona nord (Riva del Garda, Torbole). In aereo: aeroporto di Verona Villafranca (VRN, il piu vicino, 20 km da Peschiera), aeroporto di Bergamo Orio al Serio (BGY, 80 km), aeroporto di Milano Malpensa (MXP, 150 km), aeroporto di Venezia Marco Polo (VCE, 150 km). Shuttlebus disponibili da Verona. Sul lago: servizio Navigarda gestisce traghetti, battelli e aliscafi che collegano tutte le localita del lago. I traghetti auto operano tra Maderno-Torri del Benaco e Limone-Malcesine. Abbonamento giornaliero disponibile.",
+      "words": 190
+    },
+    {
+      "id": "chunk_023",
+      "url": "https://instagarda.net/blog/itinerario-weekend-lago-di-garda",
+      "title": "Itinerario Weekend al Lago di Garda - 2 Giorni Perfetti",
+      "content": "Giorno 1 — Sponda Sud e Centro. Mattina: partenza da Sirmione, visita al Castello Scaligero e passeggiata nel centro storico. Raggiungi Jamaica Beach per un bagno con vista sulle Grotte di Catullo. Pranzo in una trattoria del centro con pesce di lago (lavarello alla griglia). Pomeriggio: spostamento a Lazise (20 minuti in auto). Passeggiata nel borgo medievale, visita alla Dogana Veneta e gelato sul lungolago. Se hai tempo, tappa al Parco Termale di Cola di Lazise. Sera: aperitivo a Bardolino con degustazione di Chiaretto sul lungolago, cena in un ristorante con vista lago. Giorno 2 — Sponda Ovest e Nord. Mattina: partenza per Salo, passeggiata sul lungolago piu lungo del Garda e visita al Duomo. Da Salo, battello per Gardone Riviera e visita al Vittoriale degli Italiani (prenotare in anticipo). Pranzo: trattoria a Gargnano, borgo autentico con cucina di lago. Pomeriggio: guida lungo la Strada della Forra (Tremosine), una delle strade piu spettacolari d'Europa. Sosta alla Terrazza del Brivido a Pieve di Tremosine per foto panoramiche. Arrivo a Riva del Garda, passeggiata in centro e aperitivo in Piazza III Novembre. Se hai energia, prosegui fino a Torbole per vedere il tramonto dal porto.",
+      "words": 200
+    },
+    {
+      "id": "chunk_024",
+      "url": "https://instagarda.net/blog/lago-di-garda-con-bambini",
+      "title": "Lago di Garda con Bambini - Guida per Famiglie",
+      "content": "Il Lago di Garda e una delle destinazioni piu family-friendly d'Italia. Parchi divertimento: Gardaland (il piu grande d'Italia, a 2 km da Peschiera, con Legoland Water Park, Gardaland SEA LIFE Aquarium e Gardaland Hotel per dormire nel parco), Movieland (cinema a tema con attrazioni, vicino a Lazise), Caneva World (parco acquatico con scivoli e piscina a onde), Jungle Adventure Park (parco avventura tra gli alberi a San Zeno di Montagna), Parco Natura Viva (zoo-safari a Bussolengo con animali da tutto il mondo, a 15 minuti dal lago). Spiagge per bambini: le spiagge della zona sud (Peschiera, Lazise, Desenzano) hanno fondali bassi e sabbiosi, perfetti per i piu piccoli. Jamaica Beach a Sirmione e suggestiva ma con sassi. Attivita per famiglie: giro in battello sul lago (i bambini viaggiano gratis sotto i 4 anni), noleggio pedalo e kayak, visita alle limonaie di Limone, Museo delle Palafitte a Ledro (villaggio preistorico ricostruito, interattivo), Reptiland a Riva del Garda. Consigli pratici: la zona sud e la piu comoda per famiglie con bambini piccoli. Evita luglio-agosto se puoi: giugno e settembre offrono clima perfetto e meno folla. Molti ristoranti hanno menu bambini e seggioloni.",
+      "words": 195
+    }
+  ]
+}

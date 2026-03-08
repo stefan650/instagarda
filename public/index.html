@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garda AI — Instagarda.net</title>
+  <style>
+    /* ── Variabili brand — cambia solo qui per rebrandare ─────────────── */
+    :root {
+      --brand-primary:    #1a56db;
+      --brand-secondary:  #1e3a8a;
+      --brand-accent:     #3b82f6;
+      --brand-light:      #eff6ff;
+      --brand-text:       #1e293b;
+      --brand-muted:      #64748b;
+      --bubble-user-bg:   #1a56db;
+      --bubble-user-text: #ffffff;
+      --bubble-ai-bg:     #f1f5f9;
+      --bubble-ai-text:   #1e293b;
+      --font:             'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font);
+      background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Header ──────────────────────────────────────────────────────── */
+    .header {
+      width: 100%;
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 1px 8px rgba(0,0,0,.06);
+    }
+    .logo {
+      width: 38px; height: 38px;
+      background: var(--brand-primary);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 18px;
+    }
+    .header-text h1 { font-size: 17px; font-weight: 700; color: var(--brand-text); }
+    .header-text p  { font-size: 12px; color: var(--brand-muted); }
+    .online-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #22c55e;
+      margin-left: auto;
+      box-shadow: 0 0 0 3px rgba(34,197,94,.2);
+    }
+
+    /* ── Layout principale ───────────────────────────────────────────── */
+    .container {
+      width: 100%; max-width: 780px;
+      flex: 1;
+      display: flex; flex-direction: column;
+      padding: 20px 16px 0;
+    }
+
+    /* ── Welcome card ────────────────────────────────────────────────── */
+    .welcome-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+    }
+    .welcome-card .wave { font-size: 32px; margin-bottom: 8px; }
+    .welcome-card h2 { font-size: 18px; color: var(--brand-text); margin-bottom: 6px; }
+    .welcome-card p  { font-size: 14px; color: var(--brand-muted); line-height: 1.5; }
+
+    /* ── Suggerimenti rapidi ─────────────────────────────────────────── */
+    .quick-replies {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+    .quick-btn {
+      padding: 8px 14px;
+      border: 1.5px solid var(--brand-primary);
+      border-radius: 20px;
+      background: white;
+      color: var(--brand-primary);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all .18s;
+      font-family: var(--font);
+    }
+    .quick-btn:hover {
+      background: var(--brand-primary);
+      color: white;
+    }
+
+    /* ── Chat area ───────────────────────────────────────────────────── */
+    .chat-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 300px;
+      max-height: calc(100vh - 360px);
+    }
+
+    /* ── Messaggi ────────────────────────────────────────────────────── */
+    .message { display: flex; gap: 10px; max-width: 85%; }
+    .message.user { align-self: flex-end; flex-direction: row-reverse; }
+    .message.ai   { align-self: flex-start; }
+
+    .avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+    .avatar.ai   { background: var(--brand-primary); color: white; font-size: 13px; font-weight: 700; }
+    .avatar.user { background: #e2e8f0; font-size: 16px; }
+
+    .bubble {
+      padding: 11px 15px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.55;
+      word-break: break-word;
+    }
+    .message.ai   .bubble {
+      background: var(--bubble-ai-bg);
+      color: var(--bubble-ai-text);
+      border-bottom-left-radius: 4px;
+    }
+    .message.user .bubble {
+      background: var(--bubble-user-bg);
+      color: var(--bubble-user-text);
+      border-bottom-right-radius: 4px;
+    }
+
+    /* Markdown semplice nel bubble */
+    .bubble strong { font-weight: 700; }
+    .bubble a { color: var(--brand-primary); text-decoration: underline; }
+    .message.user .bubble a { color: #bfdbfe; }
+    .bubble p { margin-bottom: 8px; }
+    .bubble p:last-child { margin-bottom: 0; }
+    .bubble ul { margin: 6px 0 6px 18px; }
+    .bubble li { margin-bottom: 3px; }
+
+    /* ── Typing indicator ────────────────────────────────────────────── */
+    .typing-indicator {
+      display: flex; align-items: center; gap: 10px;
+      align-self: flex-start;
+    }
+    .typing-dots {
+      background: var(--bubble-ai-bg);
+      border-radius: 16px;
+      border-bottom-left-radius: 4px;
+      padding: 12px 16px;
+      display: flex; gap: 5px;
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #94a3b8;
+      animation: bounce .9s ease-in-out infinite;
+    }
+    .dot:nth-child(2) { animation-delay: .15s; }
+    .dot:nth-child(3) { animation-delay: .30s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); }
+      40%           { transform: translateY(-6px); }
+    }
+
+    /* ── Input area ──────────────────────────────────────────────────── */
+    .input-wrapper {
+      position: sticky; bottom: 0;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      padding: 14px 16px;
+      display: flex; gap: 10px; align-items: flex-end;
+      margin: 0 -16px;
+    }
+    #userInput {
+      flex: 1;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 22px;
+      padding: 11px 18px;
+      font-size: 14px;
+      font-family: var(--font);
+      resize: none;
+      min-height: 44px;
+      max-height: 120px;
+      outline: none;
+      transition: border-color .18s;
+      line-height: 1.4;
+    }
+    #userInput:focus { border-color: var(--brand-primary); }
+    #sendBtn {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--brand-primary);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 18px;
+      flex-shrink: 0;
+      transition: background .18s, transform .1s;
+    }
+    #sendBtn:hover   { background: var(--brand-secondary); }
+    #sendBtn:active  { transform: scale(.93); }
+    #sendBtn:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    /* ── Footer ──────────────────────────────────────────────────────── */
+    .powered-by {
+      text-align: center;
+      font-size: 11px;
+      color: #94a3b8;
+      padding: 6px 0 12px;
+    }
+    .powered-by a { color: var(--brand-primary); text-decoration: none; }
+
+    /* ── Responsive ──────────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .container { padding: 12px 12px 0; }
+      .welcome-card { padding: 16px; }
+      .chat-area { max-height: calc(100vh - 320px); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="logo">📍</div>
+  <div class="header-text">
+    <h1>Garda AI</h1>
+    <p>Il tuo assistente del Lago di Garda</p>
+  </div>
+  <div class="online-dot" title="Online"></div>
+</header>
+
+<!-- Chat container -->
+<div class="container">
+
+  <!-- Welcome card -->
+  <div class="welcome-card" id="welcomeCard">
+    <div class="wave">🌊</div>
+    <h2>Ciao! Sono Garda AI</h2>
+    <p>La tua guida personale al Lago di Garda.<br>
+       Chiedimi tutto: dove dormire, cosa vedere, attività, ristoranti e molto altro.</p>
+    <div class="quick-replies">
+      <button class="quick-btn" onclick="quickSend('Dove dormire a Sirmione? 🏨')">Dove dormire a Sirmione</button>
+      <button class="quick-btn" onclick="quickSend('Quali sono le attività sportive sul lago? 🚴')">Attività sportive</button>
+      <button class="quick-btn" onclick="quickSend('Consigliami un ristorante con pesce di lago 🐟')">Ristoranti pesce</button>
+      <button class="quick-btn" onclick="quickSend('Cosa vedere in 2 giorni al Lago di Garda? 🗺️')">Itinerario 2 giorni</button>
+      <button class="quick-btn" onclick="quickSend('Best beaches on Lake Garda? 🏖️')">Best beaches</button>
+      <button class="quick-btn" onclick="quickSend('Welche Sehenswürdigkeiten am Gardasee? 🏰')">Sehenswürdigkeiten</button>
+    </div>
+  </div>
+
+  <!-- Messaggi -->
+  <div class="chat-area" id="chatArea"></div>
+
+  <!-- Input -->
+  <div class="input-wrapper">
+    <textarea id="userInput" placeholder="Scrivi un messaggio…" rows="1"></textarea>
+    <button id="sendBtn" onclick="sendMessage()" title="Invia">➤</button>
+  </div>
+  <div class="powered-by">
+    Powered by <a href="https://instagarda.net" target="_blank">Instagarda.net</a> &amp; Claude AI
+  </div>
+
+</div>
+
+<script>
+  // ── Configurazione ─────────────────────────────────────────────────────
+  const API_URL    = window.GARDA_API_URL || '/api/chat';
+  const BOT_NAME   = window.GARDA_BOT_NAME || 'Garda AI';
+
+  // Storico messaggi (formato Anthropic)
+  const messages = [];
+
+  // ── Utility: renderizza markdown semplice ──────────────────────────────
+  function renderMarkdown(text) {
+    return text
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')  // escape HTML
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g,     '<em>$1</em>')
+      .replace(/`(.*?)`/g,       '<code>$1</code>')
+      .replace(/\[(.*?)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+      .replace(/https?:\/\/\S+/g, url => `<a href="${url}" target="_blank">${url}</a>`)
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\n/g, '<br>')
+      .replace(/^/, '<p>').replace(/$/, '</p>');
+  }
+
+  // ── Aggiungi messaggio alla chat ───────────────────────────────────────
+  function addMessage(role, text) {
+    // Nascondi la welcome card dopo il primo messaggio
+    const wc = document.getElementById('welcomeCard');
+    if (wc) wc.style.display = 'none';
+
+    const chatArea = document.getElementById('chatArea');
+    const div = document.createElement('div');
+    div.className = 'message ' + role;
+
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar ' + role;
+    avatar.textContent = role === 'ai' ? 'GA' : '👤';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.innerHTML = renderMarkdown(text);
+
+    div.appendChild(avatar);
+    div.appendChild(bubble);
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+    return bubble;
+  }
+
+  // ── Typing indicator ───────────────────────────────────────────────────
+  function showTyping() {
+    const chatArea = document.getElementById('chatArea');
+    const div = document.createElement('div');
+    div.className = 'typing-indicator';
+    div.id = 'typingIndicator';
+
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar ai';
+    avatar.textContent = 'GA';
+
+    const dots = document.createElement('div');
+    dots.className = 'typing-dots';
+    dots.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+
+    div.appendChild(avatar);
+    div.appendChild(dots);
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }
+
+  function hideTyping() {
+    const el = document.getElementById('typingIndicator');
+    if (el) el.remove();
+  }
+
+  // ── Invia messaggio ────────────────────────────────────────────────────
+  async function sendMessage() {
+    const input = document.getElementById('userInput');
+    const btn   = document.getElementById('sendBtn');
+    const text  = input.value.trim();
+    if (!text) return;
+
+    input.value = '';
+    input.style.height = 'auto';
+    btn.disabled = true;
+
+    addMessage('user', text);
+    messages.push({ role: 'user', content: text });
+
+    showTyping();
+
+    try {
+      const res = await fetch(API_URL, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ messages })
+      });
+
+      const data = await res.json();
+      hideTyping();
+
+      if (data.error) throw new Error(data.error);
+
+      addMessage('ai', data.reply);
+      messages.push({ role: 'assistant', content: data.reply });
+
+    } catch (err) {
+      hideTyping();
+      addMessage('ai', '⚠️ Ops, si è verificato un errore: ' + err.message);
+    }
+
+    btn.disabled = false;
+    input.focus();
+  }
+
+  // ── Quick reply ────────────────────────────────────────────────────────
+  function quickSend(text) {
+    document.getElementById('userInput').value = text;
+    sendMessage();
+  }
+
+  // ── Textarea auto-resize + invio con Enter ─────────────────────────────
+  document.getElementById('userInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  document.getElementById('userInput').addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+</script>
+</body>
+</html>

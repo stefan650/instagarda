@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+*.log
+.env
+kimi-export/
+theme/instagarda/assets/video/*.mp4
