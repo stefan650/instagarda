@@ -63,7 +63,7 @@
     <div class="ig-dest-hero__content">
         <div class="ig-container">
             <h1 class="ig-dest-hero__title"><?php the_title(); ?></h1>
-            <?php if ($subtitle): ?>
+            <?php if ($subtitle && $subtitle !== 'La Leonessa d\'Italia'): ?>
                 <p class="ig-dest-hero__sub"><?php echo esc_html($subtitle); ?></p>
             <?php endif; ?>
         </div>
