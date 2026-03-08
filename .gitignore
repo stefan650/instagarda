@@ -4,3 +4,4 @@ node_modules/
 .env
 kimi-export/
 theme/instagarda/assets/video/*.mp4
+*.zip

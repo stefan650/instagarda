@@ -149,7 +149,7 @@ if ($current_month >= 3 && $current_month <= 5) {
                 ?>
                 <a href="<?php the_permalink(); ?>" class="ig-dest-card">
                     <?php if (has_post_thumbnail()): ?>
-                        <?php the_post_thumbnail('card-wide'); ?>
+                        <?php the_post_thumbnail('card-portrait'); ?>
                     <?php else: ?>
                         <div class="ig-placeholder-img">
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>

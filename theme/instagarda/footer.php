@@ -8,7 +8,7 @@
             <!-- Brand Column -->
             <div class="ig-footer__col ig-footer__col--brand">
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="ig-footer__logo">
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-cropped.png'); ?>" alt="Instagarda" class="ig-footer__logo-img">
+                    <span class="ig-logo ig-logo--white">INSTA<span class="ig-logo__accent">GARDA</span></span>
                 </a>
                 <p class="ig-footer__desc">La guida completa per scoprire il Lago di Garda.</p>
                 <div class="ig-footer__contact">
@@ -31,11 +31,17 @@
             <div class="ig-footer__col">
                 <h4 class="ig-footer__heading">Luoghi</h4>
                 <ul class="ig-footer__links">
-                    <li><a href="<?php echo esc_url(home_url('/destinazioni/sirmione/')); ?>">Sirmione</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/destinazioni/riva-del-garda/')); ?>">Riva del Garda</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/destinazioni/malcesine/')); ?>">Malcesine</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/destinazioni/limone-sul-garda/')); ?>">Limone</a></li>
-                    <li><a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>">Tutti i paesi</a></li>
+                    <?php
+                    $luoghi = new WP_Query([
+                        'post_type' => 'destinazione',
+                        'posts_per_page' => -1,
+                        'orderby' => 'title',
+                        'order' => 'ASC',
+                    ]);
+                    while ($luoghi->have_posts()): $luoghi->the_post();
+                    ?>
+                        <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+                    <?php endwhile; wp_reset_postdata(); ?>
                 </ul>
             </div>
 
@@ -66,8 +72,10 @@
             <div class="ig-footer__col">
                 <h4 class="ig-footer__heading">Supporto</h4>
                 <ul class="ig-footer__links">
+                    <li><a href="<?php echo esc_url(home_url('/contatti/')); ?>">Contatti</a></li>
                     <li><a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a></li>
                     <li><a href="<?php echo esc_url(home_url('/cookie-policy/')); ?>">Cookie Policy</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/termini/')); ?>">Termini di Servizio</a></li>
                 </ul>
             </div>
 

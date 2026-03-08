@@ -14,7 +14,7 @@
 
         <!-- Logo -->
         <a href="<?php echo esc_url(home_url('/')); ?>" class="ig-header__logo">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-cropped.png'); ?>" alt="Instagarda" class="ig-header__logo-img">
+            <span class="ig-logo">INSTA<span class="ig-logo__accent">GARDA</span></span>
         </a>
 
         <!-- Desktop Navigation -->
@@ -96,10 +96,37 @@
             </button>
 
             <!-- Language Switcher -->
+            <?php if (function_exists('icl_get_languages')):
+                $langs = icl_get_languages('skip_missing=0&orderby=code');
+                $current = $langs[ICL_LANGUAGE_CODE] ?? null;
+                $flags = ['it' => '&#127470;&#127481;', 'en' => '&#127468;&#127463;', 'de' => '&#127465;&#127466;'];
+                $lang_order = ['it', 'en', 'de'];
+                // Filter and reorder
+                $ordered_langs = [];
+                foreach ($lang_order as $c) { if (isset($langs[$c])) $ordered_langs[$c] = $langs[$c]; }
+                $langs = $ordered_langs;
+            ?>
+            <div class="ig-lang-switcher">
+                <button class="ig-header__lang-btn" aria-expanded="false">
+                    <span class="ig-header__lang-flag"><?php echo $flags[ICL_LANGUAGE_CODE] ?? ''; ?></span>
+                    <span><?php echo strtoupper(ICL_LANGUAGE_CODE); ?></span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="ig-lang-switcher__menu">
+                    <?php foreach ($langs as $code => $lang): if ($code === ICL_LANGUAGE_CODE) continue; ?>
+                    <a href="<?php echo esc_url($lang['url']); ?>" class="ig-lang-switcher__item">
+                        <span><?php echo $flags[$code] ?? ''; ?></span>
+                        <span><?php echo esc_html($lang['translated_name']); ?></span>
+                    </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php else: ?>
             <button class="ig-header__lang-btn">
                 <span class="ig-header__lang-flag">&#127470;&#127481;</span>
                 <span>IT</span>
             </button>
+            <?php endif; ?>
 
             <!-- Search Overlay -->
             <div class="ig-search-overlay" id="igSearchOverlay">

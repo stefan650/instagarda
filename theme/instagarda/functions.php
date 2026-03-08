@@ -26,6 +26,7 @@ function instagarda_setup() {
     add_image_size('card', 600, 400, true);
     add_image_size('card-wide', 640, 420, true);
     add_image_size('card-square', 400, 400, true);
+    add_image_size('card-portrait', 420, 747, true);
     add_image_size('listing-thumb', 320, 200, true);
 }
 add_action('after_setup_theme', 'instagarda_setup');
@@ -40,22 +41,22 @@ function instagarda_assets() {
 
     wp_enqueue_style('instagarda-style',
         get_template_directory_uri() . '/assets/css/main.css',
-        ['google-fonts'], '1.0.2'
+        ['google-fonts'], '1.0.3'
     );
 
     wp_enqueue_script('instagarda-js',
         get_template_directory_uri() . '/assets/js/main.js',
-        [], '1.0.2', true
+        [], '1.0.3', true
     );
 
     // Garda AI Chat Widget
     wp_enqueue_style('garda-chat',
         get_template_directory_uri() . '/assets/css/garda-chat.css',
-        [], '1.0.2'
+        [], '1.0.3'
     );
     wp_enqueue_script('garda-chat',
         get_template_directory_uri() . '/assets/js/garda-chat.js',
-        [], '1.0.2', true
+        [], '1.0.3', true
     );
 
     // Passa dati al JS

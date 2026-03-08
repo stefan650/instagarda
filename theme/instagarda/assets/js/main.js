@@ -68,6 +68,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Language switcher toggle
+  const langSwitcher = document.querySelector('.ig-lang-switcher');
+  if (langSwitcher) {
+    const langBtn = langSwitcher.querySelector('.ig-header__lang-btn');
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      langSwitcher.classList.toggle('is-open');
+      langBtn.setAttribute('aria-expanded', langSwitcher.classList.contains('is-open'));
+    });
+    document.addEventListener('click', () => langSwitcher.classList.remove('is-open'));
+  }
+
   // Search overlay
   const searchToggle = document.getElementById('igSearchToggle');
   const searchOverlay = document.getElementById('igSearchOverlay');
@@ -143,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const destPrev = document.getElementById('igDestPrev');
   const destNext = document.getElementById('igDestNext');
   if (destTrack && destPrev && destNext) {
-    const scrollAmt = 376;
+    const scrollAmt = 226;
     let autoScrollTimer = null;
 
     const updateBtns = () => {
@@ -521,6 +533,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Escape') {
         document.querySelectorAll('.ig-poi-panel.is-open').forEach(p => closePoiPanel(p));
       }
+    });
+  }
+
+  // Contact form (simple frontend handling)
+  const contactForm = document.querySelector('.ig-contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = contactForm.querySelector('button[type="submit"]');
+      const originalHTML = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<span style="display:inline-block;width:20px;height:20px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.8s linear infinite"></span>';
+      setTimeout(() => {
+        const card = contactForm.closest('.ig-contact-form-card');
+        if (card) {
+          card.innerHTML = '<div style="text-align:center;padding:48px 24px"><div style="width:64px;height:64px;border-radius:50%;background:rgba(0,122,255,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><h3 style="font-size:1.5rem;font-weight:700;color:var(--ig-text);margin-bottom:8px">Messaggio inviato!</h3><p style="color:var(--ig-text-muted)">Grazie per averci scritto. Ti risponderemo il prima possibile.</p></div>';
+        }
+      }, 1200);
     });
   }
 
