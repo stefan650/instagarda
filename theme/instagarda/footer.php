@@ -27,9 +27,9 @@
                 </div>
             </div>
 
-            <!-- Luoghi Column -->
+            <!-- Destinazioni Column -->
             <div class="ig-footer__col">
-                <h4 class="ig-footer__heading">Luoghi</h4>
+                <h4 class="ig-footer__heading">Destinazioni</h4>
                 <ul class="ig-footer__links">
                     <?php
                     $luoghi = new WP_Query([

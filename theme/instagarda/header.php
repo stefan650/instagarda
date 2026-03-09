@@ -20,10 +20,10 @@
         <!-- Desktop Navigation -->
         <nav class="ig-nav" id="igNav">
 
-            <!-- Luoghi Dropdown -->
+            <!-- Destinazioni Dropdown -->
             <div class="ig-nav__dropdown">
                 <button class="ig-nav__link" aria-expanded="false">
-                    Luoghi
+                    Destinazioni
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
                 <div class="ig-nav__dropdown-menu">
@@ -159,10 +159,10 @@
     <div class="ig-mobile-menu" id="igMobileMenu">
         <div class="ig-mobile-menu__inner">
 
-            <!-- Luoghi -->
+            <!-- Destinazioni -->
             <div class="ig-mobile-menu__group">
                 <button class="ig-mobile-menu__heading" data-toggle="mobile-dest">
-                    Luoghi
+                    Destinazioni
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
                 <div class="ig-mobile-menu__submenu" id="mobile-dest">

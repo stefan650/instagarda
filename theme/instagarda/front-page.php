@@ -20,7 +20,7 @@
 
         <!-- CTA Buttons -->
         <div class="ig-hero__ctas">
-            <button class="ig-hero__cta ig-hero__cta--active" data-tab="destinazioni" role="tab" aria-selected="true">Luoghi</button>
+            <button class="ig-hero__cta ig-hero__cta--active" data-tab="destinazioni" role="tab" aria-selected="true">Destinazioni</button>
             <button class="ig-hero__cta" data-tab="vivi" role="tab" aria-selected="false">Esperienze</button>
         </div>
 
@@ -127,7 +127,7 @@ if ($current_month >= 3 && $current_month <= 5) {
         <div class="ig-section__header">
             <span class="ig-section__badge">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Luoghi
+                Destinazioni
             </span>
             <h2 class="ig-section__title">Esplora il Lago di Garda</h2>
         </div>
@@ -193,7 +193,7 @@ if ($current_month >= 3 && $current_month <= 5) {
         <!-- View All CTA -->
         <div class="ig-section__cta">
             <a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>" class="ig-btn ig-btn--outline ig-btn--lg">
-                Tutti i luoghi
+                Tutte le destinazioni
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
         </div>

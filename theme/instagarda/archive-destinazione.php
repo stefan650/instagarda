@@ -4,9 +4,9 @@
     <div class="ig-mini-hero__content">
         <div class="ig-mini-hero__badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <?php echo $wp_query->found_posts; ?> luoghi
+            <?php echo $wp_query->found_posts; ?> destinazioni
         </div>
-        <h1 class="ig-mini-hero__title">Luoghi del <span>Lago di Garda</span></h1>
+        <h1 class="ig-mini-hero__title">Destinazioni del <span>Lago di Garda</span></h1>
         <p class="ig-mini-hero__desc">Esplora ogni angolo del lago più bello d'Italia</p>
     </div>
 </section>
