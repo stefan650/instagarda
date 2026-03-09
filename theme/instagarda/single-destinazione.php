@@ -65,7 +65,7 @@
             'trento'              => ['125%', '105%'],
             'mantova'             => ['10%', '-15%'],
             'manerba-del-garda'   => ['15%', '28%'],
-            'castelnuovo-del-garda'=> ['30%', '8%'],
+            'castelnuovo-del-garda'=> ['70%', '8%'],
             'valeggio-sul-mincio' => ['40%', '0%'],
         ];
         if (isset($pin_positions[$slug])) {
