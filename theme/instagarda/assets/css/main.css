@@ -317,6 +317,10 @@ img { max-width: 100%; height: auto; display: block; }
     flex-shrink: 0;
     text-decoration: none;
 }
+.ig-header__logo-img {
+    height: 32px;
+    width: auto;
+}
 
 /* CSS Text Logo */
 .ig-logo {

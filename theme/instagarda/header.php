@@ -14,7 +14,7 @@
 
         <!-- Logo -->
         <a href="<?php echo esc_url(home_url('/')); ?>" class="ig-header__logo">
-            <span class="ig-logo">INSTA<span class="ig-logo__accent">GARDA</span></span>
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-cropped.png?v=2'); ?>" alt="Instagarda" class="ig-header__logo-img">
         </a>
 
         <!-- Desktop Navigation -->
