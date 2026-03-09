@@ -2568,6 +2568,7 @@ img { max-width: 100%; height: auto; display: block; }
     width: 100%;
     height: auto;
     display: block;
+    filter: invert(1) brightness(2);
 }
 .ig-dest-hero__minimap-pin {
     position: absolute;
