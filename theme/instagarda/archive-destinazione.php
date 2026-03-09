@@ -40,8 +40,6 @@
                         'torbole'             => ['85%', '88%'],
                         'arco'                => ['90%', '95%'],
                         'manerba-del-garda'   => ['15%', '38%'],
-                        'castelnuovo-del-garda'=> ['70%', '8%'],
-                        'valeggio-sul-mincio' => ['40%', '0%'],
                     ];
                     $all_dests = new WP_Query([
                         'post_type' => 'destinazione',
@@ -77,17 +75,21 @@
             </div>
 
             <!-- Right: Preview Panel -->
+            <?php
+            // Default preview: Sirmione
+            $default_dest = get_page_by_path('sirmione', OBJECT, 'destinazione');
+            $default_thumb = $default_dest ? get_the_post_thumbnail_url($default_dest->ID, 'card-wide') : '';
+            $default_excerpt = $default_dest ? wp_trim_words(get_the_excerpt($default_dest->ID), 20, '…') : '';
+            $default_link = $default_dest ? get_permalink($default_dest->ID) : '#';
+            $default_title = $default_dest ? $default_dest->post_title : 'Sirmione';
+            ?>
             <div class="ig-map-explorer__preview" id="igMapPreview">
-                <div class="ig-map-explorer__placeholder">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    <p>Passa il cursore su un pin per esplorare</p>
-                </div>
-                <div class="ig-map-explorer__card" id="igMapCard" style="display:none">
-                    <div class="ig-map-explorer__card-img" id="igMapCardImg"></div>
+                <div class="ig-map-explorer__card" id="igMapCard">
+                    <div class="ig-map-explorer__card-img" id="igMapCardImg" style="<?php if ($default_thumb): ?>background-image:url(<?php echo esc_url($default_thumb); ?>)<?php endif; ?>"></div>
                     <div class="ig-map-explorer__card-body">
-                        <h3 class="ig-map-explorer__card-title" id="igMapCardTitle"></h3>
-                        <p class="ig-map-explorer__card-desc" id="igMapCardDesc"></p>
-                        <a href="#" class="ig-btn ig-btn--primary" id="igMapCardBtn">Scopri →</a>
+                        <h3 class="ig-map-explorer__card-title" id="igMapCardTitle"><?php echo esc_html($default_title); ?></h3>
+                        <p class="ig-map-explorer__card-desc" id="igMapCardDesc"><?php echo esc_html($default_excerpt); ?></p>
+                        <a href="<?php echo esc_url($default_link); ?>" class="ig-btn ig-btn--primary" id="igMapCardBtn">Scopri <?php echo esc_html($default_title); ?> →</a>
                     </div>
                 </div>
             </div>
@@ -141,12 +143,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var pins = document.querySelectorAll('.ig-svg-map__pin');
-    var card = document.getElementById('igMapCard');
-    var placeholder = document.querySelector('.ig-map-explorer__placeholder');
     var cardImg = document.getElementById('igMapCardImg');
     var cardTitle = document.getElementById('igMapCardTitle');
     var cardDesc = document.getElementById('igMapCardDesc');
     var cardBtn = document.getElementById('igMapCardBtn');
+    var card = document.getElementById('igMapCard');
 
     pins.forEach(function(pin) {
         pin.addEventListener('mouseenter', function() {
@@ -167,10 +168,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 cardImg.style.display = 'none';
             }
 
-            placeholder.style.display = 'none';
-            card.style.display = 'block';
+            // Animate card
+            card.style.animation = 'none';
+            card.offsetHeight;
+            card.style.animation = 'igFadeIn 0.25s ease';
 
-            // Highlight active pin
             pins.forEach(function(p) { p.classList.remove('is-active'); });
             pin.classList.add('is-active');
         });
