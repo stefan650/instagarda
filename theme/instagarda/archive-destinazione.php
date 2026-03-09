@@ -31,7 +31,7 @@
                         'gargnano'            => ['32%', '55%'],
                         'limone-sul-garda'    => ['71%', '82%'],
                         'tremosine-sul-garda' => ['70%', '85%'],
-                        'peschiera-del-garda' => ['55%', '20%'],
+                        'peschiera-del-garda' => ['50%', '10%'],
                         'lazise'              => ['63%', '30%'],
                         'bardolino'           => ['62%', '37%'],
                         'garda'               => ['65%', '48%'],
