@@ -11,10 +11,58 @@
     </div>
 </section>
 
-<!-- Mappa Interattiva -->
+<!-- Mappa SVG con Pin -->
 <section class="ig-section ig-section--white ig-section--compact">
     <div class="ig-container">
-        <div id="ig-luoghi-map" style="height: 450px; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);"></div>
+        <div class="ig-svg-map">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/maps/lago-garda.png'); ?>" alt="Lago di Garda" class="ig-svg-map__img">
+            <?php
+            $pin_positions = [
+                'sirmione'            => ['28%', '24%'],
+                'desenzano-del-garda' => ['8%', '22%'],
+                'salo'                => ['20%', '35%'],
+                'gardone-riviera'     => ['28%', '55%'],
+                'toscolano-maderno'   => ['35%', '45%'],
+                'gargnano'            => ['32%', '55%'],
+                'limone-sul-garda'    => ['61%', '67%'],
+                'tremosine-sul-garda' => ['60%', '70%'],
+                'peschiera-del-garda' => ['25%', '10%'],
+                'lazise'              => ['63%', '30%'],
+                'bardolino'           => ['62%', '37%'],
+                'garda'               => ['65%', '48%'],
+                'torri-del-benaco'    => ['48%', '45%'],
+                'malcesine'           => ['70%', '66%'],
+                'brenzone-sul-garda'  => ['55%', '55%'],
+                'riva-del-garda'      => ['82%', '91%'],
+                'torbole'             => ['85%', '88%'],
+                'arco'                => ['90%', '95%'],
+                'manerba-del-garda'   => ['15%', '38%'],
+                'castelnuovo-del-garda'=> ['70%', '8%'],
+                'valeggio-sul-mincio' => ['40%', '0%'],
+            ];
+            // Collect all posts for pins
+            $all_dests = new WP_Query([
+                'post_type' => 'destinazione',
+                'posts_per_page' => -1,
+            ]);
+            if ($all_dests->have_posts()):
+                while ($all_dests->have_posts()): $all_dests->the_post();
+                    $slug = get_post_field('post_name', get_the_ID());
+                    if (isset($pin_positions[$slug])):
+                        $pl = $pin_positions[$slug][0];
+                        $pb = $pin_positions[$slug][1];
+            ?>
+            <a href="<?php the_permalink(); ?>" class="ig-svg-map__pin" style="left:<?php echo esc_attr($pl); ?>;bottom:<?php echo esc_attr($pb); ?>" title="<?php the_title_attribute(); ?>">
+                <svg width="18" height="24" viewBox="0 0 32 42" fill="none"><path d="M16 0C7.163 0 0 7.163 0 16c0 12 16 26 16 26s16-14 16-26C32 7.163 24.837 0 16 0z" fill="#E53E3E"/><circle cx="16" cy="16" r="6" fill="white"/></svg>
+                <span class="ig-svg-map__label"><?php the_title(); ?></span>
+            </a>
+            <?php
+                    endif;
+                endwhile;
+                wp_reset_postdata();
+            endif;
+            ?>
+        </div>
     </div>
 </section>
 
@@ -60,78 +108,5 @@
     </div>
 </section>
 
-<!-- Script Mappa Leaflet -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Coordinate fallback per le principali località
-    var coords = {
-        'sirmione': [45.4964, 10.6079],
-        'desenzano-del-garda': [45.4711, 10.5374],
-        'salo': [45.6069, 10.5214],
-        'gardone-riviera': [45.6219, 10.5594],
-        'toscolano-maderno': [45.6394, 10.6097],
-        'gargnano': [45.6844, 10.6606],
-        'limone-sul-garda': [45.8126, 10.7918],
-        'tremosine-sul-garda': [45.7658, 10.7528],
-        'peschiera-del-garda': [45.4387, 10.6919],
-        'lazise': [45.5050, 10.7320],
-        'bardolino': [45.5458, 10.7228],
-        'garda': [45.5749, 10.7089],
-        'torri-del-benaco': [45.6097, 10.6878],
-        'malcesine': [45.7636, 10.8107],
-        'brenzone-sul-garda': [45.7022, 10.7620],
-        'riva-del-garda': [45.8862, 10.8412],
-        'torbole': [45.8748, 10.8739],
-        'arco': [45.9178, 10.8854],
-        'brescia': [45.5415, 10.2115],
-        'verona': [45.4384, 10.9916],
-        'trento': [46.0748, 11.1217],
-        'mantova': [45.1564, 10.7914]
-    };
-    
-    // Inizializza mappa centrata sul Lago di Garda
-    var map = L.map('ig-luoghi-map').setView([45.6, 10.7], 10);
-    
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-        maxZoom: 18
-    }).addTo(map);
-    
-    // Crea marker per ogni destinazione
-    var bounds = L.latLngBounds();
-    var markers = [];
-    
-    document.querySelectorAll('.ig-dest-card').forEach(function(card) {
-        var link = card.getAttribute('href');
-        var slug = link.split('/').filter(Boolean).pop();
-        var title = card.querySelector('.ig-dest-card__title').textContent;
-        var latLng = coords[slug];
-        
-        if (latLng) {
-            var marker = L.marker(latLng).addTo(map);
-            marker.bindPopup('<strong>' + title + '</strong><br><a href="' + link + '">Scopri →</a>');
-            
-            marker.on('click', function() {
-                // Scroll alla card corrispondente
-                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                card.style.transform = 'scale(1.05)';
-                card.style.boxShadow = '0 8px 30px rgba(0,122,255,0.3)';
-                setTimeout(function() {
-                    card.style.transform = '';
-                    card.style.boxShadow = '';
-                }, 1500);
-            });
-            
-            markers.push(marker);
-            bounds.extend(latLng);
-        }
-    });
-    
-    // Adatta mappa per mostrare tutti i marker
-    if (markers.length > 0) {
-        map.fitBounds(bounds, { padding: [50, 50] });
-    }
-});
-</script>
 
 <?php get_footer(); ?>
