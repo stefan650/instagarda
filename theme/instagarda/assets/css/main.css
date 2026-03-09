@@ -2549,6 +2549,33 @@ img { max-width: 100%; height: auto; display: block; }
 .ig-dest-hero__sub { font-size:1.25rem; color:rgba(255,255,255,.9); }
 @media(min-width:768px) { .ig-dest-hero__sub { font-size:1.5rem; } }
 
+/* --- Dest hero minimap --- */
+.ig-dest-hero__minimap {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 140px;
+    z-index: 3;
+    opacity: 0.85;
+    transition: opacity 0.3s;
+    filter: drop-shadow(0 2px 12px rgba(0,0,0,0.4));
+}
+.ig-dest-hero__minimap:hover { opacity: 1; }
+.ig-dest-hero__minimap-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.ig-dest-hero__minimap-pin {
+    position: absolute;
+}
+@media(min-width:768px) {
+    .ig-dest-hero__minimap { width: 180px; bottom: 48px; right: 48px; }
+}
+@media(max-width:639px) {
+    .ig-dest-hero__minimap { width: 100px; bottom: 16px; right: 16px; }
+}
+
 /* --- Dest sidebar --- */
 .ig-dest-sidebar__card {
     background:white; border-radius:24px; padding:24px;

@@ -6,6 +6,10 @@
     $highlights = ig_get_meta('highlights');
     $map_lat    = ig_get_meta('map_lat');
     $map_lng    = ig_get_meta('map_lng');
+    $pin_left   = ig_get_meta('pin_left');
+    $pin_bottom = ig_get_meta('pin_bottom');
+
+    $slug = get_post_field('post_name', get_the_ID());
 
     // Fallback coordinates per destinazione
     if (!$map_lat || !$map_lng) {
@@ -29,10 +33,44 @@
             'torbole'             => [45.8748, 10.8739],
             'arco'                => [45.9178, 10.8854],
         ];
-        $slug = get_post_field('post_name', get_the_ID());
         if (isset($coords[$slug])) {
             $map_lat = $coords[$slug][0];
             $map_lng = $coords[$slug][1];
+        }
+    }
+
+    // Fallback pin positions per la mini-mappa hero
+    if (!$pin_left || !$pin_bottom) {
+        $pin_positions = [
+            'sirmione'            => ['33%', '19%'],
+            'desenzano-del-garda' => ['8%', '22%'],
+            'salo'                => ['20%', '35%'],
+            'gardone-riviera'     => ['28%', '40%'],
+            'toscolano-maderno'   => ['35%', '45%'],
+            'gargnano'            => ['42%', '55%'],
+            'limone-sul-garda'    => ['71%', '77%'],
+            'tremosine-sul-garda' => ['60%', '70%'],
+            'peschiera-del-garda' => ['25%', '10%'],
+            'lazise'              => ['38%', '15%'],
+            'bardolino'           => ['42%', '22%'],
+            'garda'               => ['45%', '28%'],
+            'torri-del-benaco'    => ['48%', '35%'],
+            'malcesine'           => ['70%', '66%'],
+            'brenzone-sul-garda'  => ['55%', '55%'],
+            'riva-del-garda'      => ['82%', '91%'],
+            'torbole'             => ['85%', '88%'],
+            'arco'                => ['90%', '95%'],
+            'brescia'             => ['-10%', '30%'],
+            'verona'              => ['102%', '5%'],
+            'trento'              => ['125%', '105%'],
+            'mantova'             => ['10%', '-15%'],
+            'manerba-del-garda'   => ['15%', '28%'],
+            'castelnuovo-del-garda'=> ['30%', '8%'],
+            'valeggio-sul-mincio' => ['40%', '0%'],
+        ];
+        if (isset($pin_positions[$slug])) {
+            $pin_left   = $pin_positions[$slug][0];
+            $pin_bottom = $pin_positions[$slug][1];
         }
     }
 ?>
@@ -68,6 +106,14 @@
             <?php endif; ?>
         </div>
     </div>
+    <?php if ($pin_left && $pin_bottom): ?>
+    <div class="ig-dest-hero__minimap">
+        <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/maps/lago-garda.png'); ?>" alt="Lago di Garda" class="ig-dest-hero__minimap-img">
+        <div class="ig-dest-hero__minimap-pin" style="left:<?php echo esc_attr($pin_left); ?>;bottom:<?php echo esc_attr($pin_bottom); ?>">
+            <svg width="14" height="18" viewBox="0 0 32 42" fill="none"><path d="M16 0C7.163 0 0 7.163 0 16c0 12 16 26 16 26s16-14 16-26C32 7.163 24.837 0 16 0z" fill="#E53E3E"/><circle cx="16" cy="16" r="6" fill="white"/></svg>
+        </div>
+    </div>
+    <?php endif; ?>
 </section>
 
 
