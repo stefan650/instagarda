@@ -1,11 +1,15 @@
 <?php get_header(); ?>
 
-<section class="ig-mini-hero ig-mini-hero--compact">
-    <video class="ig-mini-hero__video" autoplay muted loop playsinline>
-        <source src="<?php echo esc_url(get_template_directory_uri() . '/assets/video/destinazioni-hero.mp4'); ?>" type="video/mp4">
-    </video>
-    <div class="ig-mini-hero__content">
-        <h1 class="ig-mini-hero__title">Destinazioni del <span>Lago di Garda</span></h1>
+<section class="ig-dest-hero">
+    <div class="ig-dest-hero__bg">
+        <video class="ig-dest-hero__video ig-dest-hero__video--desktop" autoplay muted loop playsinline>
+            <source src="<?php echo esc_url(get_template_directory_uri() . '/assets/video/destinazioni-hero.mp4'); ?>" type="video/mp4">
+        </video>
+    </div>
+    <div class="ig-dest-hero__content">
+        <div class="ig-container">
+            <h1 class="ig-dest-hero__title">Destinazioni</h1>
+        </div>
     </div>
 </section>
 
