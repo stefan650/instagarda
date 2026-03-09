@@ -2622,11 +2622,17 @@ img { max-width: 100%; height: auto; display: block; }
     background: var(--ig-surface);
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
+.ig-svg-map--transparent {
+    max-width: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 20px;
+}
 .ig-svg-map__img {
     width: 100%;
     height: auto;
     display: block;
-    opacity: 0.15;
+    opacity: 0.12;
 }
 .ig-svg-map__pin {
     position: absolute;
@@ -2638,12 +2644,17 @@ img { max-width: 100%; height: auto; display: block; }
     transition: transform 0.2s ease;
     transform: translate(-50%, 50%);
 }
-.ig-svg-map__pin:hover {
-    transform: translate(-50%, 50%) scale(1.25);
+.ig-svg-map__pin:hover,
+.ig-svg-map__pin.is-active {
+    transform: translate(-50%, 50%) scale(1.3);
     z-index: 10;
 }
 .ig-svg-map__pin svg {
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    transition: filter 0.2s;
+}
+.ig-svg-map__pin.is-active svg {
+    filter: drop-shadow(0 2px 8px rgba(229,62,62,0.5));
 }
 .ig-svg-map__label {
     display: block;
@@ -2653,12 +2664,83 @@ img { max-width: 100%; height: auto; display: block; }
     color: var(--ig-text);
     white-space: nowrap;
     text-shadow: 0 1px 3px rgba(255,255,255,0.9);
-    opacity: 0.85;
-    transition: opacity 0.2s;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
 }
-.ig-svg-map__pin:hover .ig-svg-map__label {
+.ig-svg-map__pin:hover .ig-svg-map__label,
+.ig-svg-map__pin.is-active .ig-svg-map__label {
     opacity: 1;
     color: #E53E3E;
+}
+
+/* --- Map Explorer (two-column layout) --- */
+.ig-map-explorer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    min-height: 500px;
+}
+.ig-map-explorer__map {
+    position: relative;
+}
+.ig-map-explorer__preview {
+    position: sticky;
+    top: 120px;
+}
+.ig-map-explorer__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    height: 400px;
+    color: var(--ig-text-muted);
+    font-size: var(--fs-base);
+}
+.ig-map-explorer__card {
+    border-radius: 20px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    animation: igFadeIn 0.3s ease;
+}
+@keyframes igFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.ig-map-explorer__card-img {
+    width: 100%;
+    height: 240px;
+    background-size: cover;
+    background-position: center;
+    background-color: #f3f4f6;
+}
+.ig-map-explorer__card-body {
+    padding: 24px;
+}
+.ig-map-explorer__card-title {
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.ig-map-explorer__card-desc {
+    color: var(--ig-text-muted);
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+@media(max-width:767px) {
+    .ig-map-explorer {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .ig-map-explorer__preview {
+        position: static;
+    }
+    .ig-svg-map--transparent { padding: 10px; }
+    .ig-svg-map__pin svg { width: 14px; height: 18px; }
+    .ig-svg-map__label { font-size: 8px; }
 }
 @media(max-width:639px) {
     .ig-svg-map { padding: 24px 20px; }
