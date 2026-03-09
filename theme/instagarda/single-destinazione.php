@@ -64,7 +64,7 @@
             'verona'              => ['102%', '5%'],
             'trento'              => ['125%', '105%'],
             'mantova'             => ['50%', '-15%'],
-            'manerba-del-garda'   => ['15%', '28%'],
+            'manerba-del-garda'   => ['15%', '38%'],
             'castelnuovo-del-garda'=> ['70%', '8%'],
             'valeggio-sul-mincio' => ['40%', '0%'],
         ];
