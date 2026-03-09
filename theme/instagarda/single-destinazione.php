@@ -45,7 +45,7 @@
             'sirmione'            => ['28%', '24%'],
             'desenzano-del-garda' => ['8%', '22%'],
             'salo'                => ['20%', '35%'],
-            'gardone-riviera'     => ['28%', '40%'],
+            'gardone-riviera'     => ['28%', '55%'],
             'toscolano-maderno'   => ['35%', '45%'],
             'gargnano'            => ['42%', '55%'],
             'limone-sul-garda'    => ['71%', '77%'],
