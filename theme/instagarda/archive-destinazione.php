@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <!-- Mappa Interattiva + Preview -->
-<section class="ig-section ig-section--white">
+<section class="ig-section ig-section--white" style="padding-top:120px">
     <div class="ig-container">
         <div class="ig-map-explorer">
             <!-- Left: Map -->
