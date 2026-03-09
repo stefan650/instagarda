@@ -28,12 +28,10 @@
         <div class="ig-hero__suggestions" id="igHeroSuggestions">
             <div class="ig-hero__suggestion-group is-active" data-group="destinazioni">
                 <?php
-                $top_slugs = ['sirmione', 'riva-del-garda', 'malcesine', 'limone-sul-garda', 'desenzano-del-garda', 'bardolino'];
                 $hero_dests = new WP_Query([
                     'post_type'      => 'destinazione',
-                    'post_name__in'  => $top_slugs,
                     'posts_per_page' => 6,
-                    'orderby'        => 'post_name__in',
+                    'orderby'        => 'rand',
                 ]);
                 if ($hero_dests->have_posts()):
                     while ($hero_dests->have_posts()): $hero_dests->the_post();
