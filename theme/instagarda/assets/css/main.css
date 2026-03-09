@@ -2738,19 +2738,25 @@ img { max-width: 100%; height: auto; display: block; }
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: none;
-    border: none;
-    color: var(--ig-text-muted);
+    margin: 20px auto 0;
+    padding: 12px 28px;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: var(--r-pill);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
+    color: var(--ig-text);
     font-size: var(--fs-sm);
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: color 0.2s;
-    width: 100%;
+    transition: all 0.2s;
+    width: auto;
 }
 .ig-map-explorer__scroll-cta:hover {
     color: var(--ig-primary);
+    background: rgba(255,255,255,0.7);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.9);
 }
 .ig-map-explorer__scroll-cta svg {
     animation: igBounceDown 1.5s infinite;
