@@ -49,7 +49,7 @@
             'toscolano-maderno'   => ['35%', '45%'],
             'gargnano'            => ['32%', '55%'],
             'limone-sul-garda'    => ['76%', '87%'],
-            'tremosine-sul-garda' => ['60%', '70%'],
+            'tremosine-sul-garda' => ['60%', '90%'],
             'peschiera-del-garda' => ['55%', '20%'],
             'lazise'              => ['58%', '25%'],
             'bardolino'           => ['62%', '37%'],
