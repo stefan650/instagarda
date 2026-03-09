@@ -39,7 +39,7 @@
                         'malcesine'           => ['80%', '76%'],
                         'brenzone-sul-garda'  => ['60%', '70%'],
                         'riva-del-garda'      => ['82%', '91%'],
-                        'torbole'             => ['75%', '93%'],
+                        'torbole'             => ['105%', '88%'],
                         'arco'                => ['90%', '95%'],
                         'manerba-del-garda'   => ['15%', '38%'],
                     ];
