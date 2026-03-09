@@ -76,12 +76,25 @@
 
             <!-- Right: Preview Panel -->
             <?php
-            // Default preview: Sirmione
-            $default_dest = get_page_by_path('sirmione', OBJECT, 'destinazione');
-            $default_thumb = $default_dest ? get_the_post_thumbnail_url($default_dest->ID, 'card-wide') : '';
-            $default_excerpt = $default_dest ? wp_trim_words(get_the_excerpt($default_dest->ID), 20, '…') : '';
-            $default_link = $default_dest ? get_permalink($default_dest->ID) : '#';
-            $default_title = $default_dest ? $default_dest->post_title : 'Sirmione';
+            // Random default preview
+            $random_dest = new WP_Query([
+                'post_type' => 'destinazione',
+                'posts_per_page' => 1,
+                'orderby' => 'rand',
+                'meta_query' => [['key' => '_thumbnail_id', 'compare' => 'EXISTS']],
+            ]);
+            $default_thumb = '';
+            $default_excerpt = '';
+            $default_link = '#';
+            $default_title = '';
+            if ($random_dest->have_posts()):
+                $random_dest->the_post();
+                $default_thumb = get_the_post_thumbnail_url(get_the_ID(), 'card-wide') ?: '';
+                $default_excerpt = wp_trim_words(get_the_excerpt(), 20, '…');
+                $default_link = get_permalink();
+                $default_title = get_the_title();
+                wp_reset_postdata();
+            endif;
             ?>
             <div class="ig-map-explorer__preview" id="igMapPreview">
                 <div class="ig-map-explorer__card" id="igMapCard">
@@ -92,6 +105,10 @@
                         <a href="<?php echo esc_url($default_link); ?>" class="ig-btn ig-btn--primary" id="igMapCardBtn">Scopri <?php echo esc_html($default_title); ?> →</a>
                     </div>
                 </div>
+                <button class="ig-map-explorer__scroll-cta" onclick="document.getElementById('ig-dest-grid').scrollIntoView({behavior:'smooth',block:'start'})">
+                    Vedi tutte le destinazioni
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
             </div>
         </div>
     </div>

@@ -2713,24 +2713,50 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .ig-map-explorer__card-img {
     width: 100%;
-    height: 240px;
+    height: 320px;
     background-size: cover;
     background-position: center;
     background-color: #f3f4f6;
 }
 .ig-map-explorer__card-body {
-    padding: 24px;
+    padding: 28px;
 }
 .ig-map-explorer__card-title {
-    font-size: var(--fs-xl);
+    font-size: var(--fs-2xl);
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 .ig-map-explorer__card-desc {
     color: var(--ig-text-muted);
-    font-size: var(--fs-sm);
+    font-size: var(--fs-base);
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+}
+.ig-map-explorer__scroll-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    color: var(--ig-text-muted);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+    width: 100%;
+}
+.ig-map-explorer__scroll-cta:hover {
+    color: var(--ig-primary);
+}
+.ig-map-explorer__scroll-cta svg {
+    animation: igBounceDown 1.5s infinite;
+}
+@keyframes igBounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
 }
 @media(max-width:767px) {
     .ig-map-explorer {
