@@ -507,7 +507,7 @@
         <div class="ig-social-stats">
             <a href="https://www.instagram.com/instagarda/" target="_blank" rel="noopener noreferrer" class="ig-social-stat">
                 <svg class="ig-social-stat__icon ig-social-stat__icon--ig" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                <span class="ig-social-stat__number">619K</span>
+                <span class="ig-social-stat__number">620K</span>
                 <span class="ig-social-stat__label">Follower</span>
             </a>
             <a href="https://www.tiktok.com/@instagarda" target="_blank" rel="noopener noreferrer" class="ig-social-stat">
@@ -517,7 +517,7 @@
             </a>
             <a href="https://www.facebook.com/profile.php?id=61582136463994" target="_blank" rel="noopener noreferrer" class="ig-social-stat">
                 <svg class="ig-social-stat__icon ig-social-stat__icon--fb" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-                <span class="ig-social-stat__number">52.9K</span>
+                <span class="ig-social-stat__number">53K</span>
                 <span class="ig-social-stat__label">Follower</span>
             </a>
         </div>
