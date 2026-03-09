@@ -42,7 +42,7 @@
     // Fallback pin positions per la mini-mappa hero
     if (!$pin_left || !$pin_bottom) {
         $pin_positions = [
-            'sirmione'            => ['28%', '24%'],
+            'sirmione'            => ['33%', '29%'],
             'desenzano-del-garda' => ['8%', '32%'],
             'salo'                => ['20%', '35%'],
             'gardone-riviera'     => ['28%', '55%'],

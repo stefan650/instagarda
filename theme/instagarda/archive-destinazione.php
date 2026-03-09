@@ -23,7 +23,7 @@
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/maps/lago-garda.png'); ?>" alt="Lago di Garda" class="ig-svg-map__img">
                     <?php
                     $pin_positions = [
-                        'sirmione'            => ['28%', '24%'],
+                        'sirmione'            => ['33%', '29%'],
                         'desenzano-del-garda' => ['8%', '32%'],
                         'salo'                => ['20%', '35%'],
                         'gardone-riviera'     => ['28%', '55%'],
