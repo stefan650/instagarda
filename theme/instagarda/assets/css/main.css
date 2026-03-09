@@ -2623,10 +2623,11 @@ img { max-width: 100%; height: auto; display: block; }
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
 .ig-svg-map--transparent {
-    max-width: none;
+    max-width: 400px;
+    margin: 0 auto;
     background: transparent;
     box-shadow: none;
-    padding: 20px;
+    padding: 10px;
 }
 .ig-svg-map__img {
     width: 100%;
@@ -2680,7 +2681,7 @@ img { max-width: 100%; height: auto; display: block; }
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
-    align-items: center;
+    align-items: start;
     min-height: 500px;
 }
 .ig-map-explorer__map {
