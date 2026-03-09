@@ -3204,6 +3204,11 @@ img { max-width: 100%; height: auto; display: block; }
     background: linear-gradient(135deg, #1C1C1E 0%, var(--ig-primary) 100%);
     overflow: hidden;
 }
+.ig-mini-hero--compact {
+    min-height: auto;
+    padding-top: 100px;
+    padding-bottom: 32px;
+}
 .ig-mini-hero__content {
     position: relative;
     z-index: 1;

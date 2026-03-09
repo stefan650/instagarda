@@ -1,7 +1,13 @@
 <?php get_header(); ?>
 
+<section class="ig-mini-hero ig-mini-hero--compact">
+    <div class="ig-mini-hero__content">
+        <h1 class="ig-mini-hero__title">Destinazioni del <span>Lago di Garda</span></h1>
+    </div>
+</section>
+
 <!-- Mappa Interattiva + Preview -->
-<section class="ig-section ig-section--white" style="padding-top:120px">
+<section class="ig-section ig-section--white">
     <div class="ig-container">
         <div class="ig-map-explorer">
             <!-- Left: Map -->
