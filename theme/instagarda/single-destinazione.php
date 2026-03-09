@@ -52,7 +52,7 @@
             'tremosine-sul-garda' => ['60%', '70%'],
             'peschiera-del-garda' => ['25%', '10%'],
             'lazise'              => ['38%', '15%'],
-            'bardolino'           => ['42%', '22%'],
+            'bardolino'           => ['62%', '37%'],
             'garda'               => ['45%', '28%'],
             'torri-del-benaco'    => ['48%', '35%'],
             'malcesine'           => ['70%', '66%'],
