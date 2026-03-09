@@ -102,7 +102,7 @@
                     <div class="ig-map-explorer__card-body">
                         <h3 class="ig-map-explorer__card-title" id="igMapCardTitle"><?php echo esc_html($default_title); ?></h3>
                         <p class="ig-map-explorer__card-desc" id="igMapCardDesc"><?php echo esc_html($default_excerpt); ?></p>
-                        <a href="<?php echo esc_url($default_link); ?>" class="ig-btn ig-btn--primary" id="igMapCardBtn">Scopri <?php echo esc_html($default_title); ?> →</a>
+                        <a href="<?php echo esc_url($default_link); ?>" class="ig-btn ig-btn--glass" id="igMapCardBtn">Scopri <?php echo esc_html($default_title); ?> →</a>
                     </div>
                 </div>
                 <button class="ig-map-explorer__scroll-cta" onclick="document.getElementById('ig-dest-grid').scrollIntoView({behavior:'smooth',block:'start'})">

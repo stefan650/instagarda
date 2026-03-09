@@ -216,6 +216,19 @@ img { max-width: 100%; height: auto; display: block; }
 
 .ig-btn--lg { padding: 16px 36px; font-size: var(--fs-base); }
 .ig-btn--sm { padding: 8px 20px; font-size: var(--fs-sm); }
+.ig-btn--glass {
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
+    color: var(--ig-text);
+}
+.ig-btn--glass:hover {
+    background: rgba(255,255,255,0.65);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.9);
+    color: var(--ig-primary);
+}
 .ig-btn--pill { border-radius: var(--r-pill); }
 .ig-btn--icon { padding: 12px; border-radius: 50%; }
 .ig-btn--block { display: flex; width: 100%; }
