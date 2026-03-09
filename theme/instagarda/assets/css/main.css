@@ -2538,9 +2538,9 @@ img { max-width: 100%; height: auto; display: block; }
     background:linear-gradient(to top, rgba(0,0,0,.8), rgba(0,0,0,.4) 50%, transparent);
 }
 .ig-dest-hero__content {
-    position:absolute; bottom:0; left:0; right:0; padding:24px; z-index:2;
+    position:absolute; bottom:0; left:0; right:0; padding:24px; padding-bottom:48px; z-index:2;
 }
-@media(min-width:768px) { .ig-dest-hero__content { padding:48px; } }
+@media(min-width:768px) { .ig-dest-hero__content { padding:48px; padding-bottom:72px; } }
 .ig-dest-hero__region {
     display:inline-flex; align-items:center; gap:8px;
     padding:8px 16px; border-radius:9999px; background:rgba(255,255,255,.2);
