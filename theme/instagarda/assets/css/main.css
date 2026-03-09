@@ -2681,7 +2681,7 @@ img { max-width: 100%; height: auto; display: block; }
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
-    align-items: start;
+    align-items: center;
     min-height: 500px;
 }
 .ig-map-explorer__map {
