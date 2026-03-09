@@ -81,20 +81,10 @@
 // SECTION 2: DESTINAZIONI
 // ============================================================
 ?>
-<section class="ig-section ig-section--destinazioni ig-reveal">
-    <div class="ig-container">
-
-        <!-- Section Header -->
-        <div class="ig-section__header">
-            <span class="ig-section__badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Destinazioni
-            </span>
-            <h2 class="ig-section__title">Esplora il Lago di Garda</h2>
-        </div>
+<section class="ig-section ig-section--destinazioni ig-section--fullbleed ig-reveal">
 
         <!-- Carousel -->
-        <div class="ig-dest-carousel" id="igDestCarousel">
+        <div class="ig-dest-carousel ig-dest-carousel--fullbleed" id="igDestCarousel">
             <div class="ig-dest-carousel__track" id="igDestTrack">
                 <?php
                 $dest_query = new WP_Query([
@@ -151,15 +141,12 @@
             </button>
         </div>
 
-        <!-- View All CTA -->
-        <div class="ig-section__cta">
-            <a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>" class="ig-btn ig-btn--outline ig-btn--lg">
-                Tutte le destinazioni
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <div class="ig-text-center" style="margin-top:var(--sp-lg)">
+            <a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>" class="ig-btn ig-btn--outline ig-btn--sm">
+                Scopri le destinazioni →
             </a>
         </div>
 
-    </div>
 </section>
 
 

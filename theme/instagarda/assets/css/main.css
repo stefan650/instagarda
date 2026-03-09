@@ -215,6 +215,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .ig-btn--lg { padding: 16px 36px; font-size: var(--fs-base); }
+.ig-btn--sm { padding: 8px 20px; font-size: var(--fs-sm); }
 .ig-btn--pill { border-radius: var(--r-pill); }
 .ig-btn--icon { padding: 12px; border-radius: 50%; }
 .ig-btn--block { display: flex; width: 100%; }
@@ -1905,6 +1906,14 @@ img { max-width: 100%; height: auto; display: block; }
     position: relative;
     overflow: hidden;
 }
+.ig-dest-carousel--fullbleed {
+    overflow: visible;
+}
+.ig-section--fullbleed {
+    padding-left: 0;
+    padding-right: 0;
+    overflow: hidden;
+}
 .ig-dest-carousel__track {
     display: flex;
     gap: 16px;
@@ -1914,6 +1923,14 @@ img { max-width: 100%; height: auto; display: block; }
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     padding: 8px 4px 16px;
+}
+.ig-dest-carousel--fullbleed .ig-dest-carousel__track {
+    padding: 8px 24px 16px;
+    gap: 12px;
+}
+.ig-dest-carousel--fullbleed .ig-dest-card {
+    flex: 1 0 0;
+    min-width: 200px;
 }
 .ig-dest-carousel__track::-webkit-scrollbar { display: none; }
 
