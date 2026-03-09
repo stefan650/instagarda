@@ -3209,6 +3209,25 @@ img { max-width: 100%; height: auto; display: block; }
     padding-top: 100px;
     padding-bottom: 32px;
 }
+.ig-mini-hero__video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+.ig-mini-hero__video + .ig-mini-hero__content {
+    position: relative;
+    z-index: 1;
+}
+.ig-mini-hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 0;
+}
 .ig-mini-hero__content {
     position: relative;
     z-index: 1;

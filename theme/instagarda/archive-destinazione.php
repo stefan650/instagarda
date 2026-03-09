@@ -1,6 +1,9 @@
 <?php get_header(); ?>
 
 <section class="ig-mini-hero ig-mini-hero--compact">
+    <video class="ig-mini-hero__video" autoplay muted loop playsinline>
+        <source src="<?php echo esc_url(get_template_directory_uri() . '/assets/video/destinazioni-hero.mp4'); ?>" type="video/mp4">
+    </video>
     <div class="ig-mini-hero__content">
         <h1 class="ig-mini-hero__title">Destinazioni del <span>Lago di Garda</span></h1>
     </div>
