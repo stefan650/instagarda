@@ -51,7 +51,7 @@
             'limone-sul-garda'    => ['71%', '77%'],
             'tremosine-sul-garda' => ['60%', '70%'],
             'peschiera-del-garda' => ['25%', '10%'],
-            'lazise'              => ['38%', '15%'],
+            'lazise'              => ['53%', '35%'],
             'bardolino'           => ['62%', '37%'],
             'garda'               => ['55%', '38%'],
             'torri-del-benaco'    => ['48%', '35%'],
