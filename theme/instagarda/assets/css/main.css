@@ -1926,11 +1926,20 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .ig-dest-carousel--fullbleed .ig-dest-carousel__track {
     padding: 8px 24px 16px;
-    gap: 12px;
+    gap: 14px;
 }
 .ig-dest-carousel--fullbleed .ig-dest-card {
-    flex: 1 0 0;
-    min-width: 200px;
+    flex: 0 0 280px;
+    aspect-ratio: 9 / 14;
+    border-radius: 24px;
+    border: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+.ig-dest-carousel--fullbleed .ig-dest-card:hover {
+    box-shadow: 0 16px 48px rgba(0,0,0,0.15), inset 0 0 0 1px rgba(255,255,255,0.25);
 }
 .ig-dest-carousel__track::-webkit-scrollbar { display: none; }
 
