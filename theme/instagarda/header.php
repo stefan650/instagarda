@@ -22,10 +22,10 @@
 
             <!-- Destinazioni Dropdown -->
             <div class="ig-nav__dropdown">
-                <button class="ig-nav__link" aria-expanded="false">
+                <a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>" class="ig-nav__link">
                     Destinazioni
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
+                </a>
                 <div class="ig-nav__dropdown-menu">
                     <a href="<?php echo esc_url(home_url('/destinazioni/sirmione/')); ?>" class="ig-nav__dropdown-item">Sirmione</a>
                     <a href="<?php echo esc_url(home_url('/destinazioni/riva-del-garda/')); ?>" class="ig-nav__dropdown-item">Riva del Garda</a>
@@ -161,10 +161,9 @@
 
             <!-- Destinazioni -->
             <div class="ig-mobile-menu__group">
-                <button class="ig-mobile-menu__heading" data-toggle="mobile-dest">
+                <a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>" class="ig-mobile-menu__heading">
                     Destinazioni
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
+                </a>
                 <div class="ig-mobile-menu__submenu" id="mobile-dest">
                     <a href="<?php echo esc_url(home_url('/destinazioni/sirmione/')); ?>">Sirmione</a>
                     <a href="<?php echo esc_url(home_url('/destinazioni/riva-del-garda/')); ?>">Riva del Garda</a>
