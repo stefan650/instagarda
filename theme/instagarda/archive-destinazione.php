@@ -105,11 +105,13 @@
                         <a href="<?php echo esc_url($default_link); ?>" class="ig-btn ig-btn--glass" id="igMapCardBtn">Scopri <?php echo esc_html($default_title); ?> →</a>
                     </div>
                 </div>
-                <button class="ig-map-explorer__scroll-cta" onclick="document.getElementById('ig-dest-grid').scrollIntoView({behavior:'smooth',block:'start'})">
-                    Vedi tutte le destinazioni
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
             </div>
+        </div>
+        <div class="ig-text-center" style="margin-top:24px">
+            <button class="ig-map-explorer__scroll-cta" onclick="document.getElementById('ig-dest-grid').scrollIntoView({behavior:'smooth',block:'start'})">
+                Vedi tutte le destinazioni
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
         </div>
     </div>
 </section>
