@@ -820,6 +820,11 @@ img { max-width: 100%; height: auto; display: block; }
     color: var(--ig-white);
     transform: translateY(-1px);
 }
+.ig-hero__pill--all {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.3);
+    font-weight: 600;
+}
 .ig-hero__pill svg {
     opacity: 0.7;
 }

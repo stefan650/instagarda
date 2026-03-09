@@ -28,11 +28,12 @@
         <div class="ig-hero__suggestions" id="igHeroSuggestions">
             <div class="ig-hero__suggestion-group is-active" data-group="destinazioni">
                 <?php
+                $top_slugs = ['sirmione', 'riva-del-garda', 'malcesine', 'limone-sul-garda', 'desenzano-del-garda', 'bardolino'];
                 $hero_dests = new WP_Query([
                     'post_type'      => 'destinazione',
-                    'posts_per_page' => -1,
-                    'orderby'        => 'title',
-                    'order'          => 'ASC',
+                    'post_name__in'  => $top_slugs,
+                    'posts_per_page' => 6,
+                    'orderby'        => 'post_name__in',
                 ]);
                 if ($hero_dests->have_posts()):
                     while ($hero_dests->have_posts()): $hero_dests->the_post();
@@ -43,6 +44,7 @@
                     wp_reset_postdata();
                 endif;
                 ?>
+                <a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>" class="ig-hero__pill ig-hero__pill--all">Vedi tutte →</a>
             </div>
             <div class="ig-hero__suggestion-group" data-group="vivi">
                 <a href="<?php echo esc_url(home_url('/attivita/')); ?>" class="ig-hero__pill">
