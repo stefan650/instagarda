@@ -78,45 +78,6 @@
 
 <?php
 // ============================================================
-// SEASONAL BANNER — "In evidenza ora"
-// ============================================================
-$current_month = (int) date('n');
-if ($current_month >= 3 && $current_month <= 5) {
-    $seasonal_class   = 'ig-seasonal--spring';
-    $seasonal_icon    = '🌸';
-    $seasonal_text    = 'Primavera sul Garda — Escursioni, fiori e borghi da scoprire';
-    $seasonal_cta_url = home_url('/attivita/');
-} elseif ($current_month >= 6 && $current_month <= 8) {
-    $seasonal_class   = 'ig-seasonal--summer';
-    $seasonal_icon    = '☀️';
-    $seasonal_text    = 'Estate sul Garda — Spiagge, sport acquatici e serate estive';
-    $seasonal_cta_url = home_url('/attivita/');
-} elseif ($current_month >= 9 && $current_month <= 11) {
-    $seasonal_class   = 'ig-seasonal--autumn';
-    $seasonal_icon    = '🍂';
-    $seasonal_text    = 'Autunno sul Garda — Vendemmia, foliage e sapori d\'autunno';
-    $seasonal_cta_url = home_url('/eventi/');
-} else {
-    $seasonal_class   = 'ig-seasonal--winter';
-    $seasonal_icon    = '❄️';
-    $seasonal_text    = 'Inverno sul Garda — Mercatini, terme e atmosfere magiche';
-    $seasonal_cta_url = home_url('/eventi/');
-}
-?>
-<div class="ig-seasonal <?php echo esc_attr($seasonal_class); ?>">
-    <div class="ig-seasonal__inner ig-container">
-        <span class="ig-seasonal__icon"><?php echo $seasonal_icon; ?></span>
-        <span class="ig-seasonal__text"><?php echo esc_html($seasonal_text); ?></span>
-        <a href="<?php echo esc_url($seasonal_cta_url); ?>" class="ig-seasonal__cta">
-            Scopri
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-    </div>
-</div>
-
-
-<?php
-// ============================================================
 // SECTION 2: DESTINAZIONI
 // ============================================================
 ?>
