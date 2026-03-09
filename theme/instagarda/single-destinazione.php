@@ -118,11 +118,6 @@
 <section class="ig-section ig-section--white ig-section--compact">
     <div class="ig-container">
         <div class="ig-dest-intro-row">
-            <?php if ($map_lat && $map_lng): ?>
-            <div class="ig-dest-map">
-                <div id="ig-dest-map" data-lat="<?php echo esc_attr($map_lat); ?>" data-lng="<?php echo esc_attr($map_lng); ?>"></div>
-            </div>
-            <?php endif; ?>
             <div class="ig-dest-intro entry-content">
                 <?php
                 // Show only first paragraph for compact intro
