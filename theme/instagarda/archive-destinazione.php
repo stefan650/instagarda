@@ -144,8 +144,8 @@
 <section class="ig-section ig-section--light">
     <div class="ig-container">
         <div class="ig-section__header" style="text-align: center; margin-bottom: 2rem;">
-            <h2 class="ig-section__title">Esplora il Lago di Garda e i dintorni</h2>
-            <p class="ig-section__desc">Clicca sulla mappa o scegli dalla lista</p>
+            <h2 class="ig-section__title">Ogni paese, una storia da vivere</h2>
+            <p class="ig-section__desc">Scopri i borghi del Lago di Garda e le città che lo circondano</p>
         </div>
         <div class="ig-dest-grid" id="ig-dest-grid">
             <?php
