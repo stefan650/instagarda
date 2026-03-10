@@ -2646,8 +2646,8 @@ img { max-width: 100%; height: auto; display: block; }
     width: 100%;
     height: auto;
     display: block;
-    opacity: 0.25;
-    filter: saturate(0) brightness(0.7) opacity(0.3);
+    opacity: 0.3;
+    filter: brightness(0) saturate(100%) invert(60%) sepia(50%) saturate(500%) hue-rotate(170deg) brightness(95%);
 }
 .ig-svg-map__pin {
     position: absolute;
