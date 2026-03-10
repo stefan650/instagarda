@@ -38,7 +38,7 @@
                         'torri-del-benaco'    => ['56%', '50%'],
                         'malcesine'           => ['79%', '74%'],
                         'brenzone-sul-garda'  => ['70%', '65%'],
-                        'riva-del-garda'      => ['82%', '96%'],
+                        'riva-del-garda'      => ['82%', '93%'],
                         'torbole'             => ['90%', '88%'],
                         'arco'                => ['90%', '95%'],
                         'manerba-del-garda'   => ['18%', '38%'],
