@@ -44,9 +44,9 @@
         $pin_positions = [
             'sirmione'            => ['33%', '26%'],
             'desenzano-del-garda' => ['8%', '27%'],
-            'salo'                => ['13%', '47%'],
-            'gardone-riviera'     => ['31%', '62%'],
-            'toscolano-maderno'   => ['33%', '52%'],
+            'salo'                => ['12%', '47%'],
+            'gardone-riviera'     => ['33%', '62%'],
+            'toscolano-maderno'   => ['32%', '52%'],
             'gargnano'            => ['44%', '68%'],
             'limone-sul-garda'    => ['76%', '88%'],
             'tremosine-sul-garda' => ['61%', '77%'],
