@@ -159,7 +159,7 @@
             <p class="ig-section__desc">Scopri i borghi del Lago di Garda e le città che lo circondano</p>
         </div>
         <div class="ig-dest-filters" id="igDestFilters">
-            <button class="ig-dest-filters__btn is-active" data-filter="tutti">Scopri tutti</button>
+            <button class="ig-dest-filters__btn is-active" data-filter="tutti">Tutto il lago</button>
             <button class="ig-dest-filters__btn" data-filter="veneto">Veneto</button>
             <button class="ig-dest-filters__btn" data-filter="lombardia">Lombardia</button>
             <button class="ig-dest-filters__btn" data-filter="trentino">Trentino</button>
