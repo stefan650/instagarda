@@ -3387,6 +3387,38 @@ img { max-width: 100%; height: auto; display: block; }
     gap: var(--sp-lg);
 }
 
+/* Dest filters (archive-destinazione) */
+.ig-dest-filters {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: var(--sp-xl);
+    flex-wrap: wrap;
+}
+.ig-dest-filters__btn {
+    padding: 8px 20px;
+    border: 1.5px solid var(--ig-border);
+    border-radius: var(--r-pill);
+    background: var(--ig-white);
+    color: var(--ig-text-muted);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.ig-dest-filters__btn:hover {
+    border-color: var(--ig-text);
+    color: var(--ig-text);
+}
+.ig-dest-filters__btn.is-active {
+    background: var(--ig-text);
+    border-color: var(--ig-text);
+    color: var(--ig-white);
+}
+.ig-dest-card[data-region].is-hidden {
+    display: none;
+}
+
 /* Dest grid (archive-destinazione) */
 .ig-dest-grid {
     display: grid;

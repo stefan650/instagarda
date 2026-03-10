@@ -147,6 +147,13 @@
             <h2 class="ig-section__title">Ogni paese, una storia da vivere</h2>
             <p class="ig-section__desc">Scopri i borghi del Lago di Garda e le città che lo circondano</p>
         </div>
+        <div class="ig-dest-filters" id="igDestFilters">
+            <button class="ig-dest-filters__btn is-active" data-filter="tutti">Scopri tutti</button>
+            <button class="ig-dest-filters__btn" data-filter="veneto">Veneto</button>
+            <button class="ig-dest-filters__btn" data-filter="lombardia">Lombardia</button>
+            <button class="ig-dest-filters__btn" data-filter="trentino">Trentino</button>
+        </div>
+
         <div class="ig-dest-grid" id="ig-dest-grid">
             <?php
             $regions = ['lombardia' => 'Lombardia', 'veneto' => 'Veneto', 'trentino' => 'Trentino'];
@@ -154,7 +161,7 @@
                 $region   = ig_get_meta('regione');
                 $subtitle = ig_get_meta('subtitle');
             ?>
-            <a href="<?php the_permalink(); ?>" class="ig-dest-card">
+            <a href="<?php the_permalink(); ?>" class="ig-dest-card" data-region="<?php echo esc_attr($region); ?>">
                 <div class="ig-dest-card__img">
                     <?php if (has_post_thumbnail()): the_post_thumbnail('card');
                     else: ?>
@@ -219,6 +226,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
             pins.forEach(function(p) { p.classList.remove('is-active'); });
             pin.classList.add('is-active');
+        });
+    });
+
+    // Filtri regione
+    var filterBtns = document.querySelectorAll('.ig-dest-filters__btn');
+    var cards = document.querySelectorAll('.ig-dest-card[data-region]');
+    filterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var filter = btn.getAttribute('data-filter');
+            filterBtns.forEach(function(b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+            cards.forEach(function(card) {
+                if (filter === 'tutti' || card.getAttribute('data-region') === filter) {
+                    card.classList.remove('is-hidden');
+                } else {
+                    card.classList.add('is-hidden');
+                }
+            });
         });
     });
 });
