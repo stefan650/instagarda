@@ -23,8 +23,8 @@
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/maps/lago-garda.png'); ?>" alt="Lago di Garda" class="ig-svg-map__img">
                     <?php
                     $pin_positions = [
-                        'sirmione'            => ['33%', '29%'],
-                        'desenzano-del-garda' => ['8%', '22%'],
+                        'sirmione'            => ['33%', '24%'],
+                        'desenzano-del-garda' => ['8%', '27%'],
                         'salo'                => ['20%', '35%'],
                         'gardone-riviera'     => ['28%', '55%'],
                         'toscolano-maderno'   => ['35%', '45%'],
@@ -32,10 +32,10 @@
                         'limone-sul-garda'    => ['71%', '82%'],
                         'tremosine-sul-garda' => ['70%', '85%'],
                         'peschiera-del-garda' => ['50%', '17%'],
-                        'lazise'              => ['63%', '23%'],
-                        'bardolino'           => ['62%', '37%'],
-                        'garda'               => ['65%', '48%'],
-                        'torri-del-benaco'    => ['58%', '65%'],
+                        'lazise'              => ['58%', '23%'],
+                        'bardolino'           => ['65%', '32%'],
+                        'garda'               => ['60%', '38%'],
+                        'torri-del-benaco'    => ['63%', '50%'],
                         'malcesine'           => ['80%', '76%'],
                         'brenzone-sul-garda'  => ['72%', '70%'],
                         'riva-del-garda'      => ['82%', '91%'],

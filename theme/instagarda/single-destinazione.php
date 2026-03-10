@@ -42,8 +42,8 @@
     // Fallback pin positions per la mini-mappa hero
     if (!$pin_left || !$pin_bottom) {
         $pin_positions = [
-            'sirmione'            => ['33%', '29%'],
-            'desenzano-del-garda' => ['8%', '22%'],
+            'sirmione'            => ['33%', '24%'],
+            'desenzano-del-garda' => ['8%', '27%'],
             'salo'                => ['20%', '35%'],
             'gardone-riviera'     => ['28%', '55%'],
             'toscolano-maderno'   => ['35%', '45%'],
@@ -51,10 +51,10 @@
             'limone-sul-garda'    => ['76%', '87%'],
             'tremosine-sul-garda' => ['70%', '85%'],
             'peschiera-del-garda' => ['50%', '17%'],
-            'lazise'              => ['58%', '18%'],
-            'bardolino'           => ['62%', '37%'],
-            'garda'               => ['55%', '38%'],
-            'torri-del-benaco'    => ['58%', '65%'],
+            'lazise'              => ['53%', '18%'],
+            'bardolino'           => ['65%', '32%'],
+            'garda'               => ['50%', '28%'],
+            'torri-del-benaco'    => ['63%', '50%'],
             'malcesine'           => ['80%', '76%'],
             'brenzone-sul-garda'  => ['72%', '70%'],
             'riva-del-garda'      => ['82%', '91%'],
