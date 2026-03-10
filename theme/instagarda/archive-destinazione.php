@@ -144,7 +144,7 @@
 <section class="ig-section ig-section--light">
     <div class="ig-container">
         <div class="ig-section__header" style="text-align: center; margin-bottom: 2rem;">
-            <h2 class="ig-section__title">Esplora i Comuni</h2>
+            <h2 class="ig-section__title">Esplora il Lago di Garda e i dintorni</h2>
             <p class="ig-section__desc">Clicca sulla mappa o scegli dalla lista</p>
         </div>
         <div class="ig-dest-grid" id="ig-dest-grid">
