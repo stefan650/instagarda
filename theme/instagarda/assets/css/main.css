@@ -3396,24 +3396,30 @@ img { max-width: 100%; height: auto; display: block; }
     flex-wrap: wrap;
 }
 .ig-dest-filters__btn {
-    padding: 8px 20px;
-    border: 1.5px solid var(--ig-border);
+    padding: 10px 24px;
+    border: 1px solid rgba(255,255,255,0.3);
     border-radius: var(--r-pill);
-    background: var(--ig-white);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-shadow);
     color: var(--ig-text-muted);
     font-size: var(--fs-sm);
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: all 0.3s ease;
 }
 .ig-dest-filters__btn:hover {
-    border-color: var(--ig-text);
+    background: rgba(255,255,255,0.75);
     color: var(--ig-text);
 }
 .ig-dest-filters__btn.is-active {
-    background: var(--ig-text);
-    border-color: var(--ig-text);
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: transparent;
     color: var(--ig-white);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 .ig-dest-card[data-region].is-hidden {
     display: none;
