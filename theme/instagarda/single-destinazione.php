@@ -8,6 +8,10 @@
     $map_lng    = ig_get_meta('map_lng');
     $pin_left   = ig_get_meta('pin_left');
     $pin_bottom = ig_get_meta('pin_bottom');
+    $posizione     = ig_get_meta('posizione');
+    $popolazione   = ig_get_meta('popolazione');
+    $altitudine    = ig_get_meta('altitudine');
+    $come_arrivare = ig_get_meta('come_arrivare');
 
     $slug = get_post_field('post_name', get_the_ID());
 
@@ -43,7 +47,7 @@
     if (!$pin_left || !$pin_bottom) {
         $pin_positions = [
             'sirmione'            => ['33%', '26%'],
-            'desenzano-del-garda' => ['8%', '27%'],
+            'desenzano-del-garda' => ['8%', '22%'],
             'salo'                => ['12%', '47%'],
             'gardone-riviera'     => ['37%', '62%'],
             'toscolano-maderno'   => ['30%', '52%'],
@@ -73,6 +77,14 @@
             $pin_bottom = $pin_positions[$slug][1];
         }
     }
+
+    // Region labels
+    $region_labels = [
+        'lombardia' => 'Lombardia',
+        'veneto'    => 'Veneto',
+        'trentino'  => 'Trentino-Alto Adige',
+    ];
+    $region_label = $region_labels[$region] ?? ucfirst($region);
 ?>
 
 <!-- Hero -->
@@ -101,6 +113,12 @@
     <div class="ig-dest-hero__content">
         <div class="ig-container">
             <h1 class="ig-dest-hero__title"><?php the_title(); ?></h1>
+            <?php if ($region): ?>
+                <span class="ig-dest-hero__badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <?php echo esc_html($region_label); ?>
+                </span>
+            <?php endif; ?>
         </div>
     </div>
     <?php if ($pin_left && $pin_bottom): ?>
@@ -113,96 +131,192 @@
     <?php endif; ?>
 </section>
 
-
-<!-- Intro / Description -->
-<section class="ig-section ig-section--white ig-section--compact">
+<!-- Info Strip -->
+<?php if ($map_lat && $map_lng): ?>
+<section class="ig-info-strip">
     <div class="ig-container">
-        <div class="ig-dest-intro-row">
-            <div class="ig-dest-intro entry-content">
-                <?php
-                // Show only first paragraph for compact intro
-                $full = apply_filters('the_content', get_the_content());
-                preg_match('/<p[^>]*>.*?<\/p>/s', $full, $first_p);
-                echo $first_p[0] ?? $full;
-                ?>
+        <div class="ig-info-strip__grid">
+            <div class="ig-info-strip__item ig-info-strip__item--weather">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a5 5 0 00-5-5 5 5 0 00-5 5"/><circle cx="12" cy="9" r="4"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="19.78" y1="4.22" x2="18.36" y2="5.64"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+                <div>
+                    <span class="ig-info-strip__label">Meteo ora</span>
+                    <span class="ig-info-strip__value" id="igWeather">Caricamento...</span>
+                </div>
             </div>
+            <button class="ig-info-strip__item ig-info-strip__item--link ig-info-strip__item--ai" onclick="window.toggleGardaChat && window.toggleGardaChat()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                <div>
+                    <span class="ig-info-strip__label">Garda AI</span>
+                    <span class="ig-info-strip__value">Fatti consigliare a <?php the_title(); ?></span>
+                </div>
+            </button>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=<?php echo esc_attr($map_lat); ?>,<?php echo esc_attr($map_lng); ?>" target="_blank" rel="noopener" class="ig-info-strip__item ig-info-strip__item--link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                <div>
+                    <span class="ig-info-strip__label">Come arrivare</span>
+                    <span class="ig-info-strip__value">Apri in Google Maps <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle"><polyline points="7 17 17 7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+                </div>
+            </a>
         </div>
     </div>
 </section>
+<script>
+(function(){
+    var weatherCodes = {0:'Sereno',1:'Prevalentemente sereno',2:'Parzialmente nuvoloso',3:'Coperto',45:'Nebbia',48:'Nebbia con brina',51:'Pioviggine leggera',53:'Pioviggine',55:'Pioviggine intensa',61:'Pioggia leggera',63:'Pioggia',65:'Pioggia intensa',71:'Neve leggera',73:'Neve',75:'Neve intensa',80:'Rovesci leggeri',81:'Rovesci',82:'Rovesci intensi',95:'Temporale',96:'Temporale con grandine',99:'Temporale forte'};
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=<?php echo esc_js($map_lat); ?>&longitude=<?php echo esc_js($map_lng); ?>&current=temperature_2m,weather_code&timezone=Europe/Rome')
+        .then(function(r){return r.json()})
+        .then(function(d){
+            var el=document.getElementById('igWeather');
+            if(el&&d.current){
+                var t=Math.round(d.current.temperature_2m);
+                var desc=weatherCodes[d.current.weather_code]||'';
+                el.textContent=t+'\u00B0C \u2014 '+desc;
+            }
+        })
+        .catch(function(){
+            var el=document.getElementById('igWeather');
+            if(el) el.textContent='Non disponibile';
+        });
+})();
+</script>
+<?php endif; ?>
 
-<!-- Cosa Vedere -->
+
+<!-- ============================================================
+     APPLE-STYLE EDITORIAL CONTENT
+     ============================================================ -->
+
+<!-- Intro Statement -->
+<section class="ig-apple-section ig-apple-section--intro ig-reveal">
+    <div class="ig-apple-container">
+        <?php
+        $full_content = apply_filters('the_content', get_the_content());
+        // Split content into paragraphs
+        preg_match_all('/<p[^>]*>(.*?)<\/p>/s', $full_content, $paragraphs);
+        $para_texts = $paragraphs[0] ?? [];
+
+        if (!empty($para_texts)):
+            // First paragraph = big intro statement
+        ?>
+        <div class="ig-apple-intro">
+            <?php echo $para_texts[0]; ?>
+        </div>
+        <?php endif; ?>
+    </div>
+</section>
+
+<!-- Editorial Body -->
+<?php if (count($para_texts) > 1): ?>
+<section class="ig-apple-section ig-reveal">
+    <div class="ig-apple-container--narrow">
+        <div class="ig-apple-body entry-content">
+            <?php
+            // Remaining paragraphs in editorial format
+            for ($p = 1; $p < count($para_texts); $p++) {
+                echo $para_texts[$p];
+            }
+
+            // Also output any non-paragraph content (h2, h3, lists, images, etc.)
+            $non_p_content = preg_replace('/<p[^>]*>.*?<\/p>/s', '', $full_content);
+            $non_p_content = trim($non_p_content);
+            if ($non_p_content) {
+                echo $non_p_content;
+            }
+            ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+
+<!-- Cosa Vedere — Apple Feature Style -->
 <?php
 require_once get_template_directory() . '/inc/attrazioni-data.php';
 $attrazioni_db = ig_get_attrazioni();
-$slug = get_post_field('post_name', get_the_ID());
 $attrazioni = $attrazioni_db[$slug] ?? [];
 
 if (!empty($attrazioni)):
 ?>
-<section class="ig-section ig-section--light ig-reveal">
-    <div class="ig-container">
-        <div class="ig-section__header">
-            <h2 class="ig-section__title">Cosa Vedere</h2>
-            <p class="ig-section__desc">Le attrazioni principali di <?php the_title(); ?></p>
-        </div>
+<section class="ig-apple-section ig-apple-section--dark ig-reveal">
+    <div class="ig-apple-container">
+        <h2 class="ig-apple-title">Cosa vedere</h2>
+        <p class="ig-apple-subtitle">I luoghi che rendono <?php the_title(); ?> indimenticabile.</p>
+    </div>
+</section>
 
-        <div class="ig-poi-carousel">
-            <div class="ig-poi-carousel__track" id="igPoiTrack">
-                <?php foreach ($attrazioni as $i => $att): ?>
-                <article class="ig-poi-card" data-index="<?php echo $i; ?>">
-                    <div class="ig-poi-card__visual">
-                        <div class="ig-placeholder-img">
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        </div>
-                    </div>
-                    <div class="ig-poi-card__overlay">
-                        <span class="ig-poi-card__label">Attrazione</span>
-                        <h3 class="ig-poi-card__title"><?php echo esc_html($att['name']); ?></h3>
-                    </div>
-                    <button class="ig-poi-card__expand" aria-label="Scopri <?php echo esc_attr($att['name']); ?>" data-poi="<?php echo $i; ?>">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    </button>
-                </article>
-                <?php endforeach; ?>
+<?php foreach ($attrazioni as $i => $att): ?>
+<section class="ig-apple-section ig-apple-feature ig-reveal <?php echo ($i % 2 === 0) ? '' : 'ig-apple-feature--reverse'; ?> <?php echo ($i % 2 === 0) ? 'ig-apple-section--light' : 'ig-apple-section--white'; ?>">
+    <div class="ig-apple-container">
+        <div class="ig-apple-feature__grid">
+            <div class="ig-apple-feature__visual">
+                <div class="ig-placeholder-img ig-apple-feature__img">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
             </div>
-            <div class="ig-poi-carousel__nav">
-                <button class="ig-poi-carousel__btn" id="igPoiPrev" aria-label="Precedente">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-                </button>
-                <button class="ig-poi-carousel__btn" id="igPoiNext" aria-label="Successivo">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
-                </button>
+            <div class="ig-apple-feature__text">
+                <span class="ig-apple-feature__label">Attrazione</span>
+                <h3 class="ig-apple-feature__title"><?php echo esc_html($att['name']); ?></h3>
+                <p class="ig-apple-feature__excerpt"><?php echo esc_html($att['excerpt']); ?></p>
+                <p class="ig-apple-feature__desc"><?php echo esc_html($att['desc']); ?></p>
             </div>
         </div>
     </div>
 </section>
-
-<!-- POI Detail Panels -->
-<?php foreach ($attrazioni as $i => $att): ?>
-<div class="ig-poi-panel" id="igPoiPanel<?php echo $i; ?>" aria-hidden="true">
-    <div class="ig-poi-panel__inner">
-        <button class="ig-poi-panel__close" aria-label="Chiudi">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-        <div class="ig-poi-panel__header">
-            <span class="ig-poi-panel__label">Attrazione</span>
-            <h2 class="ig-poi-panel__title"><?php echo esc_html($att['name']); ?></h2>
-        </div>
-        <div class="ig-poi-panel__content">
-            <div class="ig-poi-panel__block">
-                <p class="ig-poi-panel__excerpt"><strong><?php echo esc_html($att['excerpt']); ?></strong> <?php echo esc_html($att['desc']); ?></p>
-            </div>
-            <div class="ig-poi-panel__block ig-poi-panel__block--img">
-                <div class="ig-placeholder-img" style="height:360px;border-radius:20px">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <?php endforeach; ?>
 
 <?php endif; ?>
+
+
+<!-- Esplora la zona -->
+<section class="ig-apple-section ig-apple-section--dark ig-reveal">
+    <div class="ig-apple-container">
+        <h2 class="ig-apple-title">Vivi <?php the_title(); ?></h2>
+        <p class="ig-apple-subtitle">Tutto quello che ti serve per la tua visita.</p>
+
+        <div class="ig-explore-grid" style="margin-top:var(--sp-2xl)">
+            <a href="<?php echo esc_url(home_url('/directory/?localita=' . $slug . '&tipo=ristorante')); ?>" class="ig-explore-card ig-explore-card--mangiare">
+                <div class="ig-explore-card__icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                </div>
+                <h3 class="ig-explore-card__title">Ristoranti</h3>
+                <p class="ig-explore-card__desc">I migliori posti dove mangiare</p>
+                <span class="ig-explore-card__arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+            </a>
+            <a href="<?php echo esc_url(home_url('/directory/?localita=' . $slug . '&tipo=hotel')); ?>" class="ig-explore-card ig-explore-card--dormire">
+                <div class="ig-explore-card__icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 012 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+                </div>
+                <h3 class="ig-explore-card__title">Dove Dormire</h3>
+                <p class="ig-explore-card__desc">Hotel, B&B e appartamenti</p>
+                <span class="ig-explore-card__arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+            </a>
+            <a href="<?php echo esc_url(home_url('/directory/?localita=' . $slug . '&tipo=bar')); ?>" class="ig-explore-card ig-explore-card--bar">
+                <div class="ig-explore-card__icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2h8l-4 9V22"/><path d="M4 2h16"/><path d="M7 22h10"/></svg>
+                </div>
+                <h3 class="ig-explore-card__title">Bar & Locali</h3>
+                <p class="ig-explore-card__desc">Aperitivi e vita notturna</p>
+                <span class="ig-explore-card__arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+            </a>
+            <a href="<?php echo esc_url(home_url('/directory/?localita=' . $slug . '&tipo=attivita')); ?>" class="ig-explore-card ig-explore-card--attivita">
+                <div class="ig-explore-card__icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                </div>
+                <h3 class="ig-explore-card__title">Attività</h3>
+                <p class="ig-explore-card__desc">Esperienze e cose da fare</p>
+                <span class="ig-explore-card__arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+            </a>
+        </div>
+    </div>
+</section>
 
 <!-- Strutture correlate -->
 <?php
@@ -210,7 +324,7 @@ $loc_terms = get_the_terms(get_the_ID(), 'localita');
 if ($loc_terms && !is_wp_error($loc_terms)):
     $strutture = new WP_Query([
         'post_type' => 'struttura',
-        'posts_per_page' => 3,
+        'posts_per_page' => 6,
         'tax_query' => [[
             'taxonomy' => 'localita',
             'terms'    => wp_list_pluck($loc_terms, 'term_id'),
@@ -218,12 +332,11 @@ if ($loc_terms && !is_wp_error($loc_terms)):
     ]);
     if ($strutture->have_posts()):
 ?>
-<section class="ig-section ig-section--white ig-reveal">
-    <div class="ig-container">
-        <div class="ig-section__header" style="text-align:left">
-            <h2 class="ig-section__title">Strutture a <?php the_title(); ?></h2>
-        </div>
-        <div class="ig-archive-grid">
+<section class="ig-apple-section ig-apple-section--light ig-reveal">
+    <div class="ig-apple-container">
+        <h2 class="ig-apple-title">Strutture a <?php the_title(); ?></h2>
+        <p class="ig-apple-subtitle">Le attività consigliate nella zona</p>
+        <div class="ig-archive-grid" style="margin-top:var(--sp-xl)">
             <?php while ($strutture->have_posts()): $strutture->the_post();
                 $tipo = get_the_terms(get_the_ID(), 'tipo_struttura');
             ?>
@@ -249,17 +362,16 @@ if ($loc_terms && !is_wp_error($loc_terms)):
 </section>
 <?php endif; endif; ?>
 
+
 <!-- CTA Garda AI -->
-<section class="ig-section ig-section--light">
-    <div class="ig-container ig-text-center" style="max-width:500px">
-        <div class="ig-dest-sidebar__card" style="position:static">
-            <h3>Scopri <?php the_title(); ?></h3>
-            <p style="color:var(--ig-text-muted);margin-bottom:var(--sp-lg)">Hai domande? Il nostro assistente AI conosce tutto del Lago di Garda!</p>
-            <button class="ig-btn ig-btn--primary ig-btn--lg" style="width:100%" onclick="window.toggleGardaChat && window.toggleGardaChat()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                Chiedi a Garda AI
-            </button>
-        </div>
+<section class="ig-apple-section ig-apple-section--cta">
+    <div class="ig-apple-container ig-text-center">
+        <h2 class="ig-apple-title ig-apple-title--white">Organizza la tua giornata<br>a <?php the_title(); ?></h2>
+        <p class="ig-apple-subtitle ig-apple-subtitle--white">Il nostro assistente AI conosce ogni angolo del Lago di Garda.</p>
+        <button class="ig-btn ig-btn--glass-outline ig-btn--lg" style="margin-top:var(--sp-lg)" onclick="window.toggleGardaChat && window.toggleGardaChat()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            Chiedi a Garda AI
+        </button>
     </div>
 </section>
 

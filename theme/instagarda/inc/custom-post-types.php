@@ -87,6 +87,177 @@ function ig_register_struttura() {
 }
 add_action('init', 'ig_register_struttura');
 
+// --- CPT: Evento ---
+function ig_register_evento() {
+    register_post_type('evento', [
+        'labels' => [
+            'name'               => 'Eventi',
+            'singular_name'      => 'Evento',
+            'add_new'            => 'Aggiungi Evento',
+            'add_new_item'       => 'Aggiungi Nuovo Evento',
+            'edit_item'          => 'Modifica Evento',
+            'view_item'          => 'Vedi Evento',
+            'all_items'          => 'Tutti gli Eventi',
+            'search_items'       => 'Cerca Eventi',
+            'not_found'          => 'Nessun evento trovato',
+        ],
+        'public'        => true,
+        'has_archive'   => true,
+        'rewrite'       => ['slug' => 'eventi'],
+        'menu_icon'     => 'dashicons-calendar-alt',
+        'supports'      => ['title', 'editor', 'thumbnail', 'excerpt'],
+        'show_in_rest'  => true,
+    ]);
+
+    register_taxonomy('tipo_evento', 'evento', [
+        'labels' => [
+            'name'          => 'Tipi di Evento',
+            'singular_name' => 'Tipo Evento',
+            'add_new_item'  => 'Aggiungi Tipo',
+        ],
+        'hierarchical' => true,
+        'rewrite'      => ['slug' => 'tipo-evento'],
+        'show_in_rest' => true,
+    ]);
+
+    // Condividi localita con eventi
+    register_taxonomy_for_object_type('localita', 'evento');
+}
+add_action('init', 'ig_register_evento');
+
+// --- Meta Boxes: Evento ---
+function ig_evento_meta_boxes() {
+    add_meta_box('ig_evt_info', 'Info Evento', 'ig_evt_info_render', 'evento', 'normal', 'high');
+}
+add_action('add_meta_boxes', 'ig_evento_meta_boxes');
+
+function ig_evt_info_render($post) {
+    wp_nonce_field('ig_evt_save', 'ig_evt_nonce');
+    $data_inizio = get_post_meta($post->ID, '_ig_data_inizio', true);
+    $data_fine   = get_post_meta($post->ID, '_ig_data_fine', true);
+    $orario      = get_post_meta($post->ID, '_ig_orario', true);
+    $luogo       = get_post_meta($post->ID, '_ig_luogo', true);
+    $prezzo_evt  = get_post_meta($post->ID, '_ig_prezzo_evento', true);
+    $link_ext    = get_post_meta($post->ID, '_ig_link_esterno', true);
+    ?>
+    <table class="form-table">
+        <tr><th><label>Data inizio</label></th><td><input type="date" name="ig_data_inizio" value="<?php echo esc_attr($data_inizio); ?>"></td></tr>
+        <tr><th><label>Data fine</label></th><td><input type="date" name="ig_data_fine" value="<?php echo esc_attr($data_fine); ?>"></td></tr>
+        <tr><th><label>Orario</label></th><td><input type="text" name="ig_orario" value="<?php echo esc_attr($orario); ?>" class="regular-text" placeholder="Es: 20:00 - 23:00"></td></tr>
+        <tr><th><label>Luogo</label></th><td><input type="text" name="ig_luogo" value="<?php echo esc_attr($luogo); ?>" class="large-text" placeholder="Es: Piazza Malvezzi, Desenzano"></td></tr>
+        <tr><th><label>Prezzo</label></th><td><input type="text" name="ig_prezzo_evento" value="<?php echo esc_attr($prezzo_evt); ?>" class="regular-text" placeholder="Es: Gratuito / €15"></td></tr>
+        <tr><th><label>Link esterno</label></th><td><input type="url" name="ig_link_esterno" value="<?php echo esc_attr($link_ext); ?>" class="large-text" placeholder="https://"></td></tr>
+    </table>
+    <?php
+}
+
+function ig_evt_save($post_id) {
+    if (!isset($_POST['ig_evt_nonce']) || !wp_verify_nonce($_POST['ig_evt_nonce'], 'ig_evt_save')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    $fields = ['data_inizio', 'data_fine', 'orario', 'luogo', 'prezzo_evento', 'link_esterno'];
+    foreach ($fields as $f) {
+        if (isset($_POST['ig_' . $f])) {
+            update_post_meta($post_id, '_ig_' . $f, sanitize_text_field($_POST['ig_' . $f]));
+        }
+    }
+}
+add_action('save_post_evento', 'ig_evt_save');
+
+// --- CPT: Itinerario ---
+function ig_register_itinerario() {
+    register_post_type('itinerario', [
+        'labels' => [
+            'name'               => 'Itinerari',
+            'singular_name'      => 'Itinerario',
+            'add_new'            => 'Aggiungi Itinerario',
+            'add_new_item'       => 'Aggiungi Nuovo Itinerario',
+            'edit_item'          => 'Modifica Itinerario',
+            'view_item'          => 'Vedi Itinerario',
+            'all_items'          => 'Tutti gli Itinerari',
+            'search_items'       => 'Cerca Itinerari',
+            'not_found'          => 'Nessun itinerario trovato',
+        ],
+        'public'        => true,
+        'has_archive'   => true,
+        'rewrite'       => ['slug' => 'itinerario'],
+        'menu_icon'     => 'dashicons-chart-line',
+        'supports'      => ['title', 'editor', 'thumbnail', 'excerpt'],
+        'show_in_rest'  => true,
+    ]);
+
+    register_taxonomy('tipo_itinerario', 'itinerario', [
+        'labels' => [
+            'name'          => 'Tipi di Itinerario',
+            'singular_name' => 'Tipo Itinerario',
+            'add_new_item'  => 'Aggiungi Tipo',
+        ],
+        'hierarchical' => true,
+        'rewrite'      => ['slug' => 'tipo-itinerario'],
+        'show_in_rest' => true,
+    ]);
+
+    register_taxonomy_for_object_type('localita', 'itinerario');
+}
+add_action('init', 'ig_register_itinerario');
+
+// --- Meta Boxes: Itinerario ---
+function ig_itin_meta_boxes() {
+    add_meta_box('ig_itin_info', 'Dati Itinerario', 'ig_itin_info_render', 'itinerario', 'normal', 'high');
+}
+add_action('add_meta_boxes', 'ig_itin_meta_boxes');
+
+function ig_itin_info_render($post) {
+    wp_nonce_field('ig_itin_save', 'ig_itin_nonce');
+    $m = function($k) use ($post) { return get_post_meta($post->ID, '_ig_itin_' . $k, true); };
+    ?>
+    <table class="form-table">
+        <tr><th><label>Tipo</label></th><td>
+            <select name="ig_itin_type">
+                <option value="hiking" <?php selected($m('type'), 'hiking'); ?>>Trekking</option>
+                <option value="cycling" <?php selected($m('type'), 'cycling'); ?>>Ciclismo</option>
+                <option value="mtb" <?php selected($m('type'), 'mtb'); ?>>Mountain Bike</option>
+                <option value="ferrata" <?php selected($m('type'), 'ferrata'); ?>>Via Ferrata</option>
+                <option value="water" <?php selected($m('type'), 'water'); ?>>Sport Acquatici</option>
+            </select>
+        </td></tr>
+        <tr><th><label>Difficoltà</label></th><td>
+            <select name="ig_itin_difficulty">
+                <option value="facile" <?php selected($m('difficulty'), 'facile'); ?>>Facile</option>
+                <option value="media" <?php selected($m('difficulty'), 'media'); ?>>Media</option>
+                <option value="difficile" <?php selected($m('difficulty'), 'difficile'); ?>>Difficile</option>
+            </select>
+        </td></tr>
+        <tr><th><label>Distanza (km)</label></th><td><input type="number" step="0.1" name="ig_itin_km" value="<?php echo esc_attr($m('km')); ?>" class="small-text"></td></tr>
+        <tr><th><label>Salita (m)</label></th><td><input type="number" name="ig_itin_elevation" value="<?php echo esc_attr($m('elevation')); ?>" class="small-text"></td></tr>
+        <tr><th><label>Discesa (m)</label></th><td><input type="number" name="ig_itin_descent" value="<?php echo esc_attr($m('descent')); ?>" class="small-text"></td></tr>
+        <tr><th><label>Durata</label></th><td><input type="text" name="ig_itin_hours" value="<?php echo esc_attr($m('hours')); ?>" class="small-text" placeholder="Es: 2:30"></td></tr>
+        <tr><th><label>Zona</label></th><td><input type="text" name="ig_itin_zone" value="<?php echo esc_attr($m('zone')); ?>" class="regular-text" placeholder="Es: Riva del Garda"></td></tr>
+        <tr><th><label>Coordinate</label></th><td>
+            <input type="text" name="ig_itin_lat" value="<?php echo esc_attr($m('lat')); ?>" placeholder="Lat" style="width:120px">
+            <input type="text" name="ig_itin_lng" value="<?php echo esc_attr($m('lng')); ?>" placeholder="Lng" style="width:120px">
+        </td></tr>
+        <tr><th><label>OutdoorActive ID</label></th><td><input type="text" name="ig_itin_oa_id" value="<?php echo esc_attr($m('oa_id')); ?>" class="regular-text" placeholder="Es: 1481019"></td></tr>
+        <tr><th><label>Tags</label></th><td><input type="text" name="ig_itin_tags" value="<?php echo esc_attr($m('tags')); ?>" class="large-text" placeholder="vista-lago,panoramico,famiglie"></td></tr>
+    </table>
+    <?php
+}
+
+function ig_itin_save($post_id) {
+    if (!isset($_POST['ig_itin_nonce']) || !wp_verify_nonce($_POST['ig_itin_nonce'], 'ig_itin_save')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    $fields = ['type', 'difficulty', 'km', 'elevation', 'descent', 'hours', 'zone', 'lat', 'lng', 'oa_id', 'tags'];
+    foreach ($fields as $f) {
+        if (isset($_POST['ig_itin_' . $f])) {
+            update_post_meta($post_id, '_ig_itin_' . $f, sanitize_text_field($_POST['ig_itin_' . $f]));
+        }
+    }
+}
+add_action('save_post_itinerario', 'ig_itin_save');
+
 // --- Meta Boxes: Destinazione ---
 function ig_destinazione_meta_boxes() {
     add_meta_box('ig_dest_info', 'Info Destinazione', 'ig_dest_info_render', 'destinazione', 'normal', 'high');

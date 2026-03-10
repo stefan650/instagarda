@@ -45,11 +45,11 @@
                 <a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>" class="ig-hero__pill ig-hero__pill--all">Vedi tutte →</a>
             </div>
             <div class="ig-hero__suggestion-group" data-group="vivi">
-                <a href="<?php echo esc_url(home_url('/attivita/')); ?>" class="ig-hero__pill">
+                <a href="<?php echo esc_url(home_url('/esperienze/attivita/')); ?>" class="ig-hero__pill">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                     Attività & Tour
                 </a>
-                <a href="<?php echo esc_url(home_url('/musei/')); ?>" class="ig-hero__pill">
+                <a href="<?php echo esc_url(home_url('/esperienze/cultura/')); ?>" class="ig-hero__pill">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
                     Cultura & Musei
                 </a>
@@ -57,15 +57,15 @@
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                     Eventi
                 </a>
-                <a href="<?php echo esc_url(home_url('/ristoranti/')); ?>" class="ig-hero__pill">
+                <a href="<?php echo esc_url(home_url('/esperienze/ristoranti/')); ?>" class="ig-hero__pill">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
                     Ristoranti
                 </a>
-                <a href="<?php echo esc_url(home_url('/dove-dormire/')); ?>" class="ig-hero__pill">
+                <a href="<?php echo esc_url(home_url('/esperienze/soggiorni/')); ?>" class="ig-hero__pill">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 012 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
                     Soggiorni
                 </a>
-                <a href="<?php echo esc_url(home_url('/bar-locali/')); ?>" class="ig-hero__pill">
+                <a href="<?php echo esc_url(home_url('/esperienze/bar-nightlife/')); ?>" class="ig-hero__pill">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M20 3H4l2 8h12l2-8z"/></svg>
                     Bar & Nightlife
                 </a>
@@ -280,7 +280,7 @@
                         <span class="ig-vivi-card__tag">Parchi</span>
                         <span class="ig-vivi-card__tag">Esperienze</span>
                     </div>
-                    <a href="<?php echo esc_url(home_url('/attivita/')); ?>" class="ig-vivi-card__cta">Esplora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                    <a href="<?php echo esc_url(home_url('/esperienze/attivita/')); ?>" class="ig-vivi-card__cta">Esplora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
                 </div>
             </div>
 
@@ -299,7 +299,7 @@
                         <span class="ig-vivi-card__tag">Monumenti</span>
                         <span class="ig-vivi-card__tag">Chiese</span>
                     </div>
-                    <a href="<?php echo esc_url(home_url('/musei/')); ?>" class="ig-vivi-card__cta">Esplora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                    <a href="<?php echo esc_url(home_url('/esperienze/cultura/')); ?>" class="ig-vivi-card__cta">Esplora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
                 </div>
             </div>
 
@@ -336,7 +336,7 @@
                         <span class="ig-vivi-card__tag">Trattorie</span>
                         <span class="ig-vivi-card__tag">Pizzerie</span>
                     </div>
-                    <a href="<?php echo esc_url(home_url('/ristoranti/')); ?>" class="ig-vivi-card__cta">Esplora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                    <a href="<?php echo esc_url(home_url('/esperienze/ristoranti/')); ?>" class="ig-vivi-card__cta">Esplora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
                 </div>
             </div>
 
@@ -355,7 +355,7 @@
                         <span class="ig-vivi-card__tag">Agriturismi</span>
                         <span class="ig-vivi-card__tag">Campeggi</span>
                     </div>
-                    <a href="<?php echo esc_url(home_url('/dove-dormire/')); ?>" class="ig-vivi-card__cta">Esplora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                    <a href="<?php echo esc_url(home_url('/esperienze/soggiorni/')); ?>" class="ig-vivi-card__cta">Esplora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
                 </div>
             </div>
 
@@ -374,7 +374,7 @@
                         <span class="ig-vivi-card__tag">Aperitivi</span>
                         <span class="ig-vivi-card__tag">Discoteche</span>
                     </div>
-                    <a href="<?php echo esc_url(home_url('/bar-locali/')); ?>" class="ig-vivi-card__cta">Esplora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                    <a href="<?php echo esc_url(home_url('/esperienze/bar-nightlife/')); ?>" class="ig-vivi-card__cta">Esplora <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
                 </div>
             </div>
 

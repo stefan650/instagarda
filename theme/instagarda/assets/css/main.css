@@ -332,16 +332,16 @@ img { max-width: 100%; height: auto; display: block; }
     text-decoration: none;
 }
 .ig-header__logo-img {
-    height: 32px;
+    height: 26px;
     width: auto;
 }
 
 /* CSS Text Logo */
 .ig-logo {
     font-family: var(--font);
-    font-size: 1.35rem;
+    font-size: 1.1rem;
     font-weight: 800;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     color: white;
     text-shadow: 0 1px 4px rgba(0,0,0,0.25);
     transition: color var(--duration) var(--ease), text-shadow var(--duration) var(--ease);
@@ -2569,6 +2569,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* --- Dest hero --- */
 .ig-dest-hero { position:relative; height:70vh; min-height:500px; overflow:hidden; }
+.ig-dest-hero--compact { height:280px; min-height:280px; }
 .ig-dest-hero__bg { position:absolute; inset:0; overflow:hidden; }
 .ig-dest-hero__bg img, .ig-dest-hero__bg .ig-placeholder-img, .ig-dest-hero__video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 .ig-dest-hero__video--mobile { display:none; }
@@ -3993,6 +3994,1537 @@ img { max-width: 100%; height: auto; display: block; }
     font-size: var(--fs-sm);
 }
 .ig-faq__answer p { margin: 0; }
+
+/* -----------------------------------------------------------------
+   ESPERIENZE — Landing Page Cards
+   ----------------------------------------------------------------- */
+.ig-exp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-lg);
+}
+.ig-exp-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--ig-border);
+    text-decoration: none;
+    color: var(--ig-text);
+    transition: all var(--duration) var(--ease);
+}
+.ig-exp-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    border-color: transparent;
+}
+.ig-exp-card__visual {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+.ig-exp-card__visual--attivita { background: linear-gradient(135deg, #10B981, #059669); }
+.ig-exp-card__visual--cultura  { background: linear-gradient(135deg, #06B6D4, #0891B2); }
+.ig-exp-card__visual--eventi   { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+.ig-exp-card__visual--mangiare { background: linear-gradient(135deg, #F97316, #EA580C); }
+.ig-exp-card__visual--dormire  { background: linear-gradient(135deg, #6366F1, #4F46E5); }
+.ig-exp-card__visual--bar      { background: linear-gradient(135deg, #F59E0B, #D97706); }
+.ig-exp-card__body {
+    padding: var(--sp-lg);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.ig-exp-card__title {
+    font-family: var(--font-heading);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.ig-exp-card__desc {
+    font-size: var(--fs-sm);
+    color: var(--ig-text-muted);
+    line-height: 1.6;
+    flex: 1;
+}
+.ig-exp-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ig-primary);
+    margin-top: var(--sp-md);
+}
+@media (max-width: 767px) {
+    .ig-exp-grid {
+        grid-template-columns: 1fr;
+    }
+    .ig-exp-card__visual {
+        height: 140px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+    .ig-exp-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* -----------------------------------------------------------------
+   SINGLE DESTINATION — Info Strip
+   ----------------------------------------------------------------- */
+.ig-info-strip {
+    background: white;
+    border-bottom: 1px solid var(--ig-border);
+    padding: var(--sp-lg) 0;
+}
+.ig-info-strip__grid {
+    display: flex;
+    justify-content: center;
+    gap: var(--sp-2xl);
+    flex-wrap: wrap;
+}
+.ig-info-strip__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+.ig-info-strip__item svg {
+    flex-shrink: 0;
+    color: var(--ig-primary);
+    margin-top: 2px;
+}
+.ig-info-strip__label {
+    display: block;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ig-text-muted);
+    margin-bottom: 2px;
+}
+.ig-info-strip__value {
+    display: block;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--ig-text);
+    line-height: 1.4;
+}
+@media (max-width: 480px) {
+    .ig-info-strip__grid {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--sp-md);
+    }
+}
+a.ig-info-strip__item--link {
+    text-decoration: none;
+    color: inherit;
+    border-radius: var(--r-sm);
+    padding: 8px;
+    margin: -8px;
+    transition: background var(--duration) var(--ease);
+}
+a.ig-info-strip__item--link:hover {
+    background: var(--ig-bg);
+}
+a.ig-info-strip__item--link .ig-info-strip__value {
+    color: var(--ig-primary);
+}
+button.ig-info-strip__item--ai {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    border-radius: var(--r-sm);
+    padding: 8px;
+    margin: -8px;
+    transition: background var(--duration) var(--ease);
+}
+button.ig-info-strip__item--ai:hover {
+    background: var(--ig-bg);
+}
+button.ig-info-strip__item--ai svg {
+    color: var(--ig-primary);
+}
+button.ig-info-strip__item--ai .ig-info-strip__value {
+    color: var(--ig-text);
+}
+
+/* -----------------------------------------------------------------
+   APPLE-STYLE LAYOUT SYSTEM
+   ----------------------------------------------------------------- */
+.ig-apple-section {
+    padding: var(--sp-3xl) 0;
+}
+.ig-apple-section--intro {
+    padding: var(--sp-2xl) 0 var(--sp-xl);
+}
+.ig-apple-section--white {
+    background: white;
+}
+.ig-apple-section--light {
+    background: var(--ig-bg);
+}
+.ig-apple-section--dark {
+    background: var(--ig-text);
+}
+.ig-apple-section--cta {
+    background: linear-gradient(135deg, #0077B6 0%, #48CAE4 40%, #5856D6 100%);
+    padding: var(--sp-3xl) 0;
+}
+.ig-apple-container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 var(--sp-lg);
+}
+.ig-apple-container--narrow {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 var(--sp-lg);
+}
+
+/* Apple-style titles */
+.ig-apple-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--ig-text);
+    letter-spacing: -0.02em;
+    text-align: center;
+}
+.ig-apple-section--dark .ig-apple-title,
+.ig-apple-title--white {
+    color: white;
+}
+.ig-apple-subtitle {
+    font-size: var(--fs-lg);
+    color: var(--ig-text-muted);
+    text-align: center;
+    max-width: 540px;
+    margin: var(--sp-md) auto 0;
+    line-height: 1.6;
+}
+.ig-apple-section--dark .ig-apple-subtitle,
+.ig-apple-subtitle--white {
+    color: rgba(255,255,255,0.7);
+}
+
+/* Apple Intro — big first paragraph */
+.ig-apple-intro {
+    text-align: center;
+}
+.ig-apple-intro p {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--ig-text);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+/* Apple Body — editorial text */
+.ig-apple-body {
+    font-size: var(--fs-lg);
+    line-height: 1.9;
+    color: #4A4A4E;
+}
+.ig-apple-body p {
+    margin-bottom: 1.75em;
+}
+.ig-apple-body h2 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    color: var(--ig-text);
+    margin: 2.5em 0 0.75em;
+}
+.ig-apple-body h3 {
+    font-size: var(--fs-xl);
+    font-weight: 600;
+    color: var(--ig-text);
+    margin: 2em 0 0.5em;
+}
+.ig-apple-body img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--r-xl);
+    margin: 2em 0;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+}
+.ig-apple-body blockquote {
+    border-left: 4px solid var(--ig-primary);
+    padding: var(--sp-lg) var(--sp-xl);
+    margin: 2em 0;
+    background: var(--ig-bg);
+    border-radius: 0 var(--r-lg) var(--r-lg) 0;
+    font-style: italic;
+    font-size: var(--fs-xl);
+    color: var(--ig-text-muted);
+    line-height: 1.7;
+}
+
+/* Apple Feature — alternating image/text blocks */
+.ig-apple-feature {
+    padding: var(--sp-2xl) 0;
+}
+.ig-apple-feature__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-2xl);
+    align-items: center;
+}
+.ig-apple-feature--reverse .ig-apple-feature__grid {
+    direction: rtl;
+}
+.ig-apple-feature--reverse .ig-apple-feature__grid > * {
+    direction: ltr;
+}
+.ig-apple-feature__visual {
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+}
+.ig-apple-feature__img {
+    aspect-ratio: 4/3;
+    border-radius: var(--r-xl);
+}
+.ig-apple-feature__label {
+    display: inline-block;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ig-primary);
+    margin-bottom: 8px;
+}
+.ig-apple-feature__title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ig-text);
+    margin-bottom: var(--sp-md);
+}
+.ig-apple-feature__excerpt {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    color: var(--ig-text);
+    line-height: 1.6;
+    margin-bottom: var(--sp-sm);
+}
+.ig-apple-feature__desc {
+    font-size: var(--fs-base);
+    color: var(--ig-text-muted);
+    line-height: 1.7;
+}
+
+@media (max-width: 767px) {
+    .ig-apple-section {
+        padding: var(--sp-2xl) 0;
+    }
+    .ig-apple-feature__grid {
+        grid-template-columns: 1fr;
+        gap: var(--sp-xl);
+    }
+    .ig-apple-feature--reverse .ig-apple-feature__grid {
+        direction: ltr;
+    }
+    .ig-apple-intro p {
+        font-size: 1.375rem;
+    }
+}
+
+/* -----------------------------------------------------------------
+   SINGLE DESTINATION — Hero Badge
+   ----------------------------------------------------------------- */
+.ig-dest-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: var(--r-pill);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    color: rgba(255,255,255,0.9);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    margin-top: 12px;
+}
+
+/* -----------------------------------------------------------------
+   SINGLE DESTINATION — Explore Cards
+   ----------------------------------------------------------------- */
+.ig-explore-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-lg);
+}
+.ig-explore-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--sp-lg);
+    border-radius: var(--r-lg);
+    background: white;
+    border: 1px solid var(--ig-border);
+    text-decoration: none;
+    color: var(--ig-text);
+    transition: all var(--duration) var(--ease);
+    position: relative;
+    overflow: hidden;
+}
+.ig-explore-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glass-shadow-lg);
+    border-color: transparent;
+}
+.ig-apple-section--dark .ig-explore-card {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.1);
+    color: white;
+}
+.ig-apple-section--dark .ig-explore-card:hover {
+    background: rgba(255,255,255,0.14);
+}
+.ig-apple-section--dark .ig-explore-card__desc {
+    color: rgba(255,255,255,0.6);
+}
+.ig-apple-section--dark .ig-explore-card__arrow {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+}
+.ig-apple-section--dark .ig-explore-card:hover .ig-explore-card__arrow {
+    background: var(--ig-primary);
+    color: white;
+}
+.ig-explore-card__icon {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--r-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--sp-md);
+}
+.ig-explore-card--mangiare .ig-explore-card__icon {
+    background: var(--ig-cat-mangiare-light);
+    color: var(--ig-cat-mangiare);
+}
+.ig-explore-card--dormire .ig-explore-card__icon {
+    background: var(--ig-cat-dormire-light);
+    color: var(--ig-cat-dormire);
+}
+.ig-explore-card--bar .ig-explore-card__icon {
+    background: #FEF3C7;
+    color: #D97706;
+}
+.ig-explore-card--attivita .ig-explore-card__icon {
+    background: var(--ig-cat-attivita-light);
+    color: var(--ig-cat-attivita);
+}
+.ig-explore-card__title {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.ig-explore-card__desc {
+    font-size: var(--fs-sm);
+    color: var(--ig-text-muted);
+    line-height: 1.5;
+    margin-bottom: var(--sp-md);
+}
+.ig-explore-card__arrow {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--ig-bg);
+    color: var(--ig-text-muted);
+    transition: all var(--duration) var(--ease);
+}
+.ig-explore-card:hover .ig-explore-card__arrow {
+    background: var(--ig-primary);
+    color: white;
+}
+@media (max-width: 767px) {
+    .ig-explore-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 480px) {
+    .ig-explore-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* -----------------------------------------------------------------
+   SINGLE DESTINATION — CTA Card
+   ----------------------------------------------------------------- */
+.ig-dest-cta-card {
+    background: white;
+    border-radius: var(--r-xl);
+    padding: var(--sp-xl) var(--sp-lg);
+    box-shadow: var(--glass-shadow);
+    text-align: center;
+}
+.ig-dest-cta-card__icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ig-primary), var(--ig-secondary));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--sp-md);
+}
+.ig-dest-cta-card__title {
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.ig-dest-cta-card__desc {
+    font-size: var(--fs-sm);
+    color: var(--ig-text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--sp-lg);
+}
+
+/* -----------------------------------------------------------------
+   ESPERIENZE — Filtri & Listing Grid
+   ----------------------------------------------------------------- */
+
+/* Filtri località */
+.ig-exp-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding-bottom: var(--sp-lg);
+}
+.ig-exp-filters__btn {
+    background: var(--ig-bg);
+    border: 1.5px solid var(--ig-border);
+    border-radius: var(--r-pill);
+    padding: 8px 20px;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--ig-text-muted);
+    cursor: pointer;
+    transition: all .2s ease;
+    white-space: nowrap;
+}
+.ig-exp-filters__btn:hover {
+    border-color: var(--ig-primary);
+    color: var(--ig-primary);
+    background: rgba(0,122,255,.06);
+}
+.ig-exp-filters__btn.is-active {
+    background: var(--ig-primary);
+    border-color: var(--ig-primary);
+    color: white;
+}
+
+/* Griglia strutture */
+.ig-exp-listing {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--sp-xl);
+}
+.ig-exp-item {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
+    text-decoration: none;
+    color: inherit;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.ig-exp-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0,0,0,.10);
+}
+.ig-exp-item.is-hidden {
+    display: none;
+}
+
+/* Immagine card */
+.ig-exp-item__img {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background: var(--ig-bg);
+}
+.ig-exp-item__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+.ig-exp-item:hover .ig-exp-item__img img {
+    transform: scale(1.04);
+}
+.ig-exp-item__img .ig-placeholder-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ig-bg);
+    color: var(--ig-text-muted);
+}
+
+/* Badge prezzo */
+.ig-exp-item__badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0,0,0,.6);
+    backdrop-filter: blur(12px);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    letter-spacing: .5px;
+}
+
+/* Body card */
+.ig-exp-item__body {
+    padding: 16px 20px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.ig-exp-item__title {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    margin: 0 0 6px;
+    line-height: 1.3;
+}
+.ig-exp-item__loc {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--fs-xs);
+    color: var(--ig-text-muted);
+    margin: 0 0 8px;
+}
+.ig-exp-item__loc svg {
+    flex-shrink: 0;
+}
+.ig-exp-item__desc {
+    font-size: var(--fs-sm);
+    color: var(--ig-text-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* -----------------------------------------------------------------
+   ITINERARI — Filter Bar + Mappa + Cards + Detail
+   ----------------------------------------------------------------- */
+
+.ig-apple-container--wide {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--sp-lg);
+}
+
+/* ── Barra filtri avanzata ── */
+.ig-tbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto;
+    gap: 0;
+    background: white;
+    border: 1px solid var(--ig-border);
+    border-radius: var(--r-md);
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    position: relative;
+    z-index: 50;
+}
+.ig-tbar__col {
+    padding: 16px 20px;
+    border-right: 1px solid var(--ig-border);
+    position: relative;
+    overflow: visible;
+}
+.ig-tbar__col:last-child { border-right: none; }
+.ig-tbar__col--btn { display: flex; align-items: flex-end; padding: 12px 16px; }
+.ig-tbar__label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    color: var(--ig-text);
+    margin-bottom: 4px;
+}
+.ig-tbar__value {
+    display: block;
+    font-size: 12px;
+    color: var(--ig-text-muted);
+    margin-bottom: 8px;
+}
+
+/* Range sliders */
+.ig-tbar__range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #10B981, #F59E0B, #EF4444);
+    outline: none;
+}
+.ig-tbar__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--ig-primary);
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    cursor: pointer;
+}
+.ig-tbar__range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--ig-primary);
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    cursor: pointer;
+}
+.ig-tbar__range--diff {
+    background: linear-gradient(90deg, #10B981, #F59E0B, #EF4444);
+}
+
+/* Select */
+.ig-tbar__select-wrap { position: relative; }
+.ig-tbar__select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid var(--ig-border);
+    border-radius: var(--r-xs);
+    font-size: 13px;
+    color: var(--ig-text);
+    background: white;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+/* Dropdown checkbox */
+.ig-tbar__dropdown-wrap { position: relative; }
+.ig-tbar__dropdown-btn {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid var(--ig-border);
+    border-radius: var(--r-xs);
+    font-size: 13px;
+    color: var(--ig-text);
+    background: white;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ig-tbar__dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 220px;
+    max-height: 280px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid var(--ig-border);
+    border-radius: var(--r-sm);
+    box-shadow: 0 12px 40px rgba(0,0,0,.16);
+    z-index: 200;
+    padding: 8px 0;
+}
+.ig-tbar__dropdown.is-open { display: block; }
+.ig-tbar__dropdown label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: var(--ig-text);
+    cursor: pointer;
+    transition: background .15s;
+}
+.ig-tbar__dropdown label:hover { background: var(--ig-bg); }
+.ig-tbar__dropdown input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--ig-primary);
+    flex-shrink: 0;
+}
+
+/* Cerca button */
+.ig-tbar__search {
+    background: #10B981;
+    color: white;
+    border: none;
+    border-radius: var(--r-sm);
+    padding: 10px 28px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .2s;
+    letter-spacing: .3px;
+}
+.ig-tbar__search:hover { background: #059669; }
+
+/* ── Mappa ── */
+.ig-trail-map-wrap {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,.10);
+    border: 1px solid var(--ig-border);
+    position: relative;
+    z-index: 1;
+}
+#igTrailMap {
+    height: 520px;
+    width: 100%;
+    background: var(--ig-bg);
+}
+
+/* Marker custom */
+.ig-trail-marker div {
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    border: 2px solid white;
+}
+.ig-trail-marker span {
+    transform: rotate(45deg);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+}
+.ig-trail-marker--lg div { width: 40px; height: 40px; }
+.ig-trail-marker--lg span { font-size: 14px; }
+
+/* Popup mappa */
+.ig-trail-popup-wrap .leaflet-popup-content-wrapper {
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.12);
+    padding: 0;
+}
+.ig-trail-popup-wrap .leaflet-popup-content { margin: 14px 16px; font-family: inherit; }
+.ig-trail-popup strong { font-size: 15px; display: block; margin-bottom: 4px; }
+.ig-trail-popup__meta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ig-text-muted); margin-bottom: 4px; }
+.ig-trail-popup__badge { color: white; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: var(--r-pill); text-transform: uppercase; letter-spacing: .3px; }
+.ig-trail-popup p { margin: 0; font-size: 12px; color: var(--ig-text-muted); }
+
+/* ── Griglia card ── */
+.ig-trail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--sp-lg);
+}
+.ig-trail-card {
+    background: white;
+    border-radius: var(--r-md);
+    padding: 20px 22px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.04);
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+}
+.ig-trail-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,0,0,.10);
+    border-color: var(--ig-border);
+}
+.ig-trail-card__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.ig-trail-card__num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+.ig-trail-card__type { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-right: 6px; }
+.ig-trail-card__diff { font-size: 10px; font-weight: 700; color: white; padding: 2px 8px; border-radius: var(--r-pill); text-transform: uppercase; letter-spacing: .3px; display: inline-block; }
+.ig-trail-card__title { font-size: var(--fs-lg); font-weight: 700; margin: 0 0 4px; line-height: 1.3; }
+.ig-trail-card__zone { display: flex; align-items: center; gap: 4px; font-size: var(--fs-xs); color: var(--ig-text-muted); margin: 0 0 8px; }
+.ig-trail-card__zone svg { flex-shrink: 0; }
+
+/* Tags */
+.ig-trail-card__tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.ig-trail-card__tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--r-pill);
+    background: var(--ig-bg);
+    color: var(--ig-text-muted);
+    border: 1px solid var(--ig-border);
+}
+
+/* Stats row */
+.ig-trail-card__stats { display: flex; gap: 14px; padding-top: 10px; border-top: 1px solid var(--ig-border); margin-top: auto; }
+.ig-trail-card__stat { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--ig-text); }
+.ig-trail-card__stat svg { color: var(--ig-text-muted); }
+
+/* CTA Scopri */
+.ig-trail-card__cta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ig-primary);
+    margin-top: 12px;
+}
+
+.ig-trail-count { text-align: center; font-size: var(--fs-sm); color: var(--ig-text-muted); margin-top: var(--sp-xl); }
+
+/* ── Dettaglio itinerario — Modal centrato Apple-style ── */
+.ig-td-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s .3s, opacity .3s ease;
+}
+.ig-td-overlay.is-open { visibility: visible; opacity: 1; transition-delay: 0s; }
+.ig-td-overlay__bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.ig-td-modal {
+    position: relative;
+    width: 720px;
+    max-width: 100%;
+    max-height: 90vh;
+    background: white;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,.2);
+    transform: scale(.92) translateY(20px);
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+.ig-td-overlay.is-open .ig-td-modal { transform: scale(1) translateY(0); }
+.ig-td-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 100;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,.6);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background .2s;
+    pointer-events: auto;
+}
+.ig-td-modal__close:hover { background: rgba(0,0,0,.8); }
+.ig-td-modal__map {
+    position: relative;
+    height: 480px;
+    flex-shrink: 0;
+    background: var(--ig-bg);
+    overflow: hidden;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+.ig-td-modal__map iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+.ig-td-modal__content {
+    padding: 28px 32px 36px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Detail content */
+.ig-td__title { font-size: 1.5rem; font-weight: 800; margin: 4px 0 6px; line-height: 1.25; }
+.ig-td__zone { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--ig-text-muted); margin: 0 0 16px; }
+.ig-td__stats { display: flex; flex-direction: column; gap: 0; margin-bottom: 16px; border: 1px solid var(--ig-border); border-radius: var(--r-sm); overflow: hidden; }
+.ig-td__stat-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--ig-border);
+}
+.ig-td__stat-row:last-child { border-bottom: none; }
+.ig-td__stat-row svg { color: var(--ig-text-muted); flex-shrink: 0; }
+.ig-td__stat-row span { color: var(--ig-text-muted); flex: 1; }
+.ig-td__stat-row strong { font-weight: 700; }
+.ig-td__desc { font-size: 14px; line-height: 1.7; color: var(--ig-text); margin: 0; }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .ig-tbar {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .ig-tbar__col--btn { grid-column: 1 / -1; justify-content: center; border-right: none; border-top: 1px solid var(--ig-border); }
+}
+@media (max-width: 768px) {
+    #igTrailMap { height: 380px; }
+    .ig-trail-map-wrap { border-radius: var(--r-md); }
+    .ig-trail-grid { grid-template-columns: 1fr; }
+    .ig-tbar { grid-template-columns: 1fr 1fr; }
+    .ig-td-modal { width: 100%; max-height: 95vh; border-radius: var(--r-md); }
+    .ig-td-modal__map { height: 340px; border-radius: var(--r-md) var(--r-md) 0 0; }
+    .ig-td-modal__content { padding: 20px 20px 28px; }
+}
+@media (max-width: 480px) {
+    .ig-tbar { grid-template-columns: 1fr; }
+    .ig-tbar__col { border-right: none; border-bottom: 1px solid var(--ig-border); }
+}
+
+/* ── Single Itinerario ── */
+.ig-itin-map-wrap {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,.08);
+}
+#igItinMap {
+    width: 100%;
+    height: 480px;
+}
+/* Profilo altimetrico */
+.ig-itin-profile-wrap {
+    position: relative;
+    margin-top: var(--sp-lg);
+    background: white;
+    border-radius: var(--r-md);
+    border: 1px solid var(--ig-border);
+    padding: 16px 8px 8px;
+    overflow: hidden;
+}
+.ig-itin-profile-wrap canvas {
+    display: block;
+    width: 100%;
+    cursor: crosshair;
+}
+.ig-itin-profile-tooltip {
+    display: none;
+    position: absolute;
+    top: 8px;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,.8);
+    color: white;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    pointer-events: none;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+/* Marker Start/Fine */
+.ig-route-marker div {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.ig-route-marker--start div { background: #10B981; }
+.ig-route-marker--end div { background: #EF4444; }
+/* Tipo di strada */
+.ig-itin-surface {
+    margin-top: var(--sp-lg);
+    background: white;
+    border-radius: var(--r-md);
+    border: 1px solid var(--ig-border);
+    padding: 20px 24px 24px;
+}
+.ig-itin-surface__title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ig-text);
+    margin: 0 0 16px;
+}
+.ig-itin-surface__bar {
+    display: flex;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    gap: 2px;
+}
+.ig-itin-surface__segment { min-width: 4px; }
+.ig-itin-surface__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    margin-top: 14px;
+}
+.ig-itin-surface__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.ig-itin-surface__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.ig-itin-surface__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ig-text);
+}
+.ig-itin-surface__km {
+    font-size: 12px;
+    color: var(--ig-text-muted);
+}
+/* Action bar sotto hero */
+.ig-itin-actions {
+    background: white;
+    border-bottom: 1px solid var(--ig-border);
+    padding: 12px 0;
+    position: sticky;
+    top: 60px;
+    z-index: 20;
+}
+.ig-itin-actions__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.ig-itin-actions__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--ff-sans);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .2s ease;
+    border: 2px solid var(--ig-primary);
+    background: white;
+    color: var(--ig-primary);
+}
+.ig-itin-actions__btn:hover {
+    background: var(--ig-primary);
+    color: white;
+}
+.ig-itin-actions__btn--primary {
+    background: var(--ig-primary);
+    color: white;
+    border-color: var(--ig-primary);
+}
+.ig-itin-actions__btn--primary:hover {
+    background: #1a6ec7;
+    border-color: #1a6ec7;
+}
+.ig-itin-actions__btn svg { flex-shrink: 0; }
+@media (max-width: 640px) {
+    .ig-itin-actions__row { gap: 8px; }
+    .ig-itin-actions__btn {
+        padding: 8px 14px;
+        font-size: 13px;
+        gap: 6px;
+    }
+}
+/* Title bar sotto la mappa */
+.ig-itin-title-bar {
+    background: white;
+    border-bottom: 1px solid var(--ig-border);
+    padding: var(--sp-xl) 0;
+}
+.ig-itin-title-bar__inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--sp-xl);
+}
+.ig-itin-title-bar__info { flex: 1; min-width: 0; }
+.ig-itin-title-bar__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 10px;
+}
+.ig-itin-title-bar__badge svg { width: 14px; height: 14px; }
+.ig-itin-title-bar__title {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--ig-text);
+    margin: 0;
+}
+.ig-itin-title-bar__zone {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+    color: var(--ig-text-muted);
+    margin: 8px 0 0;
+}
+.ig-itin-title-bar__stats {
+    display: flex;
+    gap: 0;
+    flex-shrink: 0;
+}
+.ig-itin-title-bar__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    border-right: 1px solid var(--ig-border);
+}
+.ig-itin-title-bar__stat:last-child { border-right: none; }
+.ig-itin-title-bar__stat strong {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--ig-text);
+    line-height: 1.3;
+}
+.ig-itin-title-bar__stat small {
+    font-size: 11px;
+    color: var(--ig-text-muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-top: 2px;
+}
+.ig-itin-diff-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: capitalize;
+    letter-spacing: .02em;
+}
+.ig-itin-detail {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--sp-2xl);
+    align-items: start;
+}
+.ig-itin-detail__heading {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 0 var(--sp-lg);
+    color: var(--ig-text);
+}
+.ig-itin-detail__subheading {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: var(--sp-xl) 0 var(--sp-md);
+    color: var(--ig-text);
+}
+.ig-itin-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.ig-itin-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: var(--ig-bg);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ig-text);
+    border: 1px solid var(--ig-border);
+}
+.ig-itin-tag svg { color: #10B981; flex-shrink: 0; }
+.ig-itin-sidebar-card {
+    background: white;
+    border-radius: var(--r-md);
+    border: 1px solid var(--ig-border);
+    overflow: hidden;
+    position: sticky;
+    top: 100px;
+}
+.ig-itin-sidebar-card__title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: 16px 20px;
+    margin: 0;
+    background: var(--ig-bg);
+    border-bottom: 1px solid var(--ig-border);
+    color: var(--ig-text-muted);
+}
+.ig-itin-sidebar-card__rows { padding: 0; }
+.ig-itin-sidebar-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--ig-border);
+}
+.ig-itin-sidebar-card__row:last-child { border-bottom: none; }
+.ig-itin-sidebar-card__row span { color: var(--ig-text-muted); }
+.ig-itin-sidebar-card__row strong { font-weight: 700; color: var(--ig-text); }
+.ig-itin-sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: var(--sp-lg);
+}
+@media (max-width: 768px) {
+    #igItinMap { height: 380px; }
+    .ig-itin-title-bar__inner { flex-direction: column; gap: var(--sp-lg); }
+    .ig-itin-title-bar__title { font-size: 1.5rem; }
+    .ig-itin-title-bar__stats { width: 100%; justify-content: space-between; }
+    .ig-itin-title-bar__stat { padding: 0 12px; }
+    .ig-itin-detail { grid-template-columns: 1fr; }
+    .ig-itin-sidebar-card { position: static; }
+}
+@media (max-width: 480px) {
+    #igItinMap { height: 300px; }
+    .ig-itin-title-bar__stats { flex-wrap: wrap; gap: 12px; }
+    .ig-itin-title-bar__stat { border-right: none; padding: 0; }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .ig-exp-listing {
+        grid-template-columns: 1fr;
+        gap: var(--sp-lg);
+    }
+    .ig-exp-filters {
+        gap: 6px;
+    }
+    .ig-exp-filters__btn {
+        padding: 6px 14px;
+        font-size: 13px;
+    }
+}
+
+/* -----------------------------------------------------------------
+   EVENTI — Card lista & Singolo evento
+   ----------------------------------------------------------------- */
+
+/* Listing eventi (horizontal cards) */
+.ig-evt-listing {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+}
+.ig-evt-card {
+    display: grid;
+    grid-template-columns: 64px 200px 1fr;
+    gap: 0 var(--sp-lg);
+    align-items: center;
+    background: white;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
+    text-decoration: none;
+    color: inherit;
+    transition: transform .25s ease, box-shadow .25s ease;
+    padding: var(--sp-lg);
+}
+.ig-evt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,.10);
+}
+.ig-evt-card.is-hidden {
+    display: none;
+}
+
+/* Colonna data */
+.ig-evt-card__date-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+}
+.ig-evt-card__day {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--ig-primary);
+}
+.ig-evt-card__month {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--ig-text-muted);
+    letter-spacing: .5px;
+    margin-top: 2px;
+}
+
+/* Immagine evento */
+.ig-evt-card__img {
+    position: relative;
+    aspect-ratio: 16/10;
+    border-radius: var(--r-sm);
+    overflow: hidden;
+    background: var(--ig-bg);
+}
+.ig-evt-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.ig-evt-card__img .ig-placeholder-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #EC4899, #8B5CF6);
+    color: rgba(255,255,255,.5);
+}
+.ig-evt-card__type-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0,0,0,.6);
+    backdrop-filter: blur(12px);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: var(--r-pill);
+}
+
+/* Body card evento */
+.ig-evt-card__body {
+    min-width: 0;
+}
+.ig-evt-card__title {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    margin: 0 0 6px;
+    line-height: 1.3;
+}
+.ig-evt-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+.ig-evt-card__meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--fs-xs);
+    color: var(--ig-text-muted);
+}
+.ig-evt-card__meta-item svg {
+    flex-shrink: 0;
+}
+.ig-evt-card__desc {
+    font-size: var(--fs-sm);
+    color: var(--ig-text-muted);
+    line-height: 1.5;
+    margin: 4px 0 0;
+}
+
+/* Singolo evento — banner passato */
+.ig-evt-past-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #FEF3C7;
+    color: #92400E;
+    border: 1px solid #FDE68A;
+    border-radius: var(--r-sm);
+    padding: 12px 20px;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+}
+
+/* Azioni evento */
+.ig-evt-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-md);
+    justify-content: center;
+}
+
+/* Responsive eventi */
+@media (max-width: 768px) {
+    .ig-evt-card {
+        grid-template-columns: 1fr;
+        gap: var(--sp-md);
+    }
+    .ig-evt-card__date-col {
+        flex-direction: row;
+        gap: 6px;
+        justify-content: flex-start;
+    }
+    .ig-evt-card__day {
+        font-size: 22px;
+    }
+    .ig-evt-card__img {
+        aspect-ratio: 16/9;
+    }
+    .ig-evt-actions {
+        flex-direction: column;
+    }
+    .ig-evt-actions .ig-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
 
 /* Hide WPML development site banner */
 #wpml-dev-site-banner { display: none !important; }

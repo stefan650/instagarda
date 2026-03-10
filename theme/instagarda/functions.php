@@ -99,6 +99,7 @@ add_action('wp_enqueue_scripts', 'instagarda_assets');
 
 // --- Custom Post Types ---
 require_once get_template_directory() . '/inc/custom-post-types.php';
+require_once get_template_directory() . '/inc/trail-route-api.php';
 
 // --- Widget Areas ---
 function instagarda_widgets() {
