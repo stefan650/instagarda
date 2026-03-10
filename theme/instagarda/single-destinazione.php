@@ -55,7 +55,7 @@
             'bardolino'           => ['63%', '35%'],
             'garda'               => ['48%', '33%'],
             'torri-del-benaco'    => ['56%', '50%'],
-            'malcesine'           => ['80%', '76%'],
+            'malcesine'           => ['79%', '74%'],
             'brenzone-sul-garda'  => ['70%', '65%'],
             'riva-del-garda'      => ['82%', '96%'],
             'torbole'             => ['90%', '88%'],
