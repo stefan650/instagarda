@@ -43,7 +43,7 @@
                         'arco'                => ['90%', '95%'],
                         'manerba-del-garda'   => ['18%', '38%'],
                         'castelnuovo-del-garda' => ['70%', '19%'],
-                        'valeggio-sul-mincio'   => ['55%', '7%'],
+                        'valeggio-sul-mincio'   => ['55%', '9%'],
                     ];
                     $all_dests = new WP_Query([
                         'post_type' => 'destinazione',
@@ -82,7 +82,7 @@
                         'Brescia'  => ['-5%', '50%', '/destinazioni/brescia/', 'Capitale della cultura, porta occidentale del Lago di Garda con il suo centro storico patrimonio UNESCO.', 'brescia.jpg'],
                         'Verona'   => ['102%', '50%', '/destinazioni/verona/', 'La città di Romeo e Giulietta, con la sua Arena romana e il fascino senza tempo a pochi km dal lago.', 'verona.jpg'],
                         'Trento'   => ['95%', '105%', '/destinazioni/trento/', 'Capoluogo del Trentino, città d\'arte e storia incastonata tra le montagne a nord del Lago di Garda.', 'trento.jpg'],
-                        'Mantova'  => ['55%', '-5%', '/destinazioni/mantova/', 'Gioiello rinascimentale dei Gonzaga, città d\'acqua e d\'arte patrimonio UNESCO a sud del lago.', 'mantova.jpg'],
+                        'Mantova'  => ['55%', '-3%', '/destinazioni/mantova/', 'Gioiello rinascimentale dei Gonzaga, città d\'acqua e d\'arte patrimonio UNESCO a sud del lago.', 'mantova.jpg'],
                     ];
                     foreach ($citta_ref as $nome => $pos): ?>
                     <a href="<?php echo esc_url(home_url($pos[2])); ?>"
