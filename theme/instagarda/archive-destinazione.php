@@ -75,18 +75,20 @@
                     ?>
                     <!-- Città di riferimento -->
                     <?php
+                    <?php $theme_img = get_template_directory_uri() . '/assets/images/destinazioni/'; ?>
+                    <?php
                     $citta_ref = [
-                        'Brescia'  => ['-20%', '30%', '/destinazioni/brescia/', 'Capitale della cultura, porta occidentale del Lago di Garda con il suo centro storico patrimonio UNESCO.'],
-                        'Verona'   => ['102%', '5%', '/destinazioni/verona/', 'La città di Romeo e Giulietta, con la sua Arena romana e il fascino senza tempo a pochi km dal lago.'],
-                        'Trento'   => ['95%', '105%', '/destinazioni/trento/', 'Capoluogo del Trentino, città d\'arte e storia incastonata tra le montagne a nord del Lago di Garda.'],
-                        'Mantova'  => ['50%', '-10%', '/destinazioni/mantova/', 'Gioiello rinascimentale dei Gonzaga, città d\'acqua e d\'arte patrimonio UNESCO a sud del lago.'],
+                        'Brescia'  => ['-20%', '30%', '/destinazioni/brescia/', 'Capitale della cultura, porta occidentale del Lago di Garda con il suo centro storico patrimonio UNESCO.', 'brescia.jpg'],
+                        'Verona'   => ['102%', '5%', '/destinazioni/verona/', 'La città di Romeo e Giulietta, con la sua Arena romana e il fascino senza tempo a pochi km dal lago.', 'verona.jpg'],
+                        'Trento'   => ['95%', '105%', '/destinazioni/trento/', 'Capoluogo del Trentino, città d\'arte e storia incastonata tra le montagne a nord del Lago di Garda.', 'trento.jpg'],
+                        'Mantova'  => ['50%', '-10%', '/destinazioni/mantova/', 'Gioiello rinascimentale dei Gonzaga, città d\'acqua e d\'arte patrimonio UNESCO a sud del lago.', 'mantova.jpg'],
                     ];
                     foreach ($citta_ref as $nome => $pos): ?>
                     <a href="<?php echo esc_url(home_url($pos[2])); ?>"
                        class="ig-svg-map__pin ig-svg-map__pin--city"
                        style="left:<?php echo esc_attr($pos[0]); ?>;bottom:<?php echo esc_attr($pos[1]); ?>"
                        data-title="<?php echo esc_attr($nome); ?>"
-                       data-thumb=""
+                       data-thumb="<?php echo esc_url($theme_img . $pos[4]); ?>"
                        data-excerpt="<?php echo esc_attr($pos[3]); ?>"
                        data-link="<?php echo esc_url(home_url($pos[2])); ?>">
                         <svg width="18" height="24" viewBox="0 0 32 42" fill="none"><path d="M16 0C7.163 0 0 7.163 0 16c0 12 16 26 16 26s16-14 16-26C32 7.163 24.837 0 16 0z" fill="#8E8E93"/><circle cx="16" cy="16" r="6" fill="white"/></svg>
