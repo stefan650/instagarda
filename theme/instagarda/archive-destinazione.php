@@ -64,7 +64,7 @@
                        data-thumb="<?php echo esc_attr($thumb_url); ?>"
                        data-excerpt="<?php echo esc_attr($excerpt); ?>"
                        data-link="<?php echo esc_url($link); ?>">
-                        <svg width="18" height="24" viewBox="0 0 32 42" fill="none"><path d="M16 0C7.163 0 0 7.163 0 16c0 12 16 26 16 26s16-14 16-26C32 7.163 24.837 0 16 0z" fill="#E53E3E"/><circle cx="16" cy="16" r="6" fill="white"/></svg>
+                        <svg width="18" height="24" viewBox="0 0 32 42" fill="none"><path d="M16 0C7.163 0 0 7.163 0 16c0 12 16 26 16 26s16-14 16-26C32 7.163 24.837 0 16 0z" fill="#8E8E93"/><circle cx="16" cy="16" r="6" fill="white"/></svg>
                         <span class="ig-svg-map__label"><?php the_title(); ?></span>
                     </a>
                     <?php

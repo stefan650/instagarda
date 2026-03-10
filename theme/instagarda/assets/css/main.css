@@ -2686,7 +2686,7 @@ img { max-width: 100%; height: auto; display: block; }
 .ig-svg-map__pin:hover .ig-svg-map__label,
 .ig-svg-map__pin.is-active .ig-svg-map__label {
     opacity: 1;
-    color: #E53E3E;
+    color: var(--ig-text);
 }
 .ig-svg-map__pin--city {
     cursor: pointer;
