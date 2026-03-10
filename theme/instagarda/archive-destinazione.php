@@ -73,6 +73,19 @@
                         wp_reset_postdata();
                     endif;
                     ?>
+                    <!-- Città di riferimento -->
+                    <?php
+                    $citta_ref = [
+                        'Brescia'  => ['-10%', '30%'],
+                        'Verona'   => ['102%', '5%'],
+                        'Trento'   => ['95%', '105%'],
+                        'Mantova'  => ['50%', '-10%'],
+                    ];
+                    foreach ($citta_ref as $nome => $pos): ?>
+                    <span class="ig-svg-map__city" style="left:<?php echo esc_attr($pos[0]); ?>;bottom:<?php echo esc_attr($pos[1]); ?>">
+                        <?php echo esc_html($nome); ?>
+                    </span>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
