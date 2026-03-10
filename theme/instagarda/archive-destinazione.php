@@ -75,8 +75,7 @@
                     ?>
                     <!-- Città di riferimento -->
                     <?php
-                    <?php $theme_img = get_template_directory_uri() . '/assets/images/destinazioni/'; ?>
-                    <?php
+                    $theme_img = get_template_directory_uri() . '/assets/images/destinazioni/';
                     $citta_ref = [
                         'Brescia'  => ['-20%', '30%', '/destinazioni/brescia/', 'Capitale della cultura, porta occidentale del Lago di Garda con il suo centro storico patrimonio UNESCO.', 'brescia.jpg'],
                         'Verona'   => ['102%', '5%', '/destinazioni/verona/', 'La città di Romeo e Giulietta, con la sua Arena romana e il fascino senza tempo a pochi km dal lago.', 'verona.jpg'],
