@@ -43,6 +43,28 @@
                         'arco'                => ['90%', '95%'],
                         'manerba-del-garda'   => ['18%', '38%'],
                     ];
+                    // Posizione label: left, right, top per evitare sovrapposizioni
+                    $label_pos = [
+                        'riva-del-garda'      => 'left',
+                        'torbole'             => 'right',
+                        'arco'                => 'right',
+                        'limone-sul-garda'    => 'left',
+                        'tremosine-sul-garda' => 'right',
+                        'malcesine'           => 'right',
+                        'gargnano'            => 'left',
+                        'brenzone-sul-garda'  => 'right',
+                        'gardone-riviera'     => 'left',
+                        'toscolano-maderno'   => 'left',
+                        'salo'                => 'left',
+                        'torri-del-benaco'    => 'right',
+                        'garda'               => 'right',
+                        'manerba-del-garda'   => 'left',
+                        'bardolino'           => 'right',
+                        'desenzano-del-garda' => 'left',
+                        'lazise'              => 'right',
+                        'sirmione'            => 'left',
+                        'peschiera-del-garda' => 'right',
+                    ];
                     $all_dests = new WP_Query([
                         'post_type' => 'destinazione',
                         'posts_per_page' => -1,
@@ -53,12 +75,13 @@
                             if (isset($pin_positions[$slug])):
                                 $pl = $pin_positions[$slug][0];
                                 $pb = $pin_positions[$slug][1];
+                                $lpos = isset($label_pos[$slug]) ? $label_pos[$slug] : '';
                                 $thumb_url = get_the_post_thumbnail_url(get_the_ID(), 'card-wide') ?: '';
                                 $excerpt = wp_trim_words(get_the_excerpt(), 20, '…');
                                 $link = get_the_permalink();
                     ?>
                     <a href="<?php echo esc_url($link); ?>"
-                       class="ig-svg-map__pin"
+                       class="ig-svg-map__pin<?php if ($lpos) echo ' ig-svg-map__pin--label-' . $lpos; ?>"
                        style="left:<?php echo esc_attr($pl); ?>;bottom:<?php echo esc_attr($pb); ?>"
                        data-title="<?php the_title_attribute(); ?>"
                        data-thumb="<?php echo esc_attr($thumb_url); ?>"
@@ -84,7 +107,7 @@
                     ];
                     foreach ($citta_ref as $nome => $pos): ?>
                     <a href="<?php echo esc_url(home_url($pos[2])); ?>"
-                       class="ig-svg-map__pin ig-svg-map__pin--city"
+                       class="ig-svg-map__pin ig-svg-map__pin--city ig-svg-map__pin--label-right"
                        style="left:<?php echo esc_attr($pos[0]); ?>;bottom:<?php echo esc_attr($pos[1]); ?>"
                        data-title="<?php echo esc_attr($nome); ?>"
                        data-thumb="<?php echo esc_url($theme_img . $pos[4]); ?>"
