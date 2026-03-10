@@ -2689,7 +2689,7 @@ img { max-width: 100%; height: auto; display: block; }
     color: #E53E3E;
 }
 .ig-svg-map__pin--city {
-    pointer-events: none;
+    cursor: pointer;
 }
 .ig-svg-map__pin--city .ig-svg-map__label {
     opacity: 0.5;
