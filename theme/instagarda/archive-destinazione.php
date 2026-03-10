@@ -43,6 +43,7 @@
                         'arco'                => ['90%', '95%'],
                         'manerba-del-garda'   => ['18%', '38%'],
                         'castelnuovo-del-garda' => ['70%', '19%'],
+                        'valeggio-sul-mincio'   => ['55%', '5%'],
                     ];
                     $all_dests = new WP_Query([
                         'post_type' => 'destinazione',
