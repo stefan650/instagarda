@@ -42,7 +42,7 @@
                         'torbole'             => ['90%', '88%'],
                         'arco'                => ['90%', '95%'],
                         'manerba-del-garda'   => ['18%', '38%'],
-                        'castelnuovo-del-garda' => ['70%', '8%'],
+                        'castelnuovo-del-garda' => ['70%', '18%'],
                     ];
                     $all_dests = new WP_Query([
                         'post_type' => 'destinazione',
