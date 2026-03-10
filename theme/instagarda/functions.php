@@ -31,6 +31,16 @@ function instagarda_setup() {
 }
 add_action('after_setup_theme', 'instagarda_setup');
 
+// --- Destinazioni: ordine alfabetico e mostra tutte ---
+function ig_destinazioni_order($query) {
+    if (!is_admin() && $query->is_main_query() && is_post_type_archive('destinazione')) {
+        $query->set('orderby', 'title');
+        $query->set('order', 'ASC');
+        $query->set('posts_per_page', -1);
+    }
+}
+add_action('pre_get_posts', 'ig_destinazioni_order');
+
 // --- Enqueue Styles & Scripts ---
 function instagarda_assets() {
     // Google Fonts — Poppins + Playfair Display
