@@ -76,14 +76,15 @@
                     <!-- Città di riferimento -->
                     <?php
                     $citta_ref = [
-                        'Brescia'  => ['-10%', '30%'],
+                        'Brescia'  => ['-20%', '30%'],
                         'Verona'   => ['102%', '5%'],
                         'Trento'   => ['95%', '105%'],
                         'Mantova'  => ['50%', '-10%'],
                     ];
                     foreach ($citta_ref as $nome => $pos): ?>
-                    <span class="ig-svg-map__city" style="left:<?php echo esc_attr($pos[0]); ?>;bottom:<?php echo esc_attr($pos[1]); ?>">
-                        <?php echo esc_html($nome); ?>
+                    <span class="ig-svg-map__pin ig-svg-map__pin--city" style="left:<?php echo esc_attr($pos[0]); ?>;bottom:<?php echo esc_attr($pos[1]); ?>">
+                        <svg width="18" height="24" viewBox="0 0 32 42" fill="none"><path d="M16 0C7.163 0 0 7.163 0 16c0 12 16 26 16 26s16-14 16-26C32 7.163 24.837 0 16 0z" fill="#8E8E93"/><circle cx="16" cy="16" r="6" fill="white"/></svg>
+                        <span class="ig-svg-map__label"><?php echo esc_html($nome); ?></span>
                     </span>
                     <?php endforeach; ?>
                 </div>

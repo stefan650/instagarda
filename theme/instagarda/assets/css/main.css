@@ -2679,7 +2679,7 @@ img { max-width: 100%; height: auto; display: block; }
     color: var(--ig-text);
     white-space: nowrap;
     text-shadow: 0 1px 3px rgba(255,255,255,0.9);
-    opacity: 0;
+    opacity: 0.7;
     pointer-events: none;
     transition: opacity 0.2s, color 0.2s;
 }
@@ -2688,17 +2688,14 @@ img { max-width: 100%; height: auto; display: block; }
     opacity: 1;
     color: #E53E3E;
 }
-.ig-svg-map__city {
-    position: absolute;
-    transform: translate(-50%, 50%);
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--ig-text-muted);
-    opacity: 0.5;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+.ig-svg-map__pin--city {
     pointer-events: none;
-    white-space: nowrap;
+}
+.ig-svg-map__pin--city .ig-svg-map__label {
+    opacity: 0.5;
+    color: var(--ig-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* --- Map Explorer (two-column layout) --- */
