@@ -5071,13 +5071,11 @@ button.ig-info-strip__item--ai .ig-info-strip__value {
 }
 .ig-route-marker--start div { background: #10B981; }
 .ig-route-marker--end div { background: #EF4444; }
-/* Tipo di strada */
+/* Tipo di strada (dentro profile-wrap) */
 .ig-itin-surface {
-    margin-top: var(--sp-lg);
-    background: white;
-    border-radius: var(--r-md);
-    border: 1px solid var(--ig-border);
-    padding: 20px 24px 24px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--ig-border);
 }
 .ig-itin-surface__title {
     font-size: 15px;

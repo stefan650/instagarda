@@ -126,31 +126,31 @@ $gradient = 'linear-gradient(135deg, ' . $color . ', ' . $color . 'cc)';
         <div class="ig-itin-profile-wrap" id="igItinProfileWrap" style="display:none">
             <canvas id="igItinProfile"></canvas>
             <div class="ig-itin-profile-tooltip" id="igItinTooltip"></div>
-        </div>
-        <?php if (!empty($surfaces)): ?>
-        <div class="ig-itin-surface">
-            <h4 class="ig-itin-surface__title">Tipo di strada</h4>
-            <div class="ig-itin-surface__bar">
-                <?php
+            <?php if (!empty($surfaces)):
                 $total_km = array_sum(array_column($surfaces, 1));
-                foreach ($surfaces as $s):
-                    $pct = $total_km > 0 ? ($s[1] / $total_km * 100) : 0;
-                    if ($pct < 0.5) continue;
-                ?>
-                <div class="ig-itin-surface__segment" style="width:<?php echo $pct; ?>%;background:<?php echo esc_attr($s[2]); ?>"></div>
-                <?php endforeach; ?>
-            </div>
-            <div class="ig-itin-surface__legend">
-                <?php foreach ($surfaces as $s): if ($s[1] <= 0) continue; ?>
-                <div class="ig-itin-surface__item">
-                    <span class="ig-itin-surface__dot" style="background:<?php echo esc_attr($s[2]); ?>"></span>
-                    <span class="ig-itin-surface__label"><?php echo esc_html($s[0]); ?></span>
-                    <span class="ig-itin-surface__km"><?php echo $s[1] >= 1 ? number_format($s[1], 1, '.', '') . ' km' : round($s[1] * 1000) . ' m'; ?></span>
+            ?>
+            <div class="ig-itin-surface">
+                <h4 class="ig-itin-surface__title">Tipo di strada</h4>
+                <div class="ig-itin-surface__bar">
+                    <?php foreach ($surfaces as $s):
+                        $pct = $total_km > 0 ? ($s[1] / $total_km * 100) : 0;
+                        if ($pct < 0.5) continue;
+                    ?>
+                    <div class="ig-itin-surface__segment" style="width:<?php echo $pct; ?>%;background:<?php echo esc_attr($s[2]); ?>"></div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
+                <div class="ig-itin-surface__legend">
+                    <?php foreach ($surfaces as $s): if ($s[1] <= 0) continue; ?>
+                    <div class="ig-itin-surface__item">
+                        <span class="ig-itin-surface__dot" style="background:<?php echo esc_attr($s[2]); ?>"></span>
+                        <span class="ig-itin-surface__label"><?php echo esc_html($s[0]); ?></span>
+                        <span class="ig-itin-surface__km"><?php echo $s[1] >= 1 ? number_format($s[1], 1, '.', '') . ' km' : round($s[1] * 1000) . ' m'; ?></span>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
+            <?php endif; ?>
         </div>
-        <?php endif; ?>
     </div>
 </section>
 
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var startLat = <?php echo floatval($lat); ?>;
     var startLng = <?php echo floatval($lng); ?>;
     var ajaxUrl = '<?php echo admin_url('admin-ajax.php'); ?>';
-    var trailColor = '#F9C74F';
+    var trailColor = '#1B3A5C';
 
     // Init mappa con OpenTopoMap
     var map = L.map('igItinMap', { scrollWheelZoom: false }).setView([startLat, startLng], 14);
@@ -189,8 +189,8 @@ document.addEventListener('DOMContentLoaded', function() {
             var route = res.data.route;
             var latlngs = route.map(function(p) { return [p[0], p[1]]; });
 
-            // Disegna percorso giallo con bordo scuro
-            L.polyline(latlngs, { color: '#8B6914', weight: 7, opacity: 0.4 }).addTo(map);
+            // Disegna percorso blu scuro con bordo
+            L.polyline(latlngs, { color: '#0a1e33', weight: 7, opacity: 0.3 }).addTo(map);
             L.polyline(latlngs, { color: trailColor, weight: 4, opacity: 1 }).addTo(map);
 
             // Marker start/end
@@ -282,8 +282,8 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.closePath();
 
         var grad = ctx.createLinearGradient(0, padT, 0, padT + chartH);
-        grad.addColorStop(0, 'rgba(249,199,79,0.4)');
-        grad.addColorStop(1, 'rgba(249,199,79,0.05)');
+        grad.addColorStop(0, 'rgba(27,58,92,0.3)');
+        grad.addColorStop(1, 'rgba(27,58,92,0.05)');
         ctx.fillStyle = grad;
         ctx.fill();
 
