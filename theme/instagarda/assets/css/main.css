@@ -2591,10 +2591,22 @@ img { max-width: 100%; height: auto; display: block; }
     backdrop-filter:blur(8px); color:white; font-size:.875rem; font-weight:500;
     margin-bottom:16px;
 }
-.ig-dest-hero__title { font-size:2.25rem; font-weight:800; color:white; margin-bottom:8px; }
-@media(min-width:768px) { .ig-dest-hero__title { font-size:4.5rem; } }
-.ig-dest-hero__sub { font-size:1.25rem; color:rgba(255,255,255,.9); }
-@media(min-width:768px) { .ig-dest-hero__sub { font-size:1.5rem; } }
+.ig-dest-hero__title { font-size:2rem; font-weight:800; color:white; margin-bottom:12px; line-height:1.15; }
+@media(min-width:768px) { .ig-dest-hero__title { font-size:3.5rem; } }
+.ig-dest-hero__sub { font-size:1rem; color:rgba(255,255,255,.85); max-width:540px; line-height:1.6; margin-bottom:24px; }
+@media(min-width:768px) { .ig-dest-hero__sub { font-size:1.15rem; } }
+.ig-dest-hero__actions { display:flex; gap:12px; flex-wrap:wrap; }
+.ig-btn--glass-outline {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    color: white;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.ig-btn--glass-outline:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.8);
+}
 
 /* --- Dest hero minimap --- */
 .ig-dest-hero__minimap {
