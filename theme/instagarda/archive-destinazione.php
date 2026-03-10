@@ -11,13 +11,13 @@
             <h1 class="ig-dest-hero__title">Il lago più bello d'Italia,<br>un borgo alla volta</h1>
             <p class="ig-dest-hero__sub">Da Sirmione a Riva del Garda: ogni paese ha la sua anima, il suo panorama e la sua storia da raccontarti.</p>
             <div class="ig-dest-hero__actions">
-                <button class="ig-btn ig-btn--glass" onclick="document.getElementById('ig-dest-grid').scrollIntoView({behavior:'smooth',block:'start'})">
+                <button class="ig-btn ig-btn--glass-outline" onclick="document.getElementById('ig-dest-grid').scrollIntoView({behavior:'smooth',block:'start'})">
                     Esplora le destinazioni
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
                 <button class="ig-btn ig-btn--glass-outline" onclick="window.toggleGardaChat && window.toggleGardaChat()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                    Chiedi a Garda AI
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Cosa stai cercando?
                 </button>
             </div>
         </div>
