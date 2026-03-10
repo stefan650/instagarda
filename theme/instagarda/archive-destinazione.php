@@ -25,7 +25,7 @@
                     $pin_positions = [
                         'sirmione'            => ['33%', '26%'],
                         'desenzano-del-garda' => ['8%', '27%'],
-                        'salo'                => ['15%', '45%'],
+                        'salo'                => ['14%', '47%'],
                         'gardone-riviera'     => ['31%', '62%'],
                         'toscolano-maderno'   => ['35%', '45%'],
                         'gargnano'            => ['32%', '55%'],
@@ -41,7 +41,7 @@
                         'riva-del-garda'      => ['82%', '91%'],
                         'torbole'             => ['90%', '88%'],
                         'arco'                => ['90%', '95%'],
-                        'manerba-del-garda'   => ['15%', '38%'],
+                        'manerba-del-garda'   => ['18%', '38%'],
                     ];
                     $all_dests = new WP_Query([
                         'post_type' => 'destinazione',
