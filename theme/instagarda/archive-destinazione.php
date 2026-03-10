@@ -8,18 +8,14 @@
     </div>
     <div class="ig-dest-hero__content">
         <div class="ig-container">
-            <span class="ig-dest-hero__badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                25 destinazioni da scoprire
-            </span>
             <h1 class="ig-dest-hero__title">Il lago più bello d'Italia,<br>un borgo alla volta</h1>
             <p class="ig-dest-hero__sub">Da Sirmione a Riva del Garda: ogni paese ha la sua anima, il suo panorama e la sua storia da raccontarti.</p>
             <div class="ig-dest-hero__actions">
-                <button class="ig-btn ig-btn--glass ig-btn--lg" onclick="document.getElementById('ig-dest-grid').scrollIntoView({behavior:'smooth',block:'start'})">
+                <button class="ig-btn ig-btn--glass" onclick="document.getElementById('ig-dest-grid').scrollIntoView({behavior:'smooth',block:'start'})">
                     Esplora le destinazioni
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
-                <button class="ig-btn ig-btn--glass-outline ig-btn--lg" onclick="window.toggleGardaChat && window.toggleGardaChat()">
+                <button class="ig-btn ig-btn--glass-outline" onclick="window.toggleGardaChat && window.toggleGardaChat()">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                     Chiedi a Garda AI
                 </button>
