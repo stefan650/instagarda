@@ -2688,32 +2688,6 @@ img { max-width: 100%; height: auto; display: block; }
     opacity: 1;
     color: var(--ig-text);
 }
-/* Label positioning per evitare sovrapposizioni */
-.ig-svg-map__pin--label-left {
-    flex-direction: row-reverse;
-    align-items: center;
-}
-.ig-svg-map__pin--label-left .ig-svg-map__label {
-    margin-top: 0;
-    margin-right: 6px;
-    text-align: right;
-}
-.ig-svg-map__pin--label-right {
-    flex-direction: row;
-    align-items: center;
-}
-.ig-svg-map__pin--label-right .ig-svg-map__label {
-    margin-top: 0;
-    margin-left: 6px;
-    text-align: left;
-}
-.ig-svg-map__pin--label-top {
-    flex-direction: column-reverse;
-}
-.ig-svg-map__pin--label-top .ig-svg-map__label {
-    margin-top: 0;
-    margin-bottom: 4px;
-}
 .ig-svg-map__pin--city {
     cursor: pointer;
 }
