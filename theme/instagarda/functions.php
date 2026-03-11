@@ -136,7 +136,7 @@ add_filter('excerpt_more', 'instagarda_excerpt_more');
 
 // --- Body classes ---
 function instagarda_body_classes($classes) {
-    if (is_singular('destinazione') || is_singular('struttura')) {
+    if (is_singular('destinazione') || is_singular('struttura') || is_singular('evento') || is_post_type_archive('evento')) {
         $classes[] = 'has-hero-header';
     }
     return $classes;

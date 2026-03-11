@@ -33,9 +33,9 @@ get_header();
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                 </div>
                 <div class="ig-exp-card__body">
-                    <h2 class="ig-exp-card__title">Attività & Tour</h2>
-                    <p class="ig-exp-card__desc">Sport acquatici, escursioni, bike tour, gite in barca e avventure all'aria aperta</p>
-                    <span class="ig-exp-card__link">Scopri le attività <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+                    <h2 class="ig-exp-card__title">Percorsi & Sport</h2>
+                    <p class="ig-exp-card__desc">Trekking, MTB, ciclismo, vie ferrate, sport acquatici e percorsi panoramici</p>
+                    <span class="ig-exp-card__link">Esplora i percorsi <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
                 </div>
             </a>
 
@@ -58,6 +58,39 @@ get_header();
                     <h2 class="ig-exp-card__title">Eventi</h2>
                     <p class="ig-exp-card__desc">Sagre, concerti, regate, mercatini e tutti gli appuntamenti da non perdere</p>
                     <span class="ig-exp-card__link">Vedi gli eventi <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+                </div>
+            </a>
+
+            <a href="<?php echo esc_url(home_url('/esperienze/enogastronomia/')); ?>" class="ig-exp-card">
+                <div class="ig-exp-card__visual ig-exp-card__visual--enogastro">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 8h1a4 4 0 110 8h-1"/><path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z"/><path d="M6 2v4"/><path d="M10 2v4"/></svg>
+                </div>
+                <div class="ig-exp-card__body">
+                    <h2 class="ig-exp-card__title">Enogastronomia</h2>
+                    <p class="ig-exp-card__desc">Degustazioni in cantina, frantoi, olio EVO del Garda e prodotti tipici</p>
+                    <span class="ig-exp-card__link">Scopri i sapori <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+                </div>
+            </a>
+
+            <a href="<?php echo esc_url(home_url('/esperienze/benessere/')); ?>" class="ig-exp-card">
+                <div class="ig-exp-card__visual ig-exp-card__visual--benessere">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                </div>
+                <div class="ig-exp-card__body">
+                    <h2 class="ig-exp-card__title">Benessere & Spa</h2>
+                    <p class="ig-exp-card__desc">Terme, spa con vista lago, massaggi e percorsi sensoriali</p>
+                    <span class="ig-exp-card__link">Rilassati al Garda <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+                </div>
+            </a>
+
+            <a href="<?php echo esc_url(home_url('/esperienze/tour/')); ?>" class="ig-exp-card">
+                <div class="ig-exp-card__visual ig-exp-card__visual--tour">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20"/><path d="M2 12h20"/></svg>
+                </div>
+                <div class="ig-exp-card__body">
+                    <h2 class="ig-exp-card__title">Tour & Escursioni</h2>
+                    <p class="ig-exp-card__desc">Crociere in battello, visite guidate, tour in barca e gite organizzate</p>
+                    <span class="ig-exp-card__link">Scopri i tour <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
                 </div>
             </a>
 

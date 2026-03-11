@@ -4032,6 +4032,9 @@ img { max-width: 100%; height: auto; display: block; }
 .ig-exp-card__visual--mangiare { background: linear-gradient(135deg, #F97316, #EA580C); }
 .ig-exp-card__visual--dormire  { background: linear-gradient(135deg, #6366F1, #4F46E5); }
 .ig-exp-card__visual--bar      { background: linear-gradient(135deg, #F59E0B, #D97706); }
+.ig-exp-card__visual--enogastro  { background: linear-gradient(135deg, #9333EA, #7C3AED); }
+.ig-exp-card__visual--benessere  { background: linear-gradient(135deg, #EC4899, #DB2777); }
+.ig-exp-card__visual--tour       { background: linear-gradient(135deg, #0EA5E9, #0284C7); }
 .ig-exp-card__body {
     padding: var(--sp-lg);
     display: flex;
@@ -5522,6 +5525,433 @@ button.ig-info-strip__item--ai .ig-info-strip__value {
         width: 100%;
         justify-content: center;
     }
+}
+
+/* -----------------------------------------------------------------
+   EVENTI v2
+   ----------------------------------------------------------------- */
+
+/* Hero */
+.ig-evt-hero {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 120px 0 72px;
+}
+.ig-evt-hero__bg {
+    position: absolute;
+    inset: 0;
+    background: url('../img/eventi-hero.jpg') center/cover no-repeat;
+    background-color: #1a1a1a;
+}
+.ig-evt-hero__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.65) 0%, rgba(0,0,0,.2) 50%, rgba(0,0,0,.35) 100%);
+}
+.ig-evt-hero__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 24px 24px 48px;
+}
+@media (min-width: 768px) {
+    .ig-evt-hero__content { padding: 48px 48px 56px; }
+}
+.ig-evt-hero__title {
+    color: #fff;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 12px;
+    font-family: var(--font);
+    letter-spacing: -0.02em;
+}
+.ig-evt-hero__desc {
+    color: rgba(255,255,255,.7);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.5;
+    margin: 0 0 24px;
+    max-width: 520px;
+    font-weight: 400;
+}
+.ig-evt-search {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    background: var(--ig-white);
+    border-radius: var(--r-lg);
+    padding: 6px 6px 6px 20px;
+    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--ig-border);
+    transition: border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+}
+.ig-evt-search:focus-within {
+    border-color: var(--ig-primary);
+    box-shadow: 0 0 0 3px rgba(0,122,255,.12), var(--glass-shadow);
+}
+.ig-evt-search__input {
+    border: none;
+    padding: 10px 12px 10px 0;
+    font-size: 1rem;
+    outline: none;
+    background: transparent;
+    color: var(--ig-text);
+    width: 220px;
+    font-family: var(--font);
+    min-width: 0;
+}
+.ig-evt-search__input::placeholder {
+    color: var(--ig-text-muted);
+}
+.ig-evt-search__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background: var(--ig-primary);
+    color: white;
+    border: none;
+    border-radius: var(--r-md);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background var(--duration) var(--ease);
+}
+.ig-evt-search__btn:hover {
+    background: #0063D1;
+}
+
+/* Hero filter pills */
+.ig-evt-hero-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+}
+.ig-evt-hero-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    border-radius: var(--r-pill);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    text-decoration: none;
+    color: rgba(255,255,255,.75);
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all .25s var(--ease);
+}
+.ig-evt-hero-pill:hover {
+    background: rgba(255,255,255,.18);
+    color: #fff;
+    border-color: rgba(255,255,255,.3);
+}
+.ig-evt-hero-pill.is-active {
+    background: #fff;
+    color: var(--ig-text);
+    border-color: #fff;
+    font-weight: 600;
+}
+
+/* Quick period filter buttons */
+.ig-evt-quick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px 0 16px;
+}
+.ig-evt-quick__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    border-radius: var(--r-pill);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--ig-text-muted);
+    background: var(--ig-bg-secondary);
+    border: 1px solid var(--ig-border);
+    transition: all .25s var(--ease);
+}
+.ig-evt-quick__btn:hover {
+    background: var(--ig-bg-tertiary);
+    color: var(--ig-text);
+    border-color: var(--ig-text-muted);
+}
+.ig-evt-quick__btn.is-active {
+    background: var(--ig-primary);
+    color: #fff;
+    border-color: var(--ig-primary);
+    font-weight: 600;
+}
+
+/* Filtri + Search toolbar */
+.ig-evt-filters-section {
+    padding: 20px 0 0;
+}
+.ig-evt-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 20px;
+}
+
+/* Category tabs — glass pills */
+.ig-evt-cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.ig-evt-cats__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    border-radius: var(--r-pill);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    background: rgba(0,0,0,.03);
+    border: 1px solid var(--ig-border);
+    color: var(--ig-text-muted);
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all .25s var(--ease);
+}
+.ig-evt-cats__btn:hover {
+    background: rgba(0,0,0,.06);
+    color: var(--ig-text);
+    border-color: rgba(0,0,0,.15);
+}
+.ig-evt-cats__btn.is-active {
+    background: var(--ig-primary);
+    color: #fff;
+    border-color: var(--ig-primary);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,122,255,.25);
+}
+
+/* Grid 3 colonne */
+.ig-evt-grid-section {
+    padding: 40px 0 60px;
+}
+.ig-evt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 32px;
+}
+
+/* Tile singola evento */
+.ig-evt-tile {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+}
+.ig-evt-tile__img {
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    background: var(--ig-bg);
+}
+.ig-evt-tile__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+.ig-evt-tile:hover .ig-evt-tile__img img {
+    transform: scale(1.05);
+}
+.ig-evt-tile__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #EC4899, #8B5CF6);
+    color: rgba(255,255,255,.4);
+}
+.ig-evt-tile__body {
+    padding: 16px 0 0;
+}
+.ig-evt-tile__location {
+    display: block;
+    font-size: .8rem;
+    color: var(--ig-text-muted);
+    margin-bottom: 4px;
+    font-weight: 400;
+}
+.ig-evt-tile__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+    color: var(--ig-text);
+}
+.ig-evt-tile:hover .ig-evt-tile__title {
+    color: var(--ig-primary);
+}
+.ig-evt-tile__date {
+    display: block;
+    margin-top: 6px;
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--ig-primary);
+}
+
+/* Empty state */
+.ig-evt-empty {
+    text-align: center;
+    padding: 80px 0;
+}
+.ig-evt-empty__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--ig-text);
+    margin: 16px 0 4px;
+}
+.ig-evt-empty__sub {
+    font-size: .9rem;
+    color: var(--ig-text-muted);
+    margin: 0;
+}
+
+/* Responsive eventi v2 */
+@media (max-width: 1024px) {
+    .ig-evt-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 24px; }
+}
+@media (max-width: 768px) {
+    .ig-evt-hero { min-height: 420px; padding: 100px 0 48px; }
+    .ig-evt-hero__title { font-size: 2rem; }
+    .ig-evt-hero__desc { font-size: .95rem; margin-bottom: 24px; }
+    .ig-evt-hero-filters { gap: 6px; }
+    .ig-evt-hero-pill { padding: 6px 14px; font-size: .8rem; }
+    .ig-evt-toolbar { flex-direction: column; align-items: stretch; gap: 12px; }
+    .ig-evt-cats { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+    .ig-evt-cats__btn { white-space: nowrap; }
+    .ig-evt-search { width: 100%; }
+    .ig-evt-search__input { flex: 1; width: auto; }
+    .ig-evt-grid { grid-template-columns: 1fr; gap: 32px; }
+    .ig-evt-cats__btn { padding: 10px 14px; font-size: .8rem; }
+}
+
+/* Itinerari sub-navigation pills */
+.ig-itin-subnav {
+    padding: 24px 0;
+    background: var(--ig-bg);
+    border-bottom: 1px solid var(--ig-border);
+}
+.ig-itin-subnav__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.ig-itin-subnav__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 22px;
+    border-radius: var(--r-pill);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--ig-text-muted);
+    background: rgba(0,0,0,.03);
+    border: 1px solid var(--ig-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all .25s var(--ease);
+    cursor: pointer;
+}
+.ig-itin-subnav__pill:hover {
+    background: rgba(0,0,0,.06);
+    color: var(--ig-text);
+    border-color: rgba(0,0,0,.15);
+}
+.ig-itin-subnav__pill.is-active {
+    background: var(--ig-primary);
+    color: #fff;
+    border-color: var(--ig-primary);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,122,255,.25);
+}
+.ig-itin-subnav__pill svg {
+    flex-shrink: 0;
+}
+@media (max-width: 768px) {
+    .ig-itin-subnav__pills {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        gap: 8px;
+    }
+    .ig-itin-subnav__pill {
+        white-space: nowrap;
+        padding: 8px 16px;
+        font-size: .8rem;
+    }
+}
+
+/* Itinerari filter pills (difficulty + season) */
+.ig-itin-filters {
+    padding: 16px 0 20px;
+    background: var(--ig-bg);
+}
+.ig-itin-filters__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+.ig-itin-filters__row:last-child { margin-bottom: 0; }
+.ig-itin-filters__label {
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--ig-text-muted);
+    min-width: 72px;
+}
+.ig-itin-filters__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.ig-itin-filters__pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 18px;
+    border-radius: var(--r-pill);
+    font-size: .85rem;
+    font-weight: 500;
+    background: rgba(0,0,0,.03);
+    border: 1px solid var(--ig-border);
+    color: var(--ig-text-muted);
+    cursor: pointer;
+    transition: all .25s var(--ease);
+}
+.ig-itin-filters__pill:hover {
+    background: rgba(0,0,0,.06);
+    color: var(--ig-text);
+}
+.ig-itin-filters__pill.is-active {
+    background: var(--ig-primary);
+    color: #fff;
+    border-color: var(--ig-primary);
+    font-weight: 600;
+}
+@media (max-width: 768px) {
+    .ig-itin-filters__row { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .ig-itin-filters__pills { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+    .ig-itin-filters__pill { white-space: nowrap; padding: 6px 14px; font-size: .8rem; }
 }
 
 /* Hide WPML development site banner */

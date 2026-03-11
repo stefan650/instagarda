@@ -21,14 +21,15 @@ $tags       = $tags_raw ? array_filter(array_map('trim', explode(',', $tags_raw)
 $surface_raw = get_post_meta(get_the_ID(), '_ig_itin_surface', true);
 $surfaces    = $surface_raw ? json_decode($surface_raw, true) : [];
 
-$type_labels  = ['hiking' => 'Trekking', 'cycling' => 'Ciclismo', 'mtb' => 'Mountain Bike', 'ferrata' => 'Via Ferrata', 'water' => 'Sport Acquatici'];
-$type_colors  = ['hiking' => '#10B981', 'cycling' => '#3B82F6', 'mtb' => '#F59E0B', 'ferrata' => '#EF4444', 'water' => '#06B6D4'];
+$type_labels  = ['hiking' => 'Trekking', 'cycling' => 'Ciclismo', 'mtb' => 'Mountain Bike', 'ferrata' => 'Via Ferrata', 'water' => 'Sport Acquatici', 'drive' => 'Scenic Drive'];
+$type_colors  = ['hiking' => '#10B981', 'cycling' => '#3B82F6', 'mtb' => '#F59E0B', 'ferrata' => '#EF4444', 'water' => '#06B6D4', 'drive' => '#8B5CF6'];
 $type_icons   = [
     'hiking'  => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>',
     'cycling' => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg>',
     'mtb'     => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-10 4 6 4-8 5 12"/></svg>',
     'ferrata' => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19l4-14 4 8 4-6 4 12"/></svg>',
     'water'   => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>',
+    'drive'   => '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17h2m10 0h2M5 17a2 2 0 01-2-2V9a2 2 0 012-2h2l2-3h6l2 3h2a2 2 0 012 2v6a2 2 0 01-2 2"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>',
 ];
 $diff_colors = ['facile' => '#10B981', 'media' => '#F59E0B', 'difficile' => '#EF4444'];
 $tag_labels  = [
@@ -37,6 +38,7 @@ $tag_labels  = [
     'ebike' => 'E-bike', 'mezzi' => 'Raggiungibile con mezzi', 'consigliato' => 'Consigliato',
     'balneabile' => 'Balneabile', 'ombreggiato' => 'Ombreggiato', 'culturale' => 'Interesse culturale',
     'ristori' => 'Punti ristoro', 'accessibile' => 'Accessibile',
+    'multiday' => 'Multi-giorno',
 ];
 
 $color = $type_colors[$type] ?? '#10B981';

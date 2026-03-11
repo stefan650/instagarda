@@ -10,7 +10,7 @@ $page_slug = get_post_field('post_name', get_the_ID());
 $categorie = [
     'attivita' => [
         'tipo'       => 'attivita',
-        'titolo'     => 'Attività & Tour',
+        'titolo'     => 'Percorsi & Sport',
         'headline'   => 'Vivi il lago,<br>non solo guardarlo',
         'intro'      => 'Dal windsurf al tramonto alle escursioni tra i borghi, il Lago di Garda è un parco giochi naturale dove ogni giornata diventa un ricordo indimenticabile.',
         'icon'       => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>',
@@ -58,6 +58,36 @@ $categorie = [
         'gradient'   => 'linear-gradient(135deg, #F59E0B, #D97706)',
         'outdooractive' => false,
     ],
+    'enogastronomia' => [
+        'tipo'       => 'enogastronomia',
+        'titolo'     => 'Enogastronomia',
+        'headline'   => 'Vini, olio e sapori<br>tra le colline del Garda',
+        'intro'      => 'Degustazioni in cantina, frantoi aperti, corsi di cucina e picnic tra gli uliveti. Scopri i prodotti tipici del territorio gardesano.',
+        'icon'       => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 110 8h-1"/><path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z"/><path d="M6 2v4"/><path d="M10 2v4"/></svg>',
+        'color'      => '#9333EA',
+        'gradient'   => 'linear-gradient(135deg, #9333EA, #7C3AED)',
+        'outdooractive' => false,
+    ],
+    'benessere' => [
+        'tipo'       => 'benessere',
+        'titolo'     => 'Benessere & Spa',
+        'headline'   => 'Rilassati<br>sulle rive del Garda',
+        'intro'      => 'Acque termali sulfuree, spa con vista lago, massaggi e percorsi sensoriali. Il benessere al Garda è un\'esperienza unica tra natura e relax.',
+        'icon'       => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+        'color'      => '#EC4899',
+        'gradient'   => 'linear-gradient(135deg, #EC4899, #DB2777)',
+        'outdooractive' => false,
+    ],
+    'tour' => [
+        'tipo'       => 'tour',
+        'titolo'     => 'Tour & Escursioni',
+        'headline'   => 'Scopri il lago<br>con una guida',
+        'intro'      => 'Crociere in battello, visite guidate alle isole, tour in barca privata e escursioni organizzate. Lasciati accompagnare alla scoperta del Garda.',
+        'icon'       => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20"/><path d="M2 12h20"/></svg>',
+        'color'      => '#0EA5E9',
+        'gradient'   => 'linear-gradient(135deg, #0EA5E9, #0284C7)',
+        'outdooractive' => false,
+    ],
 ];
 
 $cat = $categorie[$page_slug] ?? $categorie['attivita'];
@@ -85,6 +115,7 @@ $cat = $categorie[$page_slug] ?? $categorie['attivita'];
     </div>
 </section>
 
+<?php if (!$cat['outdooractive']): ?>
 <!-- Intro narrativa Apple-style -->
 <section class="ig-apple-section ig-apple-section--intro ig-reveal">
     <div class="ig-apple-container">
@@ -174,75 +205,77 @@ $cat = $categorie[$page_slug] ?? $categorie['attivita'];
         <?php endif; ?>
     </div>
 </section>
+<?php endif; ?>
 
 <!-- Itinerari & Percorsi (solo per Attività) -->
-<?php if ($cat['outdooractive']): ?>
+<?php if ($cat['outdooractive']):
+    $filtro_tipo_itin = isset($_GET['tipo']) ? sanitize_text_field($_GET['tipo']) : '';
+?>
 
-<section class="ig-apple-section ig-apple-section--dark ig-reveal">
-    <div class="ig-apple-container ig-text-center">
-        <h2 class="ig-apple-title ig-apple-title--white">Itinerari & Percorsi</h2>
-        <p class="ig-apple-subtitle ig-apple-subtitle--white" style="max-width:640px;margin:var(--sp-md) auto 0">I migliori sentieri, piste ciclabili e vie ferrate su tutte le sponde del Lago di Garda.</p>
+<!-- Sub-nav per tipo itinerario -->
+<section class="ig-itin-subnav">
+    <div class="ig-container">
+        <div class="ig-itin-subnav__pills">
+            <a href="?tipo=" class="ig-itin-subnav__pill <?php echo !$filtro_tipo_itin ? 'is-active' : ''; ?>" data-tipo="all">Tutti i percorsi</a>
+            <a href="?tipo=hiking" class="ig-itin-subnav__pill <?php echo $filtro_tipo_itin === 'hiking' ? 'is-active' : ''; ?>" data-tipo="hiking">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 4v16"/><path d="M17 4l-4 4-4-4"/><path d="M7 20l4-4 4 4"/></svg>
+                Trekking
+            </a>
+            <a href="?tipo=mtb" class="ig-itin-subnav__pill <?php echo $filtro_tipo_itin === 'mtb' ? 'is-active' : ''; ?>" data-tipo="mtb">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M12 18V6l4 4"/></svg>
+                Mountain Bike
+            </a>
+            <a href="?tipo=cycling" class="ig-itin-subnav__pill <?php echo $filtro_tipo_itin === 'cycling' ? 'is-active' : ''; ?>" data-tipo="cycling">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M12 18l-3-8h8"/></svg>
+                Ciclismo
+            </a>
+            <a href="?tipo=ferrata" class="ig-itin-subnav__pill <?php echo $filtro_tipo_itin === 'ferrata' ? 'is-active' : ''; ?>" data-tipo="ferrata">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20L20 4"/><path d="M8 16l2-2"/><path d="M12 12l2-2"/><path d="M16 8l2-2"/></svg>
+                Vie Ferrate
+            </a>
+            <a href="?tipo=water" class="ig-itin-subnav__pill <?php echo $filtro_tipo_itin === 'water' ? 'is-active' : ''; ?>" data-tipo="water">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>
+                Sport Acquatici
+            </a>
+            <a href="?tipo=drive" class="ig-itin-subnav__pill <?php echo $filtro_tipo_itin === 'drive' ? 'is-active' : ''; ?>" data-tipo="drive">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17h14"/><path d="M5 12h14"/><path d="M7 7h10"/></svg>
+                Scenic Drive
+            </a>
+        </div>
     </div>
 </section>
 
-<!-- Barra filtri avanzata -->
-<section class="ig-apple-section ig-apple-section--white" style="padding-bottom:0">
-    <div class="ig-apple-container ig-apple-container--wide">
-        <div class="ig-tbar" id="igTbar">
-            <div class="ig-tbar__col">
-                <label class="ig-tbar__label">Lunghezza</label>
-                <span class="ig-tbar__value" id="igTbarKmVal">0 — 130 km</span>
-                <input type="range" class="ig-tbar__range" id="igTbarKm" min="0" max="130" value="130" step="1">
+<!-- Filtri pill -->
+<section class="ig-itin-filters">
+    <div class="ig-container">
+        <!-- Nascosto, usato dal JS per compatibilità -->
+        <select id="igTbarCat" style="display:none">
+            <option value="all">Tutte</option>
+            <option value="hiking">Trekking</option>
+            <option value="cycling">Ciclismo</option>
+            <option value="mtb">Mountain Bike</option>
+            <option value="ferrata">Via Ferrata</option>
+            <option value="water">Sport Acquatici</option>
+            <option value="drive">Scenic Drive</option>
+        </select>
+
+        <div class="ig-itin-filters__row">
+            <span class="ig-itin-filters__label">Difficoltà</span>
+            <div class="ig-itin-filters__pills" id="igFilterDiff">
+                <button class="ig-itin-filters__pill is-active" data-diff="all">Tutte</button>
+                <button class="ig-itin-filters__pill" data-diff="facile">Facile</button>
+                <button class="ig-itin-filters__pill" data-diff="media">Media</button>
+                <button class="ig-itin-filters__pill" data-diff="difficile">Difficile</button>
             </div>
-            <div class="ig-tbar__col">
-                <label class="ig-tbar__label">Difficoltà</label>
-                <span class="ig-tbar__value" id="igTbarDiffVal">facile — difficile</span>
-                <input type="range" class="ig-tbar__range ig-tbar__range--diff" id="igTbarDiff" min="0" max="2" value="2" step="1">
-            </div>
-            <div class="ig-tbar__col">
-                <label class="ig-tbar__label">Categoria</label>
-                <div class="ig-tbar__select-wrap">
-                    <select id="igTbarCat" class="ig-tbar__select">
-                        <option value="all">Tutte</option>
-                        <option value="hiking">Trekking</option>
-                        <option value="cycling">Ciclismo</option>
-                        <option value="mtb">Mountain Bike</option>
-                        <option value="ferrata">Via Ferrata</option>
-                        <option value="water">Sport Acquatici</option>
-                    </select>
-                </div>
-            </div>
-            <div class="ig-tbar__col">
-                <label class="ig-tbar__label">Tipologia</label>
-                <div class="ig-tbar__dropdown-wrap">
-                    <button class="ig-tbar__dropdown-btn" id="igTbarTipBtn">Tutte <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
-                    <div class="ig-tbar__dropdown" id="igTbarTipDrop">
-                        <label><input type="checkbox" value="vista-lago"> Vista lago</label>
-                        <label><input type="checkbox" value="panoramico"> Panoramico</label>
-                        <label><input type="checkbox" value="circolare"> Percorso circolare</label>
-                        <label><input type="checkbox" value="famiglie"> Adatto a famiglie</label>
-                        <label><input type="checkbox" value="passeggino"> Adatto a passeggino</label>
-                        <label><input type="checkbox" value="cani"> Dog-friendly</label>
-                        <label><input type="checkbox" value="ebike"> E-bike</label>
-                        <label><input type="checkbox" value="mezzi"> Raggiungibile con mezzi</label>
-                        <label><input type="checkbox" value="consigliato"> Percorso consigliato</label>
-                        <label><input type="checkbox" value="balneabile"> Balneabile</label>
-                        <label><input type="checkbox" value="ombreggiato"> Ombreggiato</label>
-                        <label><input type="checkbox" value="culturale"> Interesse culturale</label>
-                        <label><input type="checkbox" value="ristori"> Punti ristoro</label>
-                        <label><input type="checkbox" value="accessibile"> Accessibile</label>
-                    </div>
-                </div>
-            </div>
-            <div class="ig-tbar__col">
-                <label class="ig-tbar__label">Località</label>
-                <div class="ig-tbar__dropdown-wrap">
-                    <button class="ig-tbar__dropdown-btn" id="igTbarLocBtn">Tutte <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
-                    <div class="ig-tbar__dropdown" id="igTbarLocDrop"></div>
-                </div>
-            </div>
-            <div class="ig-tbar__col ig-tbar__col--btn">
-                <button class="ig-tbar__search" id="igTbarSearch">Cerca</button>
+        </div>
+        <div class="ig-itin-filters__row">
+            <span class="ig-itin-filters__label">Periodo</span>
+            <div class="ig-itin-filters__pills" id="igFilterSeason">
+                <button class="ig-itin-filters__pill is-active" data-season="all">Tutto l'anno</button>
+                <button class="ig-itin-filters__pill" data-season="primavera">Primavera</button>
+                <button class="ig-itin-filters__pill" data-season="estate">Estate</button>
+                <button class="ig-itin-filters__pill" data-season="autunno">Autunno</button>
+                <button class="ig-itin-filters__pill" data-season="inverno">Inverno</button>
             </div>
         </div>
     </div>
@@ -311,63 +344,102 @@ document.addEventListener('DOMContentLoaded', function() {
         { id:25, name:'SUP Tour Sirmione', type:'water', lat:45.4960, lng:10.6080, difficulty:'facile', km:0, elevation:0, descent:0, hours:'2:00', zone:'Sirmione', tags:['panoramico','famiglie'], desc:'Tour in Stand-Up Paddle attorno al castello scaligero e le grotte di Catullo. Acqua cristallina, fonti termali sul lago e vista unica sulla penisola. Adatto anche a principianti con guida.' },
         { id:26, name:'Vela — Regate del Garda', type:'water', lat:45.5800, lng:10.6400, difficulty:'media', km:0, elevation:0, descent:0, hours:'—', zone:'Gargnano', tags:['panoramico'], desc:'Il Garda è la meta velica numero uno in Italia. Sede della Centomiglia, regata internazionale con 300+ barche. Scuole vela a Riva, Gargnano e Malcesine. Vento costante e affidabile tutto l\'anno.' },
         { id:27, name:'Canyoning Rio Nero', type:'water', lat:45.8550, lng:10.8300, difficulty:'difficile', km:0, elevation:0, descent:0, hours:'3:00', zone:'Torbole', tags:[], desc:'Discesa nelle gole del Rio Nero con tuffi, toboggan naturali e calate in corda. Brivido puro in un ambiente mozzafiato. Solo con guida autorizzata. Da maggio a settembre.' },
+
+        // --- Batch 2: 34 nuovi itinerari ---
+
+        // Hiking — Sponda Ovest & Nord
+        { id:28, name:'Punta Larici da Pregasina', type:'hiking', lat:45.8680, lng:10.8050, difficulty:'media', km:5.0, elevation:350, descent:350, hours:'2:00', zone:'Riva del Garda', tags:['vista-lago','panoramico','consigliato'], desc:'Il belvedere più spettacolare dell\'intero Lago di Garda. Un balcone naturale a 900 metri che si affaccia a strapiombo sul lago, con vista su Limone, Malcesine, Brenzone e il Monte Baldo.' },
+        { id:29, name:'Sentiero del Sole', type:'hiking', lat:45.8130, lng:10.7850, difficulty:'media', km:9.0, elevation:500, descent:500, hours:'3:30', zone:'Limone sul Garda', tags:['panoramico','culturale'], desc:'Passeggiata panoramica da Limone tra oliveti, bouganville e una passerella sospesa sul lago. Tracce delle due Guerre Mondiali lungo il percorso.' },
+        { id:30, name:'Monte Tremalzo e Corno della Marogna', type:'hiking', lat:45.8200, lng:10.7100, difficulty:'difficile', km:14.0, elevation:1000, descent:1000, hours:'5:30', zone:'Limone sul Garda', tags:['panoramico'], desc:'Trekking alpino lungo sentieri militari WWI fino al Monte Tremalzo e al Corno della Marogna. Vista a 360° su Garda, Ledro e Dolomiti di Brenta.' },
+
+        // Hiking — Sponda Veronese
+        { id:31, name:'Ponte Tibetano di Torri del Benaco', type:'hiking', lat:45.6200, lng:10.6850, difficulty:'facile', km:3.0, elevation:50, descent:50, hours:'1:00', zone:'Torri del Benaco', tags:['panoramico','famiglie'], desc:'Ponte tibetano sospeso a 45 metri nella Val Vanzana. 34 metri di adrenalina inaugurati nel 2019. Passeggiata breve adatta a famiglie.' },
+        { id:32, name:'Monte Luppia e Petroglifi', type:'hiking', lat:45.5750, lng:10.7050, difficulty:'facile', km:6.0, elevation:200, descent:200, hours:'2:00', zone:'Garda', tags:['panoramico','culturale','famiglie'], desc:'Incisioni rupestri neolitiche ai piedi del Monte Luppia tra oliveti e macchia mediterranea. Un percorso unico che unisce natura e archeologia.' },
+        { id:33, name:'Cima Valdritta da Novezzina', type:'hiking', lat:45.7400, lng:10.8850, difficulty:'difficile', km:13.0, elevation:965, descent:965, hours:'5:30', zone:'Ferrara di Monte Baldo', tags:['panoramico','ristori'], desc:'La vetta più alta del Monte Baldo (2218m) dal versante est. Si parte dal Rifugio Novezzina vicino all\'Orto Botanico. Vista a 360° dalle Dolomiti alla Pianura Padana.' },
+        { id:34, name:'Prada Alta — Rifugio Mondini', type:'hiking', lat:45.6400, lng:10.7600, difficulty:'facile', km:8.0, elevation:400, descent:400, hours:'3:00', zone:'San Zeno di Montagna', tags:['panoramico','famiglie','circolare','ristori'], desc:'Anello dolce sulla terrazza di Prada, il balcone del Garda. Prati alpini con mucche, antichi abbeveratoi e malghe tradizionali. Da San Zeno di Montagna (680m).' },
+        { id:35, name:'Forte Naole — Sentiero 662', type:'hiking', lat:45.7300, lng:10.8800, difficulty:'media', km:10.0, elevation:600, descent:600, hours:'4:30', zone:'Ferrara di Monte Baldo', tags:['panoramico','culturale'], desc:'Salita lungo il sentiero 662 fino al Forte Naole (1675m), la più alta fortificazione militare italiana del sistema difensivo di Rivoli (1905-1913).' },
+        { id:36, name:'Cresta di Naole', type:'hiking', lat:45.6600, lng:10.7800, difficulty:'media', km:12.0, elevation:650, descent:650, hours:'5:00', zone:'San Zeno di Montagna', tags:['panoramico','circolare','ristori'], desc:'Cresta alternativa meno affollata del Monte Baldo. Prati fioriti, Rifugio Fiori del Baldo e Rifugio Chierego. Vista su Garda e Val d\'Adige.' },
+        { id:37, name:'Sentiero della Salute', type:'hiking', lat:45.7630, lng:10.8100, difficulty:'facile', km:8.0, elevation:250, descent:250, hours:'2:30', zone:'Malcesine', tags:['vista-lago','panoramico','famiglie','cani'], desc:'Anello tra lungolago Malcesine-Cassone e sentiero collinare. A Cassone il fiume Aril, il più corto del mondo (175m). Borghi di pescatori e oliveti.' },
+        { id:38, name:'Brenzone Nordic Walking Park', type:'hiking', lat:45.7200, lng:10.7700, difficulty:'facile', km:20.0, elevation:300, descent:300, hours:'3:00', zone:'Brenzone sul Garda', tags:['vista-lago','famiglie','circolare','cani'], desc:'Primo Nordic Walking Park del Garda. 4 anelli tra 16 borghi medievali: Verde (4km), Blu (6km), Rosso (7km), Nero (5km). Borgo di Campo con chiesa di San Pietro in Vincoli.' },
+        { id:39, name:'Rocca di Garda & Eremo Camaldolesi', type:'hiking', lat:45.5700, lng:10.7050, difficulty:'facile', km:7.0, elevation:200, descent:200, hours:'2:00', zone:'Garda', tags:['panoramico','culturale','circolare'], desc:'Anello sul promontorio tra Garda e Bardolino. Eremo dei Camaldolesi (1663). Panorama a 360° da Malcesine a Sirmione. Nome Garda dal germanico Warda (torre di guardia).' },
+        { id:40, name:'Circuito Storico di Rivoli Veronese', type:'hiking', lat:45.5800, lng:10.8100, difficulty:'facile', km:8.0, elevation:200, descent:200, hours:'3:00', zone:'Rivoli Veronese', tags:['culturale','circolare'], desc:'Battaglia di Napoleone 1797. Museo Napoleonico, Forte Wohlgemuth (1854), Tagliata di Incanale. Il forte ospita un museo della Prima Guerra Mondiale.' },
+        { id:41, name:'Mura UNESCO di Peschiera', type:'hiking', lat:45.4400, lng:10.6900, difficulty:'facile', km:3.0, elevation:10, descent:10, hours:'1:00', zone:'Peschiera del Garda', tags:['culturale','famiglie','accessibile'], desc:'Mura veneziane pentagonali XVI-XVII secolo, Patrimonio UNESCO 2017. Camminamento di ronda tra 5 bastioni con vista sui canali e sul Mincio.' },
+        { id:42, name:'Monte Moscal', type:'hiking', lat:45.5300, lng:10.7700, difficulty:'facile', km:8.0, elevation:250, descent:250, hours:'2:30', zone:'Cavaion Veronese', tags:['panoramico','circolare'], desc:'Colline moreniche con bunker NATO della Guerra Fredda in cima (434m). Panorama a 360° dal Garda alla Val d\'Adige. Val Sorda e borgo di Incaffi.' },
+        { id:43, name:'Costermano — Oliveti e Memoriale', type:'hiking', lat:45.5600, lng:10.7300, difficulty:'facile', km:5.0, elevation:100, descent:100, hours:'1:30', zone:'Costermano sul Garda', tags:['culturale','famiglie'], desc:'Passeggiata tra oliveti fino al Cimitero Militare Tedesco (20.000 soldati). Memoriale WW2 con mosaici e portale in bronzo. Valle dei Mulini per estensione.' },
+        { id:44, name:'CamminaCustoza', type:'hiking', lat:45.3900, lng:10.7800, difficulty:'facile', km:8.0, elevation:150, descent:150, hours:'2:30', zone:'Custoza', tags:['panoramico','culturale','circolare'], desc:'Colline moreniche teatro del Risorgimento (1848 e 1866). Ossario, vigneti Custoza DOC, Forte Degenfeld a Pastrengo. Paesaggio dolce 100-250m.' },
+
+        // Cycling — Nuovi
+        { id:45, name:'Peschiera — Sirmione — Desenzano', type:'cycling', lat:45.4400, lng:10.6900, difficulty:'facile', km:36.0, elevation:30, descent:30, hours:'2:30', zone:'Peschiera del Garda', tags:['vista-lago','famiglie','accessibile','ebike','consigliato'], desc:'Giro della sponda sud: Castello Scaligero di Sirmione, Grotte di Catullo, tre località top del Garda. Percorso piano, ideale per famiglie.' },
+        { id:46, name:'Peschiera — Garda Lungolago', type:'cycling', lat:45.4400, lng:10.6900, difficulty:'facile', km:18.0, elevation:30, descent:30, hours:'1:30', zone:'Peschiera del Garda', tags:['vista-lago','famiglie','accessibile','ebike'], desc:'Ciclabile della riviera veronese: fortezza UNESCO, Lazise medievale, vigneti di Bardolino, paese di Garda. Completamente piano.' },
+        { id:47, name:'Strada del Vino Bardolino', type:'cycling', lat:45.5400, lng:10.7300, difficulty:'media', km:35.0, elevation:300, descent:300, hours:'2:30', zone:'Bardolino', tags:['panoramico','circolare','ebike','ristori','culturale'], desc:'16 comuni, 60+ cantine, Bardolino DOC. Cammino del Bardolino: 18 sentieri segnalati, 53 pannelli informativi. Degustazioni in cantina.' },
+        { id:48, name:'Ciclovia del Sole — Rivoli — Verona', type:'cycling', lat:45.5800, lng:10.8200, difficulty:'facile', km:20.0, elevation:30, descent:30, hours:'1:30', zone:'Rivoli Veronese', tags:['famiglie','accessibile','ebike','culturale'], desc:'EuroVelo 7 lungo il Canale Biffis. Forti austriaci, chiuse storiche, dal campo di battaglia di Napoleone a Verona. Asfaltato e separato dal traffico.' },
+        { id:49, name:'Salò — Valtenesi Loop', type:'cycling', lat:45.6100, lng:10.5200, difficulty:'media', km:48.0, elevation:400, descent:400, hours:'3:00', zone:'Salò', tags:['panoramico','circolare','ebike','ristori'], desc:'Colline della Valtenesi: Chiaretto, Groppello, castelli medievali. Manerba, Moniga, Padenghe. Terreno ondulato con vista costante sul lago.' },
+        { id:50, name:'Ciclopedonale Brenzone — Malcesine', type:'cycling', lat:45.7200, lng:10.7700, difficulty:'facile', km:20.0, elevation:20, descent:20, hours:'1:30', zone:'Brenzone sul Garda', tags:['vista-lago','famiglie','accessibile','ebike','passeggino'], desc:'Percorso piano e asfaltato tra 10 borghi della sponda nord-est. Castello Scaligero di Malcesine, museo del lago a Cassone. Adatto a tutti.' },
+
+        // MTB — Nuovi
+        { id:51, name:'Monte Baldo Red Tour', type:'mtb', lat:45.7650, lng:10.8100, difficulty:'difficile', km:35.0, elevation:375, descent:1958, hours:'4:00', zone:'Malcesine', tags:['panoramico','mezzi'], desc:'Funivia + mega discesa di 2000m! Versante trentino verso Brentonico, Loppio, Torbole. Da ambiente alpino alle rive del lago. 24 bici/ora in funivia.' },
+        { id:52, name:'Prada Enduro Trails', type:'mtb', lat:45.6400, lng:10.7700, difficulty:'media', km:15.0, elevation:600, descent:600, hours:'3:00', zone:'San Zeno di Montagna', tags:['panoramico','circolare'], desc:'17 trail dedicati a Prada/San Zeno di Montagna. Trail 51/54: 5km singletrack blu. Malga Valfredda: 3.6km, 361m dislivello. Meno affollata della funivia.' },
+
+        // Via Ferrata — Nuove
+        { id:53, name:'Via Ferrata Gerardo Sega', type:'ferrata', lat:45.7500, lng:10.9400, difficulty:'difficile', km:5.0, elevation:1000, descent:1000, hours:'5:00', zone:'Avio', tags:['panoramico'], desc:'Ferrata scenografica con Cascata della Preafessa. Scale su parete strapiombante, cavi su cenge esposte. Difficoltà C, molto esposta.' },
+        { id:54, name:'Via Ferrata delle Taccole', type:'ferrata', lat:45.7300, lng:10.8600, difficulty:'difficile', km:3.0, elevation:400, descent:400, hours:'6:00', zone:'Malcesine', tags:['panoramico'], desc:'La ferrata più difficile del Garda. Dal Rifugio Telegrafo, tre sezioni crescenti: camino verticale, placca strapiombante, crack-camino. Solo esperti. Difficoltà C/D.' },
+
+        // Scenic Drive — Nuova categoria
+        { id:55, name:'Strada della Forra', type:'drive', lat:45.7800, lng:10.7700, difficulty:'media', km:6.0, elevation:400, descent:0, hours:'0:30', zone:'Tremosine sul Garda', tags:['panoramico','consigliato'], desc:'L\'ottava meraviglia del mondo (Churchill). Gallerie nella gola del torrente Brasa. Set di James Bond Quantum of Solace. Solo veicoli piccoli.' },
+        { id:56, name:'Strada Panoramica del Monte Baldo', type:'drive', lat:45.6000, lng:10.8000, difficulty:'media', km:25.0, elevation:800, descent:0, hours:'1:00', zone:'Caprino Veronese', tags:['panoramico','culturale'], desc:'Tornanti sul versante orientale del Monte Baldo. Santuario Madonna della Corona incastonato nella roccia a 774m. San Zeno di Montagna e funivia per la cresta.' },
+        { id:57, name:'Valvestino e Cima Rest', type:'drive', lat:45.7100, lng:10.5500, difficulty:'media', km:30.0, elevation:600, descent:0, hours:'1:00', zone:'Gargnano', tags:['panoramico','culturale'], desc:'Entroterra segreto. Cima Rest: fienili con tetto in paglia austro-ungarici. Osservatorio astronomico (maggio-settembre). Valle selvaggia dietro il lungolago.' },
+
+        // Multi-day
+        { id:58, name:'Garda Trek — Top Loop', type:'hiking', lat:45.8850, lng:10.8430, difficulty:'difficile', km:95.0, elevation:5500, descent:5500, hours:'7 tappe', zone:'Riva del Garda', tags:['panoramico','consigliato','ristori','multiday'], desc:'Il trekking definitivo: 7 tappe rifugio in rifugio attorno alle vette trentine, dal lago a 2000m+. Solo giugno-ottobre.' },
+        { id:59, name:'Garda Trek — Medium Loop', type:'hiking', lat:45.8850, lng:10.8430, difficulty:'media', km:73.0, elevation:3275, descent:3275, hours:'4 tappe', zone:'Riva del Garda', tags:['panoramico','consigliato','ristori','multiday','culturale'], desc:'4 tappe a quota media. Borgo medievale di Tenno, turchese Lago di Tenno, villaggio artisti di Canale. Quasi tutto l\'anno.' },
+        { id:60, name:'Garda Trek — Low Loop', type:'hiking', lat:45.8850, lng:10.8430, difficulty:'facile', km:33.0, elevation:1045, descent:1045, hours:'2 tappe', zone:'Riva del Garda', tags:['panoramico','famiglie','ristori','multiday'], desc:'Mini-trek 2 tappe: Riva-Arco (castello) e ritorno via Nago-Torbole (windsurf). Accessibile tutto l\'anno, anche in giornata.' },
+        { id:61, name:'GranGarda Bikepacking', type:'cycling', lat:45.6500, lng:10.7500, difficulty:'difficile', km:350.0, elevation:10000, descent:10000, hours:'3-5 giorni', zone:'Lago di Garda', tags:['panoramico','consigliato','multiday'], desc:'Circumnavigazione gravel 350km, 10.000m+ dislivello. 40% asfalto, 40% sterrato, 20% mulattiere. Gomme 40mm+. Aprile-maggio o settembre-ottobre.' },
     ];
 
     // Slugs per link a pagine single
-    var slugs = {1:'sentiero-del-ponale',2:'rocca-di-manerba',3:'sentiero-dei-limoni',4:'cima-comer-gargnano',5:'sentiero-del-ventrar',6:'monte-baldo-cresta',7:'punta-san-vigilio',8:'cascate-di-molina',9:'eremo-di-san-giorgio',10:'busatte-tempesta',11:'monte-brione',12:'rifugio-altissimo',13:'ciclabile-limone-riva',14:'ciclopista-del-mincio',15:'colline-moreniche',16:'ciclabile-vallagarina',17:'tremalzo-trail',18:'trail-601-monte-baldo',19:'ponale-mtb',20:'san-michele-monte-cas',21:'via-ferrata-cima-capi',22:'via-ferrata-monte-colodri',23:'via-ferrata-che-guevara',24:'windsurf-kitesurf-torbole',25:'sup-tour-sirmione',26:'vela-regate-del-garda',27:'canyoning-rio-nero'};
+    var slugs = {1:'sentiero-del-ponale',2:'rocca-di-manerba',3:'sentiero-dei-limoni',4:'cima-comer-gargnano',5:'sentiero-del-ventrar',6:'monte-baldo-cresta',7:'punta-san-vigilio',8:'cascate-di-molina',9:'eremo-di-san-giorgio',10:'busatte-tempesta',11:'monte-brione',12:'rifugio-altissimo',13:'ciclabile-limone-riva',14:'ciclopista-del-mincio',15:'colline-moreniche',16:'ciclabile-vallagarina',17:'tremalzo-trail',18:'trail-601-monte-baldo',19:'ponale-mtb',20:'san-michele-monte-cas',21:'via-ferrata-cima-capi',22:'via-ferrata-monte-colodri',23:'via-ferrata-che-guevara',24:'windsurf-kitesurf-torbole',25:'sup-tour-sirmione',26:'vela-regate-del-garda',27:'canyoning-rio-nero',28:'punta-larici-pregasina',29:'sentiero-del-sole',30:'monte-tremalzo-corno-marogna',31:'ponte-tibetano-torri',32:'monte-luppia-petroglifi',33:'cima-valdritta-novezzina',34:'prada-alta-rifugio-mondini',35:'forte-naole-sentiero-662',36:'cresta-di-naole',37:'sentiero-della-salute-malcesine',38:'brenzone-nordic-walking',39:'rocca-di-garda-camaldolesi',40:'circuito-storico-rivoli',41:'mura-unesco-peschiera',42:'monte-moscal',43:'costermano-oliveti-memoriale',44:'cammina-custoza',45:'peschiera-sirmione-desenzano',46:'peschiera-garda-lungolago',47:'strada-vino-bardolino',48:'ciclovia-sole-rivoli-verona',49:'salo-valtenesi-loop',50:'ciclopedonale-brenzone-malcesine',51:'monte-baldo-red-tour',52:'prada-enduro-trails',53:'via-ferrata-gerardo-sega',54:'via-ferrata-delle-taccole',55:'strada-della-forra',56:'strada-panoramica-monte-baldo',57:'valvestino-cima-rest',58:'garda-trek-top-loop',59:'garda-trek-medium-loop',60:'garda-trek-low-loop',61:'grangarda-bikepacking'};
     trails.forEach(function(t) { t.slug = slugs[t.id] || ''; });
 
     // OutdoorActive IDs per embed mappa con percorso + profilo altimetrico
     var oaIds = {1:1481019, 2:1530226, 3:1505183, 4:1497954, 5:14352779, 6:215009748, 7:265353721, 8:58399382, 9:804061398, 10:1541894, 11:1490743, 12:14373302, 13:800639914, 14:56764715, 15:209343437, 16:8350452, 17:15856288, 18:17856272, 19:15866611, 20:235469274, 21:8270049, 22:1374487, 23:58397823};
     trails.forEach(function(t) { t.oaId = oaIds[t.id] || 0; });
 
-    var typeColors = { hiking:'#10B981', cycling:'#3B82F6', mtb:'#F59E0B', ferrata:'#EF4444', water:'#06B6D4' };
-    var typeLabels = { hiking:'Trekking', cycling:'Ciclismo', mtb:'MTB', ferrata:'Via Ferrata', water:'Acquatici' };
+    var typeColors = { hiking:'#10B981', cycling:'#3B82F6', mtb:'#F59E0B', ferrata:'#EF4444', water:'#06B6D4', drive:'#8B5CF6' };
+    var typeLabels = { hiking:'Trekking', cycling:'Ciclismo', mtb:'MTB', ferrata:'Via Ferrata', water:'Acquatici', drive:'Scenic Drive' };
     var diffLevels = ['facile','media','difficile'];
     var diffColors = { facile:'#10B981', media:'#F59E0B', difficile:'#EF4444' };
     var tagLabels = { 'vista-lago':'Vista lago', panoramico:'Panoramico', circolare:'Circolare', famiglie:'Famiglie', passeggino:'Passeggino', cani:'Dog-friendly', ebike:'E-bike', mezzi:'Con mezzi', consigliato:'Consigliato', balneabile:'Balneabile', ombreggiato:'Ombreggiato', culturale:'Interesse culturale', ristori:'Punti ristoro', accessibile:'Accessibile' };
 
-    // ─── Popola dropdown Località ───
-    var zones = [];
-    trails.forEach(function(t) { if (zones.indexOf(t.zone) === -1) zones.push(t.zone); });
-    zones.sort();
-    var locDrop = document.getElementById('igTbarLocDrop');
-    zones.forEach(function(z) {
-        var lbl = document.createElement('label');
-        lbl.innerHTML = '<input type="checkbox" value="' + z + '"> ' + z;
-        locDrop.appendChild(lbl);
-    });
+    // ─── Stagioni per tipo ───
+    var typeSeasons = {
+        hiking:  ['primavera','estate','autunno','inverno'],
+        cycling: ['primavera','estate','autunno','inverno'],
+        mtb:     ['primavera','estate','autunno'],
+        ferrata: ['primavera','estate','autunno'],
+        water:   ['estate'],
+        drive:   ['primavera','estate','autunno','inverno']
+    };
 
-    // ─── Dropdown toggle ───
-    function setupDropdown(btnId, dropId) {
-        var btn = document.getElementById(btnId);
-        var drop = document.getElementById(dropId);
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            // Chiudi l'altro
-            document.querySelectorAll('.ig-tbar__dropdown.is-open').forEach(function(d) {
-                if (d !== drop) d.classList.remove('is-open');
-            });
-            drop.classList.toggle('is-open');
+    // ─── Filtri pill: Difficoltà ───
+    var activeDiff = 'all';
+    document.querySelectorAll('#igFilterDiff .ig-itin-filters__pill').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('#igFilterDiff .ig-itin-filters__pill').forEach(function(b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+            activeDiff = btn.getAttribute('data-diff');
+            applyFilters();
         });
-        drop.addEventListener('click', function(e) { e.stopPropagation(); });
-    }
-    setupDropdown('igTbarTipBtn', 'igTbarTipDrop');
-    setupDropdown('igTbarLocBtn', 'igTbarLocDrop');
-    document.addEventListener('click', function() {
-        document.querySelectorAll('.ig-tbar__dropdown.is-open').forEach(function(d) { d.classList.remove('is-open'); });
     });
 
-    // ─── Slider labels ───
-    var kmSlider = document.getElementById('igTbarKm');
-    var kmVal = document.getElementById('igTbarKmVal');
-    kmSlider.addEventListener('input', function() { kmVal.textContent = '0 — ' + kmSlider.value + ' km'; });
-
-    var diffSlider = document.getElementById('igTbarDiff');
-    var diffVal = document.getElementById('igTbarDiffVal');
-    diffSlider.addEventListener('input', function() {
-        var labels = ['facile','facile — media','facile — difficile'];
-        diffVal.textContent = labels[diffSlider.value];
+    // ─── Filtri pill: Periodo ───
+    var activeSeason = 'all';
+    document.querySelectorAll('#igFilterSeason .ig-itin-filters__pill').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('#igFilterSeason .ig-itin-filters__pill').forEach(function(b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+            activeSeason = btn.getAttribute('data-season');
+            applyFilters();
+        });
     });
 
     // ─── Mappa Leaflet (OpenTopoMap come pagine single) ───
@@ -404,22 +476,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ─── Filtra ───
     function getFiltered() {
-        var maxKm = parseInt(kmSlider.value);
-        var maxDiff = parseInt(diffSlider.value);
         var cat = document.getElementById('igTbarCat').value;
-        var checkedTips = []; document.querySelectorAll('#igTbarTipDrop input:checked').forEach(function(c) { checkedTips.push(c.value); });
-        var checkedLocs = []; document.querySelectorAll('#igTbarLocDrop input:checked').forEach(function(c) { checkedLocs.push(c.value); });
 
         return trails.filter(function(t) {
-            if (t.km > maxKm && t.km > 0) return false;
-            var di = diffLevels.indexOf(t.difficulty);
-            if (di > maxDiff) return false;
+            // Filtro categoria (dalla sub-nav pill)
             if (cat !== 'all' && t.type !== cat) return false;
-            if (checkedTips.length > 0) {
-                var hasTag = checkedTips.some(function(tag) { return t.tags.indexOf(tag) !== -1; });
-                if (!hasTag) return false;
+            // Filtro difficoltà
+            if (activeDiff !== 'all' && t.difficulty !== activeDiff) return false;
+            // Filtro stagione
+            if (activeSeason !== 'all') {
+                var seasons = typeSeasons[t.type] || ['primavera','estate','autunno'];
+                if (seasons.indexOf(activeSeason) === -1) return false;
             }
-            if (checkedLocs.length > 0 && checkedLocs.indexOf(t.zone) === -1) return false;
             return true;
         });
     }
@@ -494,8 +562,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Sub-nav pill click → filtra per tipo
+    var subnavPills = document.querySelectorAll('.ig-itin-subnav__pill');
+    subnavPills.forEach(function(pill) {
+        pill.addEventListener('click', function(e) {
+            e.preventDefault();
+            var tipo = pill.getAttribute('data-tipo');
+            subnavPills.forEach(function(p) { p.classList.remove('is-active'); });
+            pill.classList.add('is-active');
+            document.getElementById('igTbarCat').value = tipo === 'all' ? 'all' : tipo;
+            applyFilters();
+        });
+    });
+
+    // Pre-filtra da URL ?tipo=
+    var urlTipo = new URLSearchParams(window.location.search).get('tipo');
+    if (urlTipo && urlTipo !== '') {
+        document.getElementById('igTbarCat').value = urlTipo;
+    }
+
     // Init
-    renderCards(trails);
+    renderCards(urlTipo ? getFiltered() : trails);
 
     // ─── Carica e disegna percorsi (polyline) sulla mappa ───
     var routePolylines = {}; // oaId -> L.polyline
@@ -528,8 +615,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }).catch(function(){});
     }
 
-    // Cerca button
-    document.getElementById('igTbarSearch').addEventListener('click', applyFilters);
+    // Filtri auto-apply (nessun bottone "Cerca" necessario)
 
     // ─── Dettaglio itinerario (pannello laterale con mappa) ───
     var detailEl = document.getElementById('igTrailDetail');

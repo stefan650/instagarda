@@ -220,6 +220,7 @@ function ig_itin_info_render($post) {
                 <option value="mtb" <?php selected($m('type'), 'mtb'); ?>>Mountain Bike</option>
                 <option value="ferrata" <?php selected($m('type'), 'ferrata'); ?>>Via Ferrata</option>
                 <option value="water" <?php selected($m('type'), 'water'); ?>>Sport Acquatici</option>
+                <option value="drive" <?php selected($m('type'), 'drive'); ?>>Scenic Drive</option>
             </select>
         </td></tr>
         <tr><th><label>Difficoltà</label></th><td>

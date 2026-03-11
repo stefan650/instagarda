@@ -3,5 +3,7 @@ node_modules/
 *.log
 .env
 kimi-export/
-theme/instagarda/assets/video/*.mp4
+*.mp4
 *.zip
+copertine/
+tmp-pages/
