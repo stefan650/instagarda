@@ -595,6 +595,10 @@
                     <form class="ig-newsletter__form" action="#" method="post">
                         <label for="igNewsletterEmail" style="display:block;font-size:.875rem;font-weight:500;color:white;margin-bottom:8px">La tua email</label>
                         <input type="email" id="igNewsletterEmail" name="email" placeholder="nome@email.com" required class="ig-newsletter__input">
+                        <label style="display:flex;align-items:flex-start;gap:8px;margin:10px 0 0;font-size:.75rem;color:rgba(255,255,255,.7);cursor:pointer;line-height:1.4">
+                            <input type="checkbox" name="privacy_consent" required style="margin-top:2px;flex-shrink:0">
+                            Ho letto e accetto la <a href="https://www.iubenda.com/privacy-policy/38241722" class="iubenda-black iubenda-noiframe iubenda-embed" style="color:#fff;text-decoration:underline" title="Privacy Policy">Privacy Policy</a>
+                        </label>
                         <button type="submit" class="ig-newsletter__submit">Iscriviti</button>
                         <p style="font-size:.75rem;color:rgba(255,255,255,.6);text-align:center;margin-top:12px">Niente spam, cancellati quando vuoi.</p>
                     </form>

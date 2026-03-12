@@ -20,6 +20,12 @@ $tags_raw   = get_post_meta(get_the_ID(), '_ig_itin_tags', true);
 $tags       = $tags_raw ? array_filter(array_map('trim', explode(',', $tags_raw))) : [];
 $surface_raw = get_post_meta(get_the_ID(), '_ig_itin_surface', true);
 $surfaces    = $surface_raw ? json_decode($surface_raw, true) : [];
+$parking     = get_post_meta(get_the_ID(), '_ig_itin_parking', true);
+$how_to_reach = get_post_meta(get_the_ID(), '_ig_itin_how_to_reach', true);
+$equipment   = get_post_meta(get_the_ID(), '_ig_itin_equipment', true);
+$directions  = get_post_meta(get_the_ID(), '_ig_itin_directions', true);
+$safety      = get_post_meta(get_the_ID(), '_ig_itin_safety', true);
+$oa_url      = get_post_meta(get_the_ID(), '_ig_outdooractive_url', true);
 
 $type_labels  = ['hiking' => 'Trekking', 'cycling' => 'Ciclismo', 'mtb' => 'Mountain Bike', 'ferrata' => 'Via Ferrata', 'water' => 'Sport Acquatici', 'drive' => 'Scenic Drive'];
 $type_colors  = ['hiking' => '#10B981', 'cycling' => '#3B82F6', 'mtb' => '#F59E0B', 'ferrata' => '#EF4444', 'water' => '#06B6D4', 'drive' => '#8B5CF6'];
@@ -391,7 +397,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
 
-                <?php if ($oa_id): ?>
+                <?php if ($oa_url): ?>
+                <a href="<?php echo esc_url($oa_url); ?>" target="_blank" rel="noopener" class="ig-btn ig-btn--outline ig-btn--lg" style="width:100%;justify-content:center;margin-top:var(--sp-md)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    Vedi su OutdoorActive
+                </a>
+                <?php elseif ($oa_id): ?>
                 <a href="https://www.outdooractive.com/it/route/<?php echo esc_attr($oa_id); ?>" target="_blank" rel="noopener" class="ig-btn ig-btn--outline ig-btn--lg" style="width:100%;justify-content:center;margin-top:var(--sp-md)">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                     Vedi su OutdoorActive
@@ -401,6 +412,68 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </section>
+
+<!-- Info Pratiche -->
+<?php if ($parking || $how_to_reach || $equipment || $directions || $safety): ?>
+<section class="ig-apple-section ig-apple-section--light">
+    <div class="ig-apple-container">
+        <h2 class="ig-apple-title">Info pratiche</h2>
+        <div class="ig-itin-info-grid">
+
+            <?php if ($how_to_reach): ?>
+            <div class="ig-itin-info-card">
+                <div class="ig-itin-info-card__icon" style="background:#3B82F622;color:#3B82F6">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                </div>
+                <h3 class="ig-itin-info-card__title">Come arrivare</h3>
+                <div class="ig-itin-info-card__text"><?php echo wp_kses_post(wpautop($how_to_reach)); ?></div>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($parking): ?>
+            <div class="ig-itin-info-card">
+                <div class="ig-itin-info-card__icon" style="background:#8B5CF622;color:#8B5CF6">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><text x="12" y="16" text-anchor="middle" fill="currentColor" stroke="none" font-size="12" font-weight="bold">P</text></svg>
+                </div>
+                <h3 class="ig-itin-info-card__title">Parcheggio</h3>
+                <div class="ig-itin-info-card__text"><?php echo wp_kses_post(wpautop($parking)); ?></div>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($directions): ?>
+            <div class="ig-itin-info-card ig-itin-info-card--wide">
+                <div class="ig-itin-info-card__icon" style="background:#10B98122;color:#10B981">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <h3 class="ig-itin-info-card__title">Direzioni del percorso</h3>
+                <div class="ig-itin-info-card__text"><?php echo wp_kses_post(wpautop($directions)); ?></div>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($equipment): ?>
+            <div class="ig-itin-info-card">
+                <div class="ig-itin-info-card__icon" style="background:#F59E0B22;color:#F59E0B">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <h3 class="ig-itin-info-card__title">Attrezzatura consigliata</h3>
+                <div class="ig-itin-info-card__text"><?php echo wp_kses_post(wpautop($equipment)); ?></div>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($safety): ?>
+            <div class="ig-itin-info-card">
+                <div class="ig-itin-info-card__icon" style="background:#EF444422;color:#EF4444">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <h3 class="ig-itin-info-card__title">Sicurezza</h3>
+                <div class="ig-itin-info-card__text"><?php echo wp_kses_post(wpautop($safety)); ?></div>
+            </div>
+            <?php endif; ?>
+
+        </div>
+    </div>
+</section>
+<?php endif; ?>
 
 <!-- Itinerari correlati -->
 <?php

@@ -3,6 +3,7 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://embeds.iubenda.com/widgets/4fbb9e6e-f17b-47a7-acd1-683b3bcd5e3c.js"></script>
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>

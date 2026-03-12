@@ -112,9 +112,9 @@
                     <li><a href="<?php echo esc_url(home_url('/progetto/')); ?>">Chi Siamo</a></li>
                     <li><a href="<?php echo esc_url(home_url('/contatti/')); ?>">Contatti</a></li>
                     <li><a href="https://instagram.com/instagarda" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/cookie-policy/')); ?>">Cookie Policy</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/termini/')); ?>">Termini di Servizio</a></li>
+                    <li><a href="https://www.iubenda.com/privacy-policy/38241722" class="iubenda-black iubenda-noiframe iubenda-embed" title="Privacy Policy">Privacy Policy</a></li>
+                    <li><a href="https://www.iubenda.com/privacy-policy/38241722/cookie-policy" class="iubenda-black iubenda-noiframe iubenda-embed" title="Cookie Policy">Cookie Policy</a></li>
+                    <li><a href="https://www.iubenda.com/termini-e-condizioni/38241722" class="iubenda-black iubenda-noiframe iubenda-embed" title="Termini e Condizioni">Termini e Condizioni</a></li>
                 </ul>
             </div>
 
@@ -126,9 +126,9 @@
         <div class="ig-container ig-footer__bottom-inner">
             <p class="ig-footer__copyright">&copy; <?php echo esc_html(wp_date('Y')); ?> INSTAGARDA &mdash; La guida al Lago di Garda</p>
             <div class="ig-footer__legal">
-                <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy</a>
-                <a href="<?php echo esc_url(home_url('/cookie-policy/')); ?>">Cookie</a>
-                <a href="<?php echo esc_url(home_url('/termini/')); ?>">Termini</a>
+                <a href="https://www.iubenda.com/privacy-policy/38241722" class="iubenda-black iubenda-noiframe iubenda-embed" title="Privacy Policy">Privacy</a>
+                <a href="https://www.iubenda.com/privacy-policy/38241722/cookie-policy" class="iubenda-black iubenda-noiframe iubenda-embed" title="Cookie Policy">Cookie</a>
+                <a href="https://www.iubenda.com/termini-e-condizioni/38241722" class="iubenda-black iubenda-noiframe iubenda-embed" title="Termini e Condizioni">Termini</a>
             </div>
         </div>
     </div>
@@ -141,6 +141,7 @@
     </svg>
 </button>
 
+<script type="text/javascript">(function(w,d){var loader=function(){var s=d.createElement("script"),tag=d.getElementsByTagName("script")[0];s.src="https://cdn.iubenda.com/iubenda.js";tag.parentNode.insertBefore(s,tag);};if(w.addEventListener){w.addEventListener("load",loader,false);}else if(w.attachEvent){w.attachEvent("onload",loader);}else{w.onload=loader;}})(window,document);</script>
 <?php wp_footer(); ?>
 </body>
 </html>

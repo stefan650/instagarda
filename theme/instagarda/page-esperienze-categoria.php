@@ -97,13 +97,9 @@ $cat = $categorie[$page_slug] ?? $categorie['attivita'];
 <!-- Hero (Attività) -->
 <section class="ig-dest-hero ig-dest-hero--short">
     <div class="ig-dest-hero__bg">
-        <?php if (has_post_thumbnail()):
-            the_post_thumbnail('hero');
-        else: ?>
-            <div class="ig-placeholder-img" style="background:<?php echo esc_attr($cat['gradient']); ?>">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1"><?php echo $cat['icon']; ?></svg>
-            </div>
-        <?php endif; ?>
+        <video class="ig-dest-hero__video" autoplay muted loop playsinline>
+            <source src="<?php echo esc_url(get_template_directory_uri() . '/assets/video/video_sport.mp4'); ?>" type="video/mp4">
+        </video>
     </div>
     <div class="ig-dest-hero__content">
         <div class="ig-container">

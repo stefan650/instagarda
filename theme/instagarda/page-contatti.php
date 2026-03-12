@@ -2,6 +2,62 @@
 /**
  * Template Name: Pagina Contatti
  */
+
+// --- Contact form handler ---
+$ig_contact_msg = '';
+$ig_contact_status = '';
+
+if (isset($_POST['ig_contact_submit'])) {
+    if (!isset($_POST['ig_contact_nonce']) || !wp_verify_nonce($_POST['ig_contact_nonce'], 'ig_contact_form')) {
+        $ig_contact_msg = 'Errore di sicurezza. Riprova.';
+        $ig_contact_status = 'error';
+    } elseif (empty($_POST['privacy_consent'])) {
+        $ig_contact_msg = 'Devi accettare la Privacy Policy per inviare il messaggio.';
+        $ig_contact_status = 'error';
+    } else {
+        $name    = sanitize_text_field($_POST['name'] ?? '');
+        $email   = sanitize_email($_POST['email'] ?? '');
+        $subject = sanitize_text_field($_POST['subject'] ?? 'info');
+        $message = sanitize_textarea_field($_POST['message'] ?? '');
+
+        if (empty($name) || empty($email) || empty($message)) {
+            $ig_contact_msg = 'Compila tutti i campi obbligatori.';
+            $ig_contact_status = 'error';
+        } elseif (!is_email($email)) {
+            $ig_contact_msg = 'Inserisci un indirizzo email valido.';
+            $ig_contact_status = 'error';
+        } else {
+            $subject_labels = [
+                'info'    => 'Informazioni generali',
+                'partner' => 'Diventa partner',
+                'press'   => 'Stampa / Media',
+                'bug'     => 'Segnala un problema',
+                'altro'   => 'Altro',
+            ];
+            $subject_label = $subject_labels[$subject] ?? $subject;
+
+            $to      = 'info@instagarda.net';
+            $subj    = '[Instagarda Contatti] ' . $subject_label . ' — da ' . $name;
+            $body    = "Nome: {$name}\n";
+            $body   .= "Email: {$email}\n";
+            $body   .= "Oggetto: {$subject_label}\n\n";
+            $body   .= "Messaggio:\n{$message}\n";
+            $headers = [
+                'Content-Type: text/plain; charset=UTF-8',
+                'Reply-To: ' . $name . ' <' . $email . '>',
+            ];
+
+            if (wp_mail($to, $subj, $body, $headers)) {
+                $ig_contact_msg = 'Messaggio inviato con successo! Ti risponderemo al pi&ugrave; presto.';
+                $ig_contact_status = 'success';
+            } else {
+                $ig_contact_msg = 'Si &egrave; verificato un errore nell\'invio. Prova a scriverci direttamente a <a href="mailto:info@instagarda.net">info@instagarda.net</a>.';
+                $ig_contact_status = 'error';
+            }
+        }
+    }
+}
+
 get_header();
 ?>
 
@@ -71,7 +127,12 @@ get_header();
 
             <!-- Form -->
             <div class="ig-contact-form-card">
-                <form class="ig-contact-form" action="#" method="post">
+                <?php if ($ig_contact_msg) : ?>
+                    <div class="ig-contact-alert ig-contact-alert--<?php echo esc_attr($ig_contact_status); ?>">
+                        <?php echo $ig_contact_msg; ?>
+                    </div>
+                <?php endif; ?>
+                <form class="ig-contact-form" action="<?php echo esc_url(get_permalink()); ?>" method="post">
                     <div class="ig-contact-form__row">
                         <div class="ig-contact-form__field">
                             <label for="cf-name">Nome</label>
@@ -96,7 +157,12 @@ get_header();
                         <label for="cf-message">Messaggio</label>
                         <textarea id="cf-message" name="message" rows="5" placeholder="Scrivi il tuo messaggio..." required></textarea>
                     </div>
-                    <button type="submit" class="ig-btn ig-btn--primary ig-btn--lg ig-btn--block">
+                    <label class="ig-form-consent">
+                        <input type="checkbox" name="privacy_consent" required>
+                        Ho letto e accetto la <a href="/privacy-policy/" target="_blank">Privacy Policy</a> *
+                    </label>
+                    <?php wp_nonce_field('ig_contact_form', 'ig_contact_nonce'); ?>
+                    <button type="submit" name="ig_contact_submit" class="ig-btn ig-btn--primary ig-btn--lg ig-btn--block">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                         Invia messaggio
                     </button>

@@ -245,6 +245,12 @@ function ig_itin_info_render($post) {
         </td></tr>
         <tr><th><label>OutdoorActive ID</label></th><td><input type="text" name="ig_itin_oa_id" value="<?php echo esc_attr($m('oa_id')); ?>" class="regular-text" placeholder="Es: 1481019"></td></tr>
         <tr><th><label>Tags</label></th><td><input type="text" name="ig_itin_tags" value="<?php echo esc_attr($m('tags')); ?>" class="large-text" placeholder="vista-lago,panoramico,famiglie"></td></tr>
+        <tr><th><label>Superficie</label></th><td><textarea name="ig_itin_surface" rows="2" class="large-text" placeholder='JSON: [["Sentiero",2.5,"#10B981"],["Asfalto",1.0,"#374151"]]'><?php echo esc_textarea($m('surface')); ?></textarea></td></tr>
+        <tr><th><label>Parcheggio</label></th><td><textarea name="ig_itin_parking" rows="3" class="large-text" placeholder="Info su dove parcheggiare"><?php echo esc_textarea($m('parking')); ?></textarea></td></tr>
+        <tr><th><label>Come arrivare</label></th><td><textarea name="ig_itin_how_to_reach" rows="3" class="large-text" placeholder="Indicazioni per raggiungere il punto di partenza"><?php echo esc_textarea($m('how_to_reach')); ?></textarea></td></tr>
+        <tr><th><label>Attrezzatura</label></th><td><textarea name="ig_itin_equipment" rows="3" class="large-text" placeholder="Attrezzatura consigliata"><?php echo esc_textarea($m('equipment')); ?></textarea></td></tr>
+        <tr><th><label>Direzioni</label></th><td><textarea name="ig_itin_directions" rows="5" class="large-text" placeholder="Indicazioni passo-passo del percorso"><?php echo esc_textarea($m('directions')); ?></textarea></td></tr>
+        <tr><th><label>Sicurezza</label></th><td><textarea name="ig_itin_safety" rows="3" class="large-text" placeholder="Consigli sulla sicurezza"><?php echo esc_textarea($m('safety')); ?></textarea></td></tr>
     </table>
     <?php
 }
@@ -258,6 +264,12 @@ function ig_itin_save($post_id) {
     foreach ($fields as $f) {
         if (isset($_POST['ig_itin_' . $f])) {
             update_post_meta($post_id, '_ig_itin_' . $f, sanitize_text_field($_POST['ig_itin_' . $f]));
+        }
+    }
+    $textarea_fields = ['surface', 'parking', 'how_to_reach', 'equipment', 'directions', 'safety'];
+    foreach ($textarea_fields as $f) {
+        if (isset($_POST['ig_itin_' . $f])) {
+            update_post_meta($post_id, '_ig_itin_' . $f, sanitize_textarea_field($_POST['ig_itin_' . $f]));
         }
     }
 }
