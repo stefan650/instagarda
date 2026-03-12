@@ -7,6 +7,7 @@ get_header();
 while (have_posts()): the_post();
 
 $type       = get_post_meta(get_the_ID(), '_ig_itin_type', true) ?: 'hiking';
+$status     = get_post_meta(get_the_ID(), '_ig_itin_status', true) ?: 'aperto';
 $difficulty  = get_post_meta(get_the_ID(), '_ig_itin_difficulty', true) ?: 'media';
 $km         = get_post_meta(get_the_ID(), '_ig_itin_km', true);
 $elevation  = get_post_meta(get_the_ID(), '_ig_itin_elevation', true);
@@ -26,6 +27,9 @@ $equipment   = get_post_meta(get_the_ID(), '_ig_itin_equipment', true);
 $directions  = get_post_meta(get_the_ID(), '_ig_itin_directions', true);
 $safety      = get_post_meta(get_the_ID(), '_ig_itin_safety', true);
 $oa_url      = get_post_meta(get_the_ID(), '_ig_outdooractive_url', true);
+$photo_credit = get_post_meta(get_the_ID(), '_ig_itin_photo_credit', true);
+$instagram_raw = get_post_meta(get_the_ID(), '_ig_itin_instagram', true);
+$instagram_urls = $instagram_raw ? array_filter(array_map('trim', explode("\n", $instagram_raw))) : [];
 
 $type_labels  = ['hiking' => 'Trekking', 'cycling' => 'Ciclismo', 'mtb' => 'Mountain Bike', 'ferrata' => 'Via Ferrata', 'water' => 'Sport Acquatici', 'drive' => 'Scenic Drive'];
 $type_colors  = ['hiking' => '#10B981', 'cycling' => '#3B82F6', 'mtb' => '#F59E0B', 'ferrata' => '#EF4444', 'water' => '#06B6D4', 'drive' => '#8B5CF6'];
@@ -77,6 +81,12 @@ $gradient = 'linear-gradient(135deg, ' . $color . ', ' . $color . 'cc)';
             <?php endif; ?>
         </div>
     </div>
+<?php if ($photo_credit): ?>
+    <div class="ig-dest-hero__credit">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <?php echo esc_html($photo_credit); ?>
+    </div>
+<?php endif; ?>
 </section>
 
 <!-- Info Strip -->
@@ -236,18 +246,49 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.scale(dpr, dpr);
 
         // Calcola distanze cumulative
-        var distances = [0];
+        var rawDist = [0];
         for (var i = 1; i < route.length; i++) {
             var d = haversine(route[i-1][0], route[i-1][1], route[i][0], route[i][1]);
-            distances.push(distances[i-1] + d);
+            rawDist.push(rawDist[i-1] + d);
         }
-        var totalDist = distances[distances.length - 1];
+        var totalDist = rawDist[rawDist.length - 1];
+        var rawElevs = route.map(function(p) { return p[2]; });
 
-        var elevs = route.map(function(p) { return p[2]; });
+        // ─── Downsample a ~300 punti equidistanti e smooth ───
+        var N = Math.min(300, route.length);
+        var pts = []; // {d, e} — distanza e quota
+        for (var i = 0; i < N; i++) {
+            var targetD = (i / (N - 1)) * totalDist;
+            // Trova segmento
+            var j = 1;
+            while (j < rawDist.length - 1 && rawDist[j] < targetD) j++;
+            var segLen = rawDist[j] - rawDist[j-1];
+            var t = segLen > 0 ? (targetD - rawDist[j-1]) / segLen : 0;
+            var elev = rawElevs[j-1] + t * (rawElevs[j] - rawElevs[j-1]);
+            pts.push({ d: targetD, e: elev });
+        }
+
+        // Smooth: media mobile 3 passate
+        for (var pass = 0; pass < 3; pass++) {
+            var smoothed = [];
+            var win = Math.max(3, Math.round(N / 60));
+            for (var i = 0; i < pts.length; i++) {
+                var sum = 0, count = 0;
+                for (var k = Math.max(0, i - win); k <= Math.min(pts.length - 1, i + win); k++) {
+                    sum += pts[k].e; count++;
+                }
+                smoothed.push({ d: pts[i].d, e: sum / count });
+            }
+            pts = smoothed;
+        }
+
+        var elevs = pts.map(function(p) { return p.e; });
+        var distances = pts.map(function(p) { return p.d; });
+
         var rawMin = Math.min.apply(null, elevs);
         var rawMax = Math.max.apply(null, elevs);
 
-        // Calcola step "belli" per l'asse Y
+        // Step "belli" per asse Y
         var rawRange = rawMax - rawMin || 1;
         var niceStep = rawRange / 4;
         var mag = Math.pow(10, Math.floor(Math.log10(niceStep)));
@@ -268,55 +309,71 @@ document.addEventListener('DOMContentLoaded', function() {
         var chartW = w - padL - padR;
         var chartH = h - padT - padB;
 
-        // Sfondo area grafico
-        ctx.fillStyle = '#f5f6f8';
-        ctx.fillRect(padL, padT, chartW, chartH);
-
-        // Griglia orizzontale + etichette quota
-        ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'middle';
-
-        for (var s = 0; s <= elevSteps; s++) {
-            var elev = minElev + niceStep * s;
-            var y = padT + chartH - (chartH * s / elevSteps);
-            // Linea griglia sottile
-            ctx.strokeStyle = '#e0e2e6';
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + chartW, y); ctx.stroke();
-            // Etichetta quota
-            ctx.fillStyle = '#6b7280';
-            ctx.fillText(Math.round(elev) + ' m', padL - 8, y);
+        // Coordinate canvas per i punti smooth
+        var pxPts = [];
+        for (var i = 0; i < pts.length; i++) {
+            pxPts.push({
+                x: padL + (distances[i] / totalDist) * chartW,
+                y: padT + chartH - ((elevs[i] - minElev) / elevRange) * chartH
+            });
         }
 
-        // Funzione per calcolare coordinate canvas
-        function toX(i) { return padL + (distances[i] / totalDist) * chartW; }
-        function toY(i) { return padT + chartH - ((elevs[i] - minElev) / elevRange) * chartH; }
-
-        // Area riempita grigio chiaro (stile Outdooractive)
-        ctx.beginPath();
-        ctx.moveTo(padL, padT + chartH);
-        for (var i = 0; i < route.length; i++) {
-            ctx.lineTo(toX(i), toY(i));
+        // Disegna il profilo con curva spline
+        function drawSmooth(ctx, points, close) {
+            if (close) {
+                ctx.moveTo(padL, padT + chartH);
+                ctx.lineTo(points[0].x, points[0].y);
+            } else {
+                ctx.moveTo(points[0].x, points[0].y);
+            }
+            for (var i = 0; i < points.length - 1; i++) {
+                var x0 = points[i].x, y0 = points[i].y;
+                var x1 = points[i+1].x, y1 = points[i+1].y;
+                var cpx = (x0 + x1) / 2;
+                ctx.bezierCurveTo(cpx, y0, cpx, y1, x1, y1);
+            }
+            if (close) {
+                ctx.lineTo(points[points.length-1].x, padT + chartH);
+                ctx.closePath();
+            }
         }
-        ctx.lineTo(toX(route.length - 1), padT + chartH);
-        ctx.closePath();
-        ctx.fillStyle = '#d5d8de';
-        ctx.fill();
 
-        // Linea profilo scura
-        ctx.beginPath();
-        for (var i = 0; i < route.length; i++) {
-            if (i === 0) ctx.moveTo(toX(i), toY(i));
-            else ctx.lineTo(toX(i), toY(i));
+        function redraw() {
+            ctx.clearRect(0, 0, w, h);
+            // Sfondo
+            ctx.fillStyle = '#f5f6f8';
+            ctx.fillRect(padL, padT, chartW, chartH);
+            // Griglia
+            ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            for (var s = 0; s <= elevSteps; s++) {
+                var elev = minElev + niceStep * s;
+                var y = padT + chartH - (chartH * s / elevSteps);
+                ctx.strokeStyle = '#e0e2e6';
+                ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + chartW, y); ctx.stroke();
+                ctx.fillStyle = '#6b7280';
+                ctx.fillText(Math.round(elev) + ' m', padL - 8, y);
+            }
+            // Area morbida
+            ctx.beginPath();
+            drawSmooth(ctx, pxPts, true);
+            ctx.fillStyle = '#d5d8de';
+            ctx.fill();
+            // Linea morbida
+            ctx.beginPath();
+            drawSmooth(ctx, pxPts, false);
+            ctx.strokeStyle = '#2d3748';
+            ctx.lineWidth = 2;
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            ctx.stroke();
         }
-        ctx.strokeStyle = '#2d3748';
-        ctx.lineWidth = 2;
-        ctx.lineJoin = 'round';
-        ctx.stroke();
+
+        redraw();
 
         // ─── Hover interattivo ───
-        var hoverLine = null;
         canvas.addEventListener('mousemove', function(e) {
             var rect = canvas.getBoundingClientRect();
             var mx = (e.clientX - rect.left);
@@ -324,23 +381,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
             var ratio = (mx - padL) / chartW;
             var dist = ratio * totalDist;
+            // Trova punto smooth più vicino
             var idx = 0;
             for (var i = 1; i < distances.length; i++) {
                 if (distances[i] >= dist) { idx = i; break; }
             }
-            var elev = elevs[idx];
-            var py = toY(idx);
+            var py = pxPts[idx].y;
 
-            // Ridisegna il grafico pulito + linea verticale + punto
             redraw();
+            // Linea verticale tratteggiata
             ctx.save();
             ctx.strokeStyle = 'rgba(45,55,72,0.4)';
             ctx.lineWidth = 1;
             ctx.setLineDash([4, 3]);
             ctx.beginPath(); ctx.moveTo(mx, padT); ctx.lineTo(mx, padT + chartH); ctx.stroke();
             ctx.restore();
-
-            // Punto sul profilo
+            // Punto
             ctx.beginPath();
             ctx.arc(mx, py, 4, 0, Math.PI * 2);
             ctx.fillStyle = '#2d3748';
@@ -349,48 +405,11 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            tooltip.innerHTML = '<strong>' + Math.round(elev) + ' m</strong><span style="color:rgba(255,255,255,.7);margin-left:8px">' + dist.toFixed(1) + ' km</span>';
+            tooltip.innerHTML = '<strong>' + Math.round(elevs[idx]) + ' m</strong><span style="color:rgba(255,255,255,.7);margin-left:8px">' + dist.toFixed(1) + ' km</span>';
             tooltip.style.display = 'flex';
             tooltip.style.left = Math.min(Math.max(mx, 60), w - 60) + 'px';
         });
         canvas.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; redraw(); });
-
-        function redraw() {
-            ctx.clearRect(0, 0, w, h);
-            // Sfondo
-            ctx.fillStyle = '#f5f6f8';
-            ctx.fillRect(padL, padT, chartW, chartH);
-            // Griglia
-            for (var s = 0; s <= elevSteps; s++) {
-                var elev = minElev + niceStep * s;
-                var y = padT + chartH - (chartH * s / elevSteps);
-                ctx.strokeStyle = '#e0e2e6';
-                ctx.lineWidth = 1;
-                ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + chartW, y); ctx.stroke();
-                ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-                ctx.textAlign = 'right';
-                ctx.textBaseline = 'middle';
-                ctx.fillStyle = '#6b7280';
-                ctx.fillText(Math.round(elev) + ' m', padL - 8, y);
-            }
-            // Area
-            ctx.beginPath();
-            ctx.moveTo(padL, padT + chartH);
-            for (var i = 0; i < route.length; i++) ctx.lineTo(toX(i), toY(i));
-            ctx.lineTo(toX(route.length - 1), padT + chartH);
-            ctx.closePath();
-            ctx.fillStyle = '#d5d8de';
-            ctx.fill();
-            // Linea
-            ctx.beginPath();
-            for (var i = 0; i < route.length; i++) {
-                if (i === 0) ctx.moveTo(toX(i), toY(i)); else ctx.lineTo(toX(i), toY(i));
-            }
-            ctx.strokeStyle = '#2d3748';
-            ctx.lineWidth = 2;
-            ctx.lineJoin = 'round';
-            ctx.stroke();
-        }
     }
 
     function haversine(lat1, lon1, lat2, lon2) {
@@ -403,34 +422,204 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- Descrizione + Dettagli -->
+<!-- Dettagli con Tab stile Outdooractive -->
 <section class="ig-apple-section ig-apple-section--white" style="padding-top:0">
     <div class="ig-apple-container">
         <div class="ig-itin-detail">
             <div class="ig-itin-detail__main">
-                <h2 class="ig-itin-detail__heading">Descrizione</h2>
-                <div class="ig-apple-body">
-                    <?php the_content(); ?>
+
+                <!-- Tab navigation -->
+                <nav class="ig-itin-tabs">
+                    <button class="ig-itin-tabs__btn ig-itin-tabs__btn--active" data-tab="dettagli">Dettagli</button>
+                    <button class="ig-itin-tabs__btn" data-tab="direzioni">Direzioni da seguire</button>
+                    <button class="ig-itin-tabs__btn" data-tab="arrivare">Come arrivare</button>
+                    <button class="ig-itin-tabs__btn" data-tab="attrezzatura">Attrezzatura</button>
+                    <?php if ($lat && $lng): ?>
+                    <button class="ig-itin-tabs__btn" data-tab="meteo">Meteo</button>
+                    <?php endif; ?>
+                </nav>
+
+                <!-- Tab: Dettagli -->
+                <div class="ig-itin-tab-panel ig-itin-tab-panel--active" id="igTab-dettagli">
+                    <div class="ig-apple-body">
+                        <?php the_content(); ?>
+                    </div>
+
+                    <?php if (!empty($instagram_urls)): ?>
+                    <h3 class="ig-itin-detail__subheading">Video</h3>
+                    <div class="ig-itin-reels">
+                        <?php foreach ($instagram_urls as $ig_url):
+                            // Estrai il codice dal URL Instagram
+                            if (preg_match('#instagram\.com/(?:p|reel)/([A-Za-z0-9_-]+)#', $ig_url, $ig_match)):
+                                $ig_code = $ig_match[1];
+                        ?>
+                        <div class="ig-itin-reel">
+                            <iframe src="https://www.instagram.com/p/<?php echo esc_attr($ig_code); ?>/embed/" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>
+                        </div>
+                        <?php endif; endforeach; ?>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($tags)): ?>
+                    <h3 class="ig-itin-detail__subheading">Caratteristiche</h3>
+                    <div class="ig-itin-tags">
+                        <?php foreach ($tags as $tag):
+                            if (isset($tag_labels[$tag])): ?>
+                            <span class="ig-itin-tag">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                <?php echo esc_html($tag_labels[$tag]); ?>
+                            </span>
+                        <?php endif; endforeach; ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
 
-                <?php if (!empty($tags)): ?>
-                <h3 class="ig-itin-detail__subheading">Caratteristiche</h3>
-                <div class="ig-itin-tags">
-                    <?php foreach ($tags as $tag):
-                        if (isset($tag_labels[$tag])): ?>
-                        <span class="ig-itin-tag">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                            <?php echo esc_html($tag_labels[$tag]); ?>
-                        </span>
-                    <?php endif; endforeach; ?>
+                <!-- Tab: Direzioni da seguire -->
+                <div class="ig-itin-tab-panel" id="igTab-direzioni">
+                    <?php if ($directions): ?>
+                    <h3 class="ig-itin-detail__subheading" style="margin-top:0">Direzioni da seguire</h3>
+                    <div class="ig-apple-body"><?php echo wp_kses_post(wpautop($directions)); ?></div>
+                    <?php else: ?>
+                    <p style="color:var(--ig-muted)">Le direzioni dettagliate del percorso non sono ancora disponibili per questo itinerario.</p>
+                    <?php endif; ?>
                 </div>
+
+                <!-- Tab: Come arrivare -->
+                <div class="ig-itin-tab-panel" id="igTab-arrivare">
+                    <?php if ($how_to_reach): ?>
+                    <h3 class="ig-itin-detail__subheading" style="margin-top:0">Come arrivare</h3>
+                    <div class="ig-apple-body"><?php echo wp_kses_post(wpautop($how_to_reach)); ?></div>
+                    <?php endif; ?>
+
+                    <?php if ($parking): ?>
+                    <h3 class="ig-itin-detail__subheading"<?php echo !$how_to_reach ? ' style="margin-top:0"' : ''; ?>>Dove parcheggiare</h3>
+                    <div class="ig-apple-body"><?php echo wp_kses_post(wpautop($parking)); ?></div>
+                    <?php endif; ?>
+
+                    <?php if ($lat && $lng):
+                        // Calcola coordinate DMS
+                        $lat_f = floatval($lat);
+                        $lng_f = floatval($lng);
+                        $lat_dir = $lat_f >= 0 ? 'N' : 'S';
+                        $lng_dir = $lng_f >= 0 ? 'E' : 'W';
+                        $lat_abs = abs($lat_f);
+                        $lng_abs = abs($lng_f);
+                        $lat_deg = floor($lat_abs);
+                        $lat_min = floor(($lat_abs - $lat_deg) * 60);
+                        $lat_sec = round(($lat_abs - $lat_deg - $lat_min / 60) * 3600, 1);
+                        $lng_deg = floor($lng_abs);
+                        $lng_min = floor(($lng_abs - $lng_deg) * 60);
+                        $lng_sec = round(($lng_abs - $lng_deg - $lng_min / 60) * 3600, 1);
+                        $dms = $lat_deg . '°' . $lat_min . "'" . $lat_sec . '"' . $lat_dir . ' ' . $lng_deg . '°' . $lng_min . "'" . $lng_sec . '"' . $lng_dir;
+                    ?>
+                    <h3 class="ig-itin-detail__subheading">Coordinate punto di partenza</h3>
+                    <div class="ig-itin-coords">
+                        <div class="ig-itin-coords__row">
+                            <span class="ig-itin-coords__label">DD</span>
+                            <span class="ig-itin-coords__value" id="igCoordDD"><?php echo esc_html($lat . ', ' . $lng); ?></span>
+                            <button class="ig-itin-coords__copy" onclick="navigator.clipboard.writeText('<?php echo esc_js($lat . ', ' . $lng); ?>')" title="Copia">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                            </button>
+                        </div>
+                        <div class="ig-itin-coords__row">
+                            <span class="ig-itin-coords__label">DMS</span>
+                            <span class="ig-itin-coords__value"><?php echo esc_html($dms); ?></span>
+                            <button class="ig-itin-coords__copy" onclick="navigator.clipboard.writeText('<?php echo esc_js($dms); ?>')" title="Copia">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--sp-lg)">
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=<?php echo esc_attr($lat); ?>,<?php echo esc_attr($lng); ?>" target="_blank" rel="noopener" class="ig-btn ig-btn--primary" style="display:inline-flex;align-items:center;gap:6px">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+                            Naviga al punto di partenza
+                        </a>
+                        <a href="https://www.google.com/maps/@<?php echo esc_attr($lat); ?>,<?php echo esc_attr($lng); ?>,15z" target="_blank" rel="noopener" class="ig-btn ig-btn--outline" style="display:inline-flex;align-items:center;gap:6px">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            Mostra sulla mappa
+                        </a>
+                    </div>
+                    <?php elseif (!$how_to_reach && !$parking): ?>
+                    <p style="color:var(--ig-muted)">Le indicazioni per raggiungere questo itinerario non sono ancora disponibili.</p>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Tab: Attrezzatura -->
+                <div class="ig-itin-tab-panel" id="igTab-attrezzatura">
+                    <?php if ($equipment): ?>
+                    <h3 class="ig-itin-detail__subheading" style="margin-top:0">Attrezzatura consigliata</h3>
+                    <div class="ig-apple-body"><?php echo wp_kses_post(wpautop($equipment)); ?></div>
+                    <?php endif; ?>
+
+                    <?php if ($safety): ?>
+                    <h3 class="ig-itin-detail__subheading"<?php echo !$equipment ? ' style="margin-top:0"' : ''; ?>>Sicurezza</h3>
+                    <div class="ig-apple-body"><?php echo wp_kses_post(wpautop($safety)); ?></div>
+                    <?php endif; ?>
+
+                    <?php if (!$equipment && !$safety): ?>
+                    <p style="color:var(--ig-muted)">Le informazioni sull'attrezzatura non sono ancora disponibili per questo itinerario.</p>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Tab: Meteo -->
+                <?php if ($lat && $lng): ?>
+                <div class="ig-itin-tab-panel" id="igTab-meteo">
+                    <div id="igWeatherForecast" class="ig-itin-weather">
+                        <p style="color:var(--ig-muted)">Caricamento previsioni...</p>
+                    </div>
+                </div>
+                <script>
+                (function(){
+                    var weatherCodes = {0:'Sereno',1:'Prevalentemente sereno',2:'Parzialmente nuvoloso',3:'Coperto',45:'Nebbia',48:'Nebbia con brina',51:'Pioviggine leggera',53:'Pioviggine',55:'Pioviggine intensa',61:'Pioggia leggera',63:'Pioggia',65:'Pioggia intensa',71:'Neve leggera',73:'Neve',75:'Neve intensa',80:'Rovesci leggeri',81:'Rovesci',82:'Rovesci intensi',95:'Temporale',96:'Temporale con grandine',99:'Temporale forte'};
+                    var weatherIcons = {0:'\u2600\uFE0F',1:'\u26C5',2:'\u26C5',3:'\u2601\uFE0F',45:'\uD83C\uDF2B\uFE0F',48:'\uD83C\uDF2B\uFE0F',51:'\uD83C\uDF26',53:'\uD83C\uDF27',55:'\uD83C\uDF27',61:'\uD83C\uDF26',63:'\uD83C\uDF27',65:'\uD83C\uDF27',71:'\uD83C\uDF28',73:'\u2744\uFE0F',75:'\u2744\uFE0F',80:'\uD83C\uDF26',81:'\uD83C\uDF27',82:'\u26C8',95:'\u26C8',96:'\u26C8',99:'\u26C8'};
+                    var days = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+                    fetch('https://api.open-meteo.com/v1/forecast?latitude=<?php echo esc_js($lat); ?>&longitude=<?php echo esc_js($lng); ?>&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe/Rome&forecast_days=7')
+                        .then(function(r){return r.json()})
+                        .then(function(d){
+                            var el=document.getElementById('igWeatherForecast');
+                            if(!el||!d.daily) return;
+                            var html='<div class="ig-itin-weather__grid">';
+                            for(var i=0;i<d.daily.time.length;i++){
+                                var dt=new Date(d.daily.time[i]+'T12:00:00');
+                                var day=days[dt.getDay()];
+                                var date=dt.getDate()+'/'+(dt.getMonth()+1);
+                                var code=d.daily.weather_code[i];
+                                var icon=weatherIcons[code]||'\u2601\uFE0F';
+                                var desc=weatherCodes[code]||'';
+                                var tMax=Math.round(d.daily.temperature_2m_max[i]);
+                                var tMin=Math.round(d.daily.temperature_2m_min[i]);
+                                var rain=d.daily.precipitation_probability_max[i]||0;
+                                html+='<div class="ig-itin-weather__day'+(i===0?' ig-itin-weather__day--today':'')+'">';
+                                html+='<span class="ig-itin-weather__label">'+(i===0?'Oggi':day)+'</span>';
+                                html+='<span class="ig-itin-weather__date">'+date+'</span>';
+                                html+='<span class="ig-itin-weather__icon">'+icon+'</span>';
+                                html+='<span class="ig-itin-weather__temp"><strong>'+tMax+'\u00B0</strong> / '+tMin+'\u00B0</span>';
+                                html+='<span class="ig-itin-weather__desc">'+desc+'</span>';
+                                if(rain>0) html+='<span class="ig-itin-weather__rain">\uD83D\uDCA7 '+rain+'%</span>';
+                                html+='</div>';
+                            }
+                            html+='</div>';
+                            el.innerHTML=html;
+                        }).catch(function(){ document.getElementById('igWeatherForecast').innerHTML='<p>Previsioni non disponibili</p>'; });
+                })();
+                </script>
                 <?php endif; ?>
+
             </div>
 
             <aside class="ig-itin-detail__sidebar">
                 <div class="ig-itin-sidebar-card">
                     <h4 class="ig-itin-sidebar-card__title">Dati tecnici</h4>
+                    <?php
+                        $status_labels = ['aperto' => 'Aperto', 'chiuso' => 'Chiuso', 'parziale' => 'Parzialmente aperto'];
+                        $status_colors = ['aperto' => '#10B981', 'chiuso' => '#EF4444', 'parziale' => '#F59E0B'];
+                    ?>
                     <div class="ig-itin-sidebar-card__rows">
+                        <div class="ig-itin-sidebar-card__row">
+                            <span>Stato</span>
+                            <strong><span class="ig-itin-status-badge" style="background:<?php echo esc_attr($status_colors[$status] ?? '#10B981'); ?>"><?php echo esc_html($status_labels[$status] ?? 'Aperto'); ?></span></strong>
+                        </div>
                         <?php if ($km): ?>
                         <div class="ig-itin-sidebar-card__row">
                             <span>Distanza</span><strong><?php echo esc_html($km); ?> km</strong>
@@ -482,67 +671,21 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>
 
-<!-- Info Pratiche -->
-<?php if ($parking || $how_to_reach || $equipment || $directions || $safety): ?>
-<section class="ig-apple-section ig-apple-section--light">
-    <div class="ig-apple-container">
-        <h2 class="ig-apple-title">Info pratiche</h2>
-        <div class="ig-itin-info-grid">
-
-            <?php if ($how_to_reach): ?>
-            <div class="ig-itin-info-card">
-                <div class="ig-itin-info-card__icon" style="background:#3B82F622;color:#3B82F6">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-                </div>
-                <h3 class="ig-itin-info-card__title">Come arrivare</h3>
-                <div class="ig-itin-info-card__text"><?php echo wp_kses_post(wpautop($how_to_reach)); ?></div>
-            </div>
-            <?php endif; ?>
-
-            <?php if ($parking): ?>
-            <div class="ig-itin-info-card">
-                <div class="ig-itin-info-card__icon" style="background:#8B5CF622;color:#8B5CF6">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><text x="12" y="16" text-anchor="middle" fill="currentColor" stroke="none" font-size="12" font-weight="bold">P</text></svg>
-                </div>
-                <h3 class="ig-itin-info-card__title">Parcheggio</h3>
-                <div class="ig-itin-info-card__text"><?php echo wp_kses_post(wpautop($parking)); ?></div>
-            </div>
-            <?php endif; ?>
-
-            <?php if ($directions): ?>
-            <div class="ig-itin-info-card ig-itin-info-card--wide">
-                <div class="ig-itin-info-card__icon" style="background:#10B98122;color:#10B981">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                </div>
-                <h3 class="ig-itin-info-card__title">Direzioni del percorso</h3>
-                <div class="ig-itin-info-card__text"><?php echo wp_kses_post(wpautop($directions)); ?></div>
-            </div>
-            <?php endif; ?>
-
-            <?php if ($equipment): ?>
-            <div class="ig-itin-info-card">
-                <div class="ig-itin-info-card__icon" style="background:#F59E0B22;color:#F59E0B">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                </div>
-                <h3 class="ig-itin-info-card__title">Attrezzatura consigliata</h3>
-                <div class="ig-itin-info-card__text"><?php echo wp_kses_post(wpautop($equipment)); ?></div>
-            </div>
-            <?php endif; ?>
-
-            <?php if ($safety): ?>
-            <div class="ig-itin-info-card">
-                <div class="ig-itin-info-card__icon" style="background:#EF444422;color:#EF4444">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                </div>
-                <h3 class="ig-itin-info-card__title">Sicurezza</h3>
-                <div class="ig-itin-info-card__text"><?php echo wp_kses_post(wpautop($safety)); ?></div>
-            </div>
-            <?php endif; ?>
-
-        </div>
-    </div>
-</section>
-<?php endif; ?>
+<!-- Tab switching -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var btns = document.querySelectorAll('.ig-itin-tabs__btn');
+    btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            btns.forEach(function(b) { b.classList.remove('ig-itin-tabs__btn--active'); });
+            btn.classList.add('ig-itin-tabs__btn--active');
+            document.querySelectorAll('.ig-itin-tab-panel').forEach(function(p) { p.classList.remove('ig-itin-tab-panel--active'); });
+            var panel = document.getElementById('igTab-' + btn.getAttribute('data-tab'));
+            if (panel) panel.classList.add('ig-itin-tab-panel--active');
+        });
+    });
+});
+</script>
 
 <!-- Itinerari correlati -->
 <?php

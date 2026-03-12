@@ -217,6 +217,13 @@ function ig_itin_info_render($post) {
     $m = function($k) use ($post) { return get_post_meta($post->ID, '_ig_itin_' . $k, true); };
     ?>
     <table class="form-table">
+        <tr><th><label>Stato</label></th><td>
+            <select name="ig_itin_status">
+                <option value="aperto" <?php selected($m('status'), 'aperto'); ?>>Aperto</option>
+                <option value="chiuso" <?php selected($m('status'), 'chiuso'); ?>>Chiuso</option>
+                <option value="parziale" <?php selected($m('status'), 'parziale'); ?>>Parzialmente aperto</option>
+            </select>
+        </td></tr>
         <tr><th><label>Tipo</label></th><td>
             <select name="ig_itin_type">
                 <option value="hiking" <?php selected($m('type'), 'hiking'); ?>>Trekking</option>
@@ -251,6 +258,9 @@ function ig_itin_info_render($post) {
         <tr><th><label>Attrezzatura</label></th><td><textarea name="ig_itin_equipment" rows="3" class="large-text" placeholder="Attrezzatura consigliata"><?php echo esc_textarea($m('equipment')); ?></textarea></td></tr>
         <tr><th><label>Direzioni</label></th><td><textarea name="ig_itin_directions" rows="5" class="large-text" placeholder="Indicazioni passo-passo del percorso"><?php echo esc_textarea($m('directions')); ?></textarea></td></tr>
         <tr><th><label>Sicurezza</label></th><td><textarea name="ig_itin_safety" rows="3" class="large-text" placeholder="Consigli sulla sicurezza"><?php echo esc_textarea($m('safety')); ?></textarea></td></tr>
+        <tr><th><label>URL OutdoorActive</label></th><td><input type="url" name="ig_outdooractive_url" value="<?php echo esc_attr(get_post_meta($post->ID, '_ig_outdooractive_url', true)); ?>" class="large-text" placeholder="https://www.outdooractive.com/..."></td></tr>
+        <tr><th><label>Credito foto</label></th><td><input type="text" name="ig_itin_photo_credit" value="<?php echo esc_attr($m('photo_credit')); ?>" class="large-text" placeholder="Es: Archivio Garda Trentino (ph. Watchsome)"></td></tr>
+        <tr><th><label>Instagram</label></th><td><textarea name="ig_itin_instagram" rows="2" class="large-text" placeholder="URL Instagram (uno per riga)&#10;https://www.instagram.com/p/Czvq1RILKP9/"><?php echo esc_textarea($m('instagram')); ?></textarea></td></tr>
     </table>
     <?php
 }
@@ -260,17 +270,23 @@ function ig_itin_save($post_id) {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if (!current_user_can('edit_post', $post_id)) return;
 
-    $fields = ['type', 'difficulty', 'km', 'elevation', 'descent', 'hours', 'zone', 'lat', 'lng', 'oa_id', 'tags'];
+    $fields = ['status', 'type', 'difficulty', 'km', 'elevation', 'descent', 'hours', 'zone', 'lat', 'lng', 'oa_id', 'tags'];
     foreach ($fields as $f) {
         if (isset($_POST['ig_itin_' . $f])) {
             update_post_meta($post_id, '_ig_itin_' . $f, sanitize_text_field($_POST['ig_itin_' . $f]));
         }
     }
-    $textarea_fields = ['surface', 'parking', 'how_to_reach', 'equipment', 'directions', 'safety'];
+    $textarea_fields = ['surface', 'parking', 'how_to_reach', 'equipment', 'directions', 'safety', 'instagram'];
     foreach ($textarea_fields as $f) {
         if (isset($_POST['ig_itin_' . $f])) {
             update_post_meta($post_id, '_ig_itin_' . $f, sanitize_textarea_field($_POST['ig_itin_' . $f]));
         }
+    }
+    if (isset($_POST['ig_outdooractive_url'])) {
+        update_post_meta($post_id, '_ig_outdooractive_url', esc_url_raw($_POST['ig_outdooractive_url']));
+    }
+    if (isset($_POST['ig_itin_photo_credit'])) {
+        update_post_meta($post_id, '_ig_itin_' . 'photo_credit', sanitize_text_field($_POST['ig_itin_photo_credit']));
     }
 }
 add_action('save_post_itinerario', 'ig_itin_save');
