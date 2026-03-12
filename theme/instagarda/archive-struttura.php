@@ -38,9 +38,9 @@
                         </p>
                     <?php endif; ?>
                     <?php if ($prezzo && isset($prezzi[$prezzo])): ?>
-                        <span class="ig-listing-card__price"><?php echo $prezzi[$prezzo]; ?></span>
+                        <span class="ig-listing-card__price"><?php echo esc_html($prezzi[$prezzo]); ?></span>
                     <?php endif; ?>
-                    <p class="ig-listing-card__excerpt"><?php echo get_the_excerpt(); ?></p>
+                    <p class="ig-listing-card__excerpt"><?php echo esc_html(get_the_excerpt()); ?></p>
                 </div>
             </article>
             <?php endwhile; endif; ?>

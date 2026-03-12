@@ -59,7 +59,7 @@ $gradient = 'linear-gradient(135deg, ' . $color . ', ' . $color . 'cc)';
     <div class="ig-dest-hero__content">
         <div class="ig-container">
             <span class="ig-dest-hero__badge" style="background:<?php echo esc_attr($color); ?>">
-                <?php echo $type_icons[$type] ?? ''; ?>
+                <?php echo wp_kses_post($type_icons[$type] ?? ''); ?>
                 <?php echo esc_html($type_labels[$type] ?? 'Itinerario'); ?>
             </span>
             <h1 class="ig-dest-hero__title"><?php the_title(); ?></h1>
@@ -138,7 +138,7 @@ $gradient = 'linear-gradient(135deg, ' . $color . ', ' . $color . 'cc)';
                         $pct = $total_km > 0 ? ($s[1] / $total_km * 100) : 0;
                         if ($pct < 0.5) continue;
                     ?>
-                    <div class="ig-itin-surface__segment" style="width:<?php echo $pct; ?>%;background:<?php echo esc_attr($s[2]); ?>"></div>
+                    <div class="ig-itin-surface__segment" style="width:<?php echo esc_attr($pct); ?>%;background:<?php echo esc_attr($s[2]); ?>"></div>
                     <?php endforeach; ?>
                 </div>
                 <div class="ig-itin-surface__legend">
@@ -156,8 +156,6 @@ $gradient = 'linear-gradient(135deg, ' . $color . ', ' . $color . 'cc)';
     </div>
 </section>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var oaId = <?php echo intval($oa_id); ?>;
@@ -410,7 +408,8 @@ $related_args = [
     'post_type'      => 'itinerario',
     'posts_per_page' => 3,
     'post__not_in'   => [get_the_ID()],
-    'orderby'        => 'rand',
+    'orderby'        => 'date',
+    'order'          => 'DESC',
 ];
 
 // Prova prima stessa zona

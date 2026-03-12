@@ -8,8 +8,8 @@ add_action('wp_ajax_nopriv_ig_trail_route', 'ig_trail_route_handler');
 
 function ig_trail_route_handler() {
     $oa_id = intval($_GET['oa_id'] ?? 0);
-    if (!$oa_id) {
-        wp_send_json_error('Missing oa_id');
+    if (!$oa_id || $oa_id < 1000 || $oa_id > 999999999) {
+        wp_send_json_error('Invalid oa_id');
     }
 
     $cache_key = 'ig_trail_route_' . $oa_id;

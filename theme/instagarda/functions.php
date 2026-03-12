@@ -76,8 +76,8 @@ function instagarda_assets() {
         'chat_api'  => '/api/chat',
     ]);
 
-    // Leaflet per pagine destinazione (singola e archive)
-    if (is_singular('destinazione') || is_post_type_archive('destinazione')) {
+    // Leaflet per pagine destinazione, itinerari e pagine con mappa
+    if (is_singular('destinazione') || is_post_type_archive('destinazione') || is_singular('itinerario')) {
         wp_enqueue_style('leaflet-css',
             'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
             [], '1.9.4'
@@ -148,3 +148,12 @@ function ig_get_meta($key, $post_id = null) {
     if (!$post_id) $post_id = get_the_ID();
     return get_post_meta($post_id, '_ig_' . $key, true);
 }
+
+// --- Invalida cache footer quando si modifica/elimina una destinazione ---
+function ig_invalidate_footer_cache($post_id) {
+    if (get_post_type($post_id) === 'destinazione') {
+        delete_transient('ig_footer_destinations');
+    }
+}
+add_action('save_post', 'ig_invalidate_footer_cache');
+add_action('delete_post', 'ig_invalidate_footer_cache');

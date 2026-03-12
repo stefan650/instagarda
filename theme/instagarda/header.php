@@ -8,6 +8,9 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<!-- Skip to content (accessibility) -->
+<a href="#ig-main-content" class="ig-skip-link">Vai al contenuto principale</a>
+
 <!-- Fixed Header -->
 <header class="ig-header" id="igHeader">
     <div class="ig-header__inner">
@@ -50,7 +53,7 @@
                 <div class="ig-nav__dropdown-menu">
                     <a href="<?php echo esc_url(home_url('/esperienze/attivita/')); ?>" class="ig-nav__dropdown-item">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-                        Attività & Tour
+                        Percorsi & Sport
                     </a>
                     <a href="<?php echo esc_url(home_url('/esperienze/cultura/')); ?>" class="ig-nav__dropdown-item">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
@@ -113,14 +116,14 @@
             ?>
             <div class="ig-lang-switcher">
                 <button class="ig-header__lang-btn" aria-expanded="false">
-                    <span class="ig-header__lang-flag"><?php echo $flags[ICL_LANGUAGE_CODE] ?? ''; ?></span>
-                    <span><?php echo strtoupper(ICL_LANGUAGE_CODE); ?></span>
+                    <span class="ig-header__lang-flag"><?php echo wp_kses_post($flags[ICL_LANGUAGE_CODE] ?? ''); ?></span>
+                    <span><?php echo esc_html(strtoupper(ICL_LANGUAGE_CODE)); ?></span>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
                 <div class="ig-lang-switcher__menu">
                     <?php foreach ($langs as $code => $lang): if ($code === ICL_LANGUAGE_CODE) continue; ?>
                     <a href="<?php echo esc_url($lang['url']); ?>" class="ig-lang-switcher__item">
-                        <span><?php echo $flags[$code] ?? ''; ?></span>
+                        <span><?php echo wp_kses_post($flags[$code] ?? ''); ?></span>
                         <span><?php echo esc_html($lang['translated_name']); ?></span>
                     </a>
                     <?php endforeach; ?>
@@ -166,7 +169,7 @@
 
             <!-- Destinazioni -->
             <div class="ig-mobile-menu__group">
-                <a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>" class="ig-mobile-menu__heading">
+                <a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>" class="ig-mobile-menu__heading" data-toggle="mobile-dest">
                     Destinazioni
                 </a>
                 <div class="ig-mobile-menu__submenu" id="mobile-dest">
@@ -182,13 +185,13 @@
 
             <!-- Esperienze -->
             <div class="ig-mobile-menu__group">
-                <a href="<?php echo esc_url(home_url('/esperienze/')); ?>" class="ig-mobile-menu__heading">
+                <a href="<?php echo esc_url(home_url('/esperienze/')); ?>" class="ig-mobile-menu__heading" data-toggle="mobile-vivi">
                     Esperienze
                 </a>
                 <div class="ig-mobile-menu__submenu" id="mobile-vivi">
                     <a href="<?php echo esc_url(home_url('/esperienze/attivita/')); ?>">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-                        Attività & Tour
+                        Percorsi & Sport
                     </a>
                     <a href="<?php echo esc_url(home_url('/esperienze/cultura/')); ?>">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
@@ -221,4 +224,4 @@
     </div>
 </header>
 
-<main class="ig-main">
+<main class="ig-main" id="ig-main-content">

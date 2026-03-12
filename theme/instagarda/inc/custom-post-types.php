@@ -156,11 +156,15 @@ function ig_evt_save($post_id) {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if (!current_user_can('edit_post', $post_id)) return;
 
-    $fields = ['data_inizio', 'data_fine', 'orario', 'luogo', 'prezzo_evento', 'link_esterno'];
+    $fields = ['data_inizio', 'data_fine', 'orario', 'luogo', 'prezzo_evento'];
     foreach ($fields as $f) {
         if (isset($_POST['ig_' . $f])) {
             update_post_meta($post_id, '_ig_' . $f, sanitize_text_field($_POST['ig_' . $f]));
         }
+    }
+    // Link esterno e' un URL: usa esc_url_raw per la sanitizzazione
+    if (isset($_POST['ig_link_esterno'])) {
+        update_post_meta($post_id, '_ig_link_esterno', esc_url_raw($_POST['ig_link_esterno']));
     }
 }
 add_action('save_post_evento', 'ig_evt_save');
@@ -329,11 +333,15 @@ function ig_dest_save($post_id) {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if (!current_user_can('edit_post', $post_id)) return;
 
-    $fields = ['subtitle', 'regione', 'posizione', 'popolazione', 'altitudine', 'come_arrivare', 'highlights', 'map_lat', 'map_lng'];
+    $fields = ['subtitle', 'regione', 'posizione', 'popolazione', 'altitudine', 'come_arrivare', 'map_lat', 'map_lng'];
     foreach ($fields as $f) {
         if (isset($_POST['ig_' . $f])) {
             update_post_meta($post_id, '_ig_' . $f, sanitize_text_field($_POST['ig_' . $f]));
         }
+    }
+    // Highlights e' un textarea: usa sanitize_textarea_field per preservare i ritorni a capo
+    if (isset($_POST['ig_highlights'])) {
+        update_post_meta($post_id, '_ig_highlights', sanitize_textarea_field($_POST['ig_highlights']));
     }
 }
 add_action('save_post_destinazione', 'ig_dest_save');
@@ -379,11 +387,19 @@ function ig_str_save($post_id) {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if (!current_user_can('edit_post', $post_id)) return;
 
-    $fields = ['indirizzo', 'telefono', 'email', 'website', 'prezzo', 'orari'];
+    $fields = ['indirizzo', 'telefono', 'prezzo', 'orari'];
     foreach ($fields as $f) {
         if (isset($_POST['ig_' . $f])) {
             update_post_meta($post_id, '_ig_' . $f, sanitize_text_field($_POST['ig_' . $f]));
         }
+    }
+    // Email: sanitizzazione specifica
+    if (isset($_POST['ig_email'])) {
+        update_post_meta($post_id, '_ig_email', sanitize_email($_POST['ig_email']));
+    }
+    // Website e' un URL: usa esc_url_raw
+    if (isset($_POST['ig_website'])) {
+        update_post_meta($post_id, '_ig_website', esc_url_raw($_POST['ig_website']));
     }
 }
 add_action('save_post_struttura', 'ig_str_save');

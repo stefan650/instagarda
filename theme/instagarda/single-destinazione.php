@@ -36,6 +36,12 @@
             'riva-del-garda'      => [45.8862, 10.8412],
             'torbole'             => [45.8748, 10.8739],
             'arco'                => [45.9178, 10.8854],
+            'lonato-del-garda'    => [45.4604, 10.4858],
+            'polpenazze-del-garda'=> [45.5567, 10.5033],
+            'moniga-del-garda'    => [45.5297, 10.5411],
+            'padenghe-sul-garda'  => [45.5089, 10.5128],
+            'san-felice-del-benaco'=> [45.5811, 10.5517],
+            'soiano-del-lago'     => [45.5433, 10.5139],
         ];
         if (isset($coords[$slug])) {
             $map_lat = $coords[$slug][0];
@@ -69,6 +75,12 @@
             'trento'              => ['105%', '105%'],
             'mantova'             => ['50%', '-15%'],
             'manerba-del-garda'   => ['18%', '38%'],
+            'moniga-del-garda'    => ['16%', '34%'],
+            'padenghe-sul-garda'  => ['14%', '30%'],
+            'lonato-del-garda'    => ['5%', '17%'],
+            'polpenazze-del-garda'=> ['5%', '42%'],
+            'san-felice-del-benaco'=> ['21%', '43%'],
+            'soiano-del-lago'     => ['8%', '38%'],
             'castelnuovo-del-garda'=> ['70%', '19%'],
             'valeggio-sul-mincio' => ['40%', '0%'],
         ];

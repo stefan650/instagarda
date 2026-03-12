@@ -103,12 +103,12 @@ $loc_list = ($localita && !is_wp_error($localita)) ? $localita : [];
             <h1 class="ig-evt-hero__title">Il lago prende vita</h1>
 
             <!-- Filtro per località -->
-            <div class="ig-evt-hero-filters">
-                <a href="<?php echo esc_url(remove_query_arg('loc')); ?>" class="ig-evt-hero-pill <?php echo !$filtro_loc ? 'is-active' : ''; ?>">Tutto il lago</a>
+            <nav class="ig-evt-hero-filters" aria-label="Filtra per località">
+                <a href="<?php echo esc_url(remove_query_arg('loc')); ?>" class="ig-evt-hero-pill <?php echo !$filtro_loc ? 'is-active' : ''; ?>" <?php echo !$filtro_loc ? 'aria-current="true"' : ''; ?>>Tutto il lago</a>
                 <?php foreach ($loc_list as $loc_item): ?>
-                <a href="<?php echo esc_url(add_query_arg('loc', $loc_item->slug)); ?>" class="ig-evt-hero-pill <?php echo $filtro_loc === $loc_item->slug ? 'is-active' : ''; ?>"><?php echo esc_html($loc_item->name); ?></a>
+                <a href="<?php echo esc_url(add_query_arg('loc', $loc_item->slug)); ?>" class="ig-evt-hero-pill <?php echo $filtro_loc === $loc_item->slug ? 'is-active' : ''; ?>" <?php echo $filtro_loc === $loc_item->slug ? 'aria-current="true"' : ''; ?>><?php echo esc_html($loc_item->name); ?></a>
                 <?php endforeach; ?>
-            </div>
+            </nav>
         </div>
     </div>
 </section>
@@ -122,7 +122,7 @@ $loc_list = ($localita && !is_wp_error($localita)) ? $localita : [];
             <a href="?periodo=questa-settimana" class="ig-evt-quick__btn <?php echo $filtro_tempo === 'questa-settimana' ? 'is-active' : ''; ?>">Questa settimana</a>
             <a href="?periodo=questo-mese" class="ig-evt-quick__btn <?php echo $filtro_tempo === 'questo-mese' ? 'is-active' : ''; ?>">Questo mese</a>
             <a href="?periodo=prossimi" class="ig-evt-quick__btn <?php echo $filtro_tempo === 'prossimi' ? 'is-active' : ''; ?>">Prossimamente</a>
-            <a href="?periodo=tutti" class="ig-evt-quick__btn <?php echo ($filtro_tempo === 'tutti' || $filtro_tempo === '') ? 'is-active' : ''; ?>">Tutti</a>
+            <a href="?periodo=tutti" class="ig-evt-quick__btn <?php echo $filtro_tempo === 'tutti' ? 'is-active' : ''; ?>">Tutti</a>
         </div>
 
         <!-- Filtro tipo + Search -->
@@ -136,13 +136,6 @@ $loc_list = ($localita && !is_wp_error($localita)) ? $localita : [];
             </div>
             <?php endif; ?>
 
-            <form class="ig-evt-search" method="get" action="<?php echo esc_url(get_post_type_archive_link('evento')); ?>">
-                <input type="hidden" name="periodo" value="<?php echo esc_attr($filtro_tempo); ?>">
-                <input type="text" name="s_evt" class="ig-evt-search__input" placeholder="Cerca evento..." value="<?php echo esc_attr($filtro_search); ?>">
-                <button type="submit" class="ig-evt-search__btn">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                </button>
-            </form>
         </div>
     </div>
 </section>
@@ -174,18 +167,22 @@ $loc_list = ($localita && !is_wp_error($localita)) ? $localita : [];
                     }
                 }
             ?>
-            <a href="<?php the_permalink(); ?>" class="ig-evt-tile" data-tipo="<?php echo esc_attr($tipo_slug); ?>">
+            <a href="<?php the_permalink(); ?>" class="ig-evt-tile" data-tipo="<?php echo esc_attr($tipo_slug); ?>" aria-label="<?php echo esc_attr(get_the_title()); ?>">
                 <div class="ig-evt-tile__img">
-                    <?php if (has_post_thumbnail()): the_post_thumbnail('medium_large');
+                    <?php if (has_post_thumbnail()):
+                        the_post_thumbnail('medium_large', ['loading' => 'lazy', 'alt' => esc_attr(get_the_title())]);
                     else: ?>
                         <div class="ig-evt-tile__placeholder">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                         </div>
                     <?php endif; ?>
                 </div>
                 <div class="ig-evt-tile__body">
                     <?php if ($loc_name): ?>
-                    <span class="ig-evt-tile__location"><?php echo esc_html($loc_name); ?></span>
+                    <span class="ig-evt-tile__location">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <?php echo esc_html($loc_name); ?>
+                    </span>
                     <?php endif; ?>
                     <h3 class="ig-evt-tile__title"><?php the_title(); ?></h3>
                     <?php if ($data_display): ?>
@@ -196,11 +193,16 @@ $loc_list = ($localita && !is_wp_error($localita)) ? $localita : [];
             <?php endwhile; wp_reset_postdata(); ?>
         </div>
         <?php else: ?>
-        <div class="ig-evt-empty">
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--ig-text-muted)" stroke-width="1" style="opacity:.3"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div class="ig-evt-empty" role="status">
+            <div class="ig-evt-empty__icon" aria-hidden="true">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
             <p class="ig-evt-empty__title">Nessun evento trovato</p>
-            <p class="ig-evt-empty__sub">Prova a cambiare i filtri o torna più tardi.</p>
-            <a href="?periodo=prossimi" class="ig-btn ig-btn--outline" style="margin-top:16px">Vedi prossimi eventi</a>
+            <p class="ig-evt-empty__sub">Non ci sono eventi per i filtri selezionati. Prova a cambiare il periodo o la località.</p>
+            <a href="?periodo=prossimi" class="ig-btn ig-btn--primary" style="margin-top:var(--sp-md)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                Vedi prossimi eventi
+            </a>
         </div>
         <?php endif; ?>
     </div>

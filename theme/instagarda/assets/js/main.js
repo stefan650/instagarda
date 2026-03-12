@@ -58,9 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Mobile accordion submenus
     mobileMenu.querySelectorAll('.ig-mobile-menu__heading').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
         const target = document.getElementById(btn.dataset.toggle);
         if (target) {
+          e.preventDefault();
           btn.classList.toggle('is-open');
           target.classList.toggle('is-open');
         }

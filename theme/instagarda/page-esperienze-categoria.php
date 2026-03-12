@@ -93,7 +93,8 @@ $categorie = [
 $cat = $categorie[$page_slug] ?? $categorie['attivita'];
 ?>
 
-<!-- Hero -->
+<?php if ($cat['outdooractive']): ?>
+<!-- Hero (Attività) -->
 <section class="ig-dest-hero ig-dest-hero--short">
     <div class="ig-dest-hero__bg">
         <?php if (has_post_thumbnail()):
@@ -110,99 +111,132 @@ $cat = $categorie[$page_slug] ?? $categorie['attivita'];
                 <?php echo $cat['icon']; ?>
                 Esperienze
             </span>
-            <h1 class="ig-dest-hero__title"><?php echo $cat['titolo']; ?></h1>
+            <h1 class="ig-dest-hero__title"><?php echo esc_html($cat['titolo']); ?></h1>
+        </div>
+    </div>
+</section>
+<?php else:
+    /* Non-outdooractive: layout stile Eventi */
+    $filtro_loc = isset($_GET['loc']) ? sanitize_text_field($_GET['loc']) : '';
+
+    /* Raccogli solo le località che corrispondono a destinazioni reali */
+    $dest_posts = get_posts(['post_type' => 'destinazione', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC']);
+    $dest_loc_map = [];
+    foreach ($dest_posts as $dp) {
+        $slug = get_post_field('post_name', $dp);
+        $dest_loc_map[$slug] = get_the_title($dp);
+    }
+
+    $str_args = [
+        'post_type'      => 'struttura',
+        'posts_per_page' => -1,
+        'tax_query'      => [[
+            'taxonomy' => 'tipo_struttura',
+            'field'    => 'slug',
+            'terms'    => $cat['tipo'],
+        ]],
+        'orderby' => 'title',
+        'order'   => 'ASC',
+    ];
+    if ($filtro_loc) {
+        $str_args['tax_query'][] = ['taxonomy' => 'localita', 'field' => 'slug', 'terms' => $filtro_loc];
+        $str_args['tax_query']['relation'] = 'AND';
+    }
+    $strutture = new WP_Query($str_args);
+?>
+
+<!-- Hero pulita -->
+<section class="ig-evt-hero">
+    <div class="ig-evt-hero__bg" style="<?php if (has_post_thumbnail()): ?>background-image:url(<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>)<?php else: ?>background:<?php echo esc_attr($cat['gradient']); ?><?php endif; ?>">
+        <div class="ig-evt-hero__gradient"></div>
+    </div>
+    <div class="ig-evt-hero__content">
+        <div class="ig-container">
+            <h1 class="ig-evt-hero__title"><?php echo wp_kses_post($cat['headline']); ?></h1>
+            <p class="ig-evt-hero__desc"><?php echo esc_html($cat['intro']); ?></p>
         </div>
     </div>
 </section>
 
-<?php if (!$cat['outdooractive']): ?>
-<!-- Intro narrativa Apple-style -->
-<section class="ig-apple-section ig-apple-section--intro ig-reveal">
-    <div class="ig-apple-container">
-        <div class="ig-apple-intro">
-            <p><?php echo esc_html($cat['intro']); ?></p>
-        </div>
-    </div>
-</section>
-
-<!-- Filtro per località -->
-<section class="ig-apple-section ig-apple-section--white" style="padding-top:0">
-    <div class="ig-apple-container">
-        <div class="ig-exp-filters" id="igExpFilters">
-            <button class="ig-exp-filters__btn is-active" data-filter="tutti">Tutto il lago</button>
-            <?php
-            $localita_terms = get_terms(['taxonomy' => 'localita', 'hide_empty' => true]);
-            if ($localita_terms && !is_wp_error($localita_terms)):
-                foreach ($localita_terms as $loc):
+<!-- Filtri località (solo destinazioni reali) -->
+<section class="ig-evt-filters-section">
+    <div class="ig-container">
+        <nav class="ig-evt-cats" id="igStrutLoc" aria-label="Filtra per località">
+            <a href="<?php echo esc_url(remove_query_arg('loc')); ?>" class="ig-evt-cats__btn <?php echo !$filtro_loc ? 'is-active' : ''; ?>">Tutto il lago</a>
+            <?php foreach ($dest_loc_map as $d_slug => $d_name):
+                /* Mappa slug destinazione → slug localita (possono differire leggermente) */
+                $loc_term = get_term_by('slug', $d_slug, 'localita');
+                if (!$loc_term) continue;
             ?>
-            <button class="ig-exp-filters__btn" data-filter="<?php echo esc_attr($loc->slug); ?>"><?php echo esc_html($loc->name); ?></button>
-            <?php endforeach; endif; ?>
-        </div>
+            <a href="<?php echo esc_url(add_query_arg('loc', $loc_term->slug)); ?>" class="ig-evt-cats__btn <?php echo $filtro_loc === $loc_term->slug ? 'is-active' : ''; ?>"><?php echo esc_html($d_name); ?></a>
+            <?php endforeach; ?>
+        </nav>
     </div>
 </section>
 
-<!-- Griglia strutture -->
-<section class="ig-apple-section ig-apple-section--light" style="padding-top:var(--sp-lg)">
-    <div class="ig-apple-container">
-        <?php
-        $strutture = new WP_Query([
-            'post_type'      => 'struttura',
-            'posts_per_page' => 24,
-            'tax_query'      => [[
-                'taxonomy' => 'tipo_struttura',
-                'field'    => 'slug',
-                'terms'    => $cat['tipo'],
-            ]],
-            'orderby' => 'title',
-            'order'   => 'ASC',
-        ]);
-
-        if ($strutture->have_posts()):
-        ?>
-        <div class="ig-exp-listing" id="igExpListing">
+<!-- Griglia 3 colonne -->
+<section class="ig-evt-grid-section">
+    <div class="ig-container">
+        <?php if ($strutture->have_posts()): ?>
+        <div class="ig-evt-grid" id="igStrutGrid">
             <?php while ($strutture->have_posts()): $strutture->the_post();
                 $loc = get_the_terms(get_the_ID(), 'localita');
-                $loc_slug = ($loc && !is_wp_error($loc)) ? $loc[0]->slug : '';
                 $loc_name = ($loc && !is_wp_error($loc)) ? $loc[0]->name : '';
-                $prezzo = ig_get_meta('prezzo');
-                $prezzi = ['1' => '€', '2' => '€€', '3' => '€€€', '4' => '€€€€'];
             ?>
-            <a href="<?php the_permalink(); ?>" class="ig-exp-item" data-localita="<?php echo esc_attr($loc_slug); ?>">
-                <div class="ig-exp-item__img">
-                    <?php if (has_post_thumbnail()): the_post_thumbnail('card-wide');
+            <a href="<?php the_permalink(); ?>" class="ig-evt-tile" aria-label="<?php echo esc_attr(get_the_title()); ?>">
+                <div class="ig-evt-tile__img">
+                    <?php if (has_post_thumbnail()):
+                        the_post_thumbnail('medium_large', ['loading' => 'lazy', 'alt' => esc_attr(get_the_title())]);
                     else: ?>
-                        <div class="ig-placeholder-img">
+                        <div class="ig-evt-tile__placeholder" style="background:<?php echo esc_attr($cat['gradient']); ?>">
                             <?php echo $cat['icon']; ?>
                         </div>
                     <?php endif; ?>
-                    <?php if ($prezzo && isset($prezzi[$prezzo])): ?>
-                        <span class="ig-exp-item__badge"><?php echo $prezzi[$prezzo]; ?></span>
-                    <?php endif; ?>
                 </div>
-                <div class="ig-exp-item__body">
-                    <h3 class="ig-exp-item__title"><?php the_title(); ?></h3>
+                <div class="ig-evt-tile__body">
                     <?php if ($loc_name): ?>
-                    <p class="ig-exp-item__loc">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span class="ig-evt-tile__location">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                         <?php echo esc_html($loc_name); ?>
-                    </p>
+                    </span>
                     <?php endif; ?>
+                    <h3 class="ig-evt-tile__title"><?php the_title(); ?></h3>
                     <?php if (has_excerpt()): ?>
-                    <p class="ig-exp-item__desc"><?php echo esc_html(wp_trim_words(get_the_excerpt(), 15)); ?></p>
+                    <p class="ig-evt-tile__desc"><?php echo esc_html(wp_trim_words(get_the_excerpt(), 15)); ?></p>
                     <?php endif; ?>
                 </div>
             </a>
             <?php endwhile; wp_reset_postdata(); ?>
         </div>
         <?php else: ?>
-        <div class="ig-text-center" style="padding:var(--sp-3xl) 0">
-            <p style="font-size:var(--fs-lg);color:var(--ig-text-muted)">Presto troverai qui tutte le proposte. Stiamo lavorando per te!</p>
-            <button class="ig-btn ig-btn--primary ig-btn--lg" style="margin-top:var(--sp-lg)" onclick="window.toggleGardaChat && window.toggleGardaChat()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                Chiedi consiglio a Garda AI
-            </button>
+        <div class="ig-evt-empty" role="status">
+            <?php echo $cat['icon'] ? '<div class="ig-evt-empty__icon" aria-hidden="true">' . $cat['icon'] . '</div>' : ''; ?>
+            <p class="ig-evt-empty__title">Nessun risultato trovato</p>
+            <p class="ig-evt-empty__sub">Non abbiamo trovato <?php echo esc_html(strtolower($cat['titolo'])); ?> per questa località. Prova a cambiare i filtri o esplora tutto il lago.</p>
+            <a href="<?php echo esc_url(remove_query_arg('loc')); ?>" class="ig-btn ig-btn--primary" style="margin-top:var(--sp-md)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                Mostra tutto
+            </a>
         </div>
         <?php endif; ?>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="ig-apple-section ig-apple-section--cta">
+    <div class="ig-apple-container ig-text-center">
+        <h2 class="ig-apple-title ig-apple-title--white">Non sai da dove iniziare?</h2>
+        <p class="ig-apple-subtitle ig-apple-subtitle--white">Il nostro assistente AI conosce ogni angolo del Garda. Raccontagli cosa ti piace e ti guiderà alla scoperta dei luoghi perfetti per te.</p>
+        <div style="display:flex;gap:var(--sp-sm);justify-content:center;flex-wrap:wrap;margin-top:var(--sp-lg)">
+            <button class="ig-btn ig-btn--glass-outline ig-btn--lg" onclick="window.toggleGardaChat && window.toggleGardaChat()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                Chiedi a Garda AI
+            </button>
+            <a href="<?php echo esc_url(home_url('/contatti/')); ?>" class="ig-btn ig-btn--glass-outline ig-btn--lg">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Contattaci
+            </a>
+        </div>
     </div>
 </section>
 <?php endif; ?>
@@ -278,6 +312,35 @@ $cat = $categorie[$page_slug] ?? $categorie['attivita'];
                 <button class="ig-itin-filters__pill" data-season="inverno">Inverno</button>
             </div>
         </div>
+        <div class="ig-itin-filters__row">
+            <span class="ig-itin-filters__label">Zona</span>
+            <div class="ig-itin-filters__pills ig-itin-filters__pills--scroll" id="igFilterZone">
+                <button class="ig-itin-filters__pill is-active" data-zone="all">Tutto il lago</button>
+                <button class="ig-itin-filters__pill" data-zone="riva">Riva del Garda</button>
+                <button class="ig-itin-filters__pill" data-zone="torbole">Torbole</button>
+                <button class="ig-itin-filters__pill" data-zone="limone">Limone</button>
+                <button class="ig-itin-filters__pill" data-zone="tremosine">Tremosine</button>
+                <button class="ig-itin-filters__pill" data-zone="gargnano">Gargnano</button>
+                <button class="ig-itin-filters__pill" data-zone="salo">Salò</button>
+                <button class="ig-itin-filters__pill" data-zone="manerba">Manerba</button>
+                <button class="ig-itin-filters__pill" data-zone="desenzano">Desenzano</button>
+                <button class="ig-itin-filters__pill" data-zone="sirmione">Sirmione</button>
+                <button class="ig-itin-filters__pill" data-zone="peschiera">Peschiera</button>
+                <button class="ig-itin-filters__pill" data-zone="bardolino">Bardolino</button>
+                <button class="ig-itin-filters__pill" data-zone="garda">Garda</button>
+                <button class="ig-itin-filters__pill" data-zone="torri">Torri del Benaco</button>
+                <button class="ig-itin-filters__pill" data-zone="brenzone">Brenzone</button>
+                <button class="ig-itin-filters__pill" data-zone="malcesine">Malcesine</button>
+                <button class="ig-itin-filters__pill" data-zone="baldo">Monte Baldo</button>
+                <button class="ig-itin-filters__pill" data-zone="padenghe">Padenghe</button>
+                <button class="ig-itin-filters__pill" data-zone="moniga">Moniga</button>
+                <button class="ig-itin-filters__pill" data-zone="lonato">Lonato</button>
+                <button class="ig-itin-filters__pill" data-zone="sanfelice">San Felice</button>
+                <button class="ig-itin-filters__pill" data-zone="valtenesi">Valtenesi</button>
+                <button class="ig-itin-filters__pill" data-zone="arco">Arco</button>
+                <button class="ig-itin-filters__pill" data-zone="entroterra">Entroterra</button>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -286,6 +349,14 @@ $cat = $categorie[$page_slug] ?? $categorie['attivita'];
     <div class="ig-apple-container ig-apple-container--wide">
         <div class="ig-trail-map-wrap">
             <div id="igTrailMap"></div>
+            <div class="ig-map-legend">
+                <span class="ig-map-legend__item"><i style="background:#10B981"></i>Trekking</span>
+                <span class="ig-map-legend__item"><i style="background:#3B82F6"></i>Ciclismo</span>
+                <span class="ig-map-legend__item"><i style="background:#F59E0B"></i>MTB</span>
+                <span class="ig-map-legend__item"><i style="background:#EF4444"></i>Via Ferrata</span>
+                <span class="ig-map-legend__item"><i style="background:#06B6D4"></i>Acquatici</span>
+                <span class="ig-map-legend__item"><i style="background:#8B5CF6"></i>Scenic</span>
+            </div>
         </div>
     </div>
 </section>
@@ -394,15 +465,44 @@ document.addEventListener('DOMContentLoaded', function() {
         { id:59, name:'Garda Trek — Medium Loop', type:'hiking', lat:45.8850, lng:10.8430, difficulty:'media', km:73.0, elevation:3275, descent:3275, hours:'4 tappe', zone:'Riva del Garda', tags:['panoramico','consigliato','ristori','multiday','culturale'], desc:'4 tappe a quota media. Borgo medievale di Tenno, turchese Lago di Tenno, villaggio artisti di Canale. Quasi tutto l\'anno.' },
         { id:60, name:'Garda Trek — Low Loop', type:'hiking', lat:45.8850, lng:10.8430, difficulty:'facile', km:33.0, elevation:1045, descent:1045, hours:'2 tappe', zone:'Riva del Garda', tags:['panoramico','famiglie','ristori','multiday'], desc:'Mini-trek 2 tappe: Riva-Arco (castello) e ritorno via Nago-Torbole (windsurf). Accessibile tutto l\'anno, anche in giornata.' },
         { id:61, name:'GranGarda Bikepacking', type:'cycling', lat:45.6500, lng:10.7500, difficulty:'difficile', km:350.0, elevation:10000, descent:10000, hours:'3-5 giorni', zone:'Lago di Garda', tags:['panoramico','consigliato','multiday'], desc:'Circumnavigazione gravel 350km, 10.000m+ dislivello. 40% asfalto, 40% sterrato, 20% mulattiere. Gomme 40mm+. Aprile-maggio o settembre-ottobre.' },
+
+        // --- Batch 3: Sud-Ovest Garda (Valtenesi) ---
+        { id:62, name:'Penisola di Sirmione — Castello e Grotte di Catullo', type:'hiking', lat:45.4733, lng:10.6054, difficulty:'facile', km:8.5, elevation:31, descent:31, hours:'2:15', zone:'Sirmione', tags:['vista-lago','culturale','famiglie','circolare','accessibile','ristori','consigliato'], desc:'Anello completo della penisola: dal porto di Colombare si attraversa il borgo medievale con il Castello Scaligero fino alle Grotte di Catullo con vista panoramica sul lago.' },
+        { id:63, name:'Lungolago Desenzano — Porto Vecchio e Castello', type:'hiking', lat:45.4713, lng:10.5356, difficulty:'facile', km:4.3, elevation:32, descent:49, hours:'1:05', zone:'Desenzano del Garda', tags:['vista-lago','famiglie','culturale','ristori','accessibile','balneabile'], desc:'Passeggiata dal Porto Vecchio lungo il Lungolago Battisti fino alla Spiaggia d\'Oro, con deviazione al Castello medievale che domina la città e offre vista panoramica.' },
+        { id:64, name:'Lungolago di Salò', type:'hiking', lat:45.6057, lng:10.5201, difficulty:'facile', km:2.8, elevation:5, descent:5, hours:'0:45', zone:'Salò', tags:['vista-lago','famiglie','accessibile','ristori','culturale','consigliato'], desc:'Il lungolago più lungo del Garda: quasi 3 km tra palazzi rinascimentali, portici e giardini fioriti. Vista sul Golfo di Salò, sull\'Isola del Garda e sulle Alpi.' },
+        { id:65, name:'Croce di Salò — Tour dei Santuari', type:'hiking', lat:45.6057, lng:10.5201, difficulty:'media', km:7.4, elevation:535, descent:535, hours:'3:00', zone:'Salò', tags:['panoramico','vista-lago','circolare','ombreggiato','consigliato'], desc:'Tour circolare dei santuari e della Croce sulle colline del Parco Alto Garda Bresciano. Vedute eccezionali sul Golfo di Salò e sulla Valtenesi.' },
+        { id:66, name:'CAI 801B — Castello di Padenghe e Sant\'Emiliano', type:'hiking', lat:45.5033, lng:10.4972, difficulty:'media', km:5.7, elevation:257, descent:257, hours:'2:00', zone:'Padenghe sul Garda', tags:['panoramico','culturale','circolare','vista-lago','consigliato'], desc:'Sentiero CAI dal castello più antico della Valtenesi (X sec.) attraverso colline moreniche fino alla chiesa romanica di Sant\'Emiliano a Drugolo (XI-XII sec.).' },
+        { id:67, name:'Lungolago Moniga — Padenghe', type:'hiking', lat:45.5267, lng:10.5373, difficulty:'facile', km:7.4, elevation:31, descent:42, hours:'1:50', zone:'Moniga del Garda', tags:['vista-lago','famiglie','cani','balneabile','accessibile','ristori'], desc:'Passeggiata piatta da porto a porto lungo il lago, senza traffico. Ideale per famiglie, passeggini e cani. Spiagge accessibili lungo tutto il percorso.' },
+        { id:68, name:'Anello dei Castelli della Valtenesi', type:'hiking', lat:45.5267, lng:10.5373, difficulty:'media', km:18.0, elevation:380, descent:380, hours:'5:00', zone:'Moniga del Garda', tags:['panoramico','culturale','vista-lago','circolare','consigliato'], desc:'Escursione circolare che collega i castelli di Moniga, Padenghe, Drugolo e Soiano tra vigneti DOC e uliveti, con tratto ciclabile lungo il lago.' },
+        { id:69, name:'CAI 803 — Rocca di Lonato e Spia d\'Italia', type:'hiking', lat:45.4619, lng:10.4767, difficulty:'facile', km:10.2, elevation:213, descent:213, hours:'2:40', zone:'Lonato del Garda', tags:['culturale','panoramico','ombreggiato','circolare','consigliato'], desc:'Sentiero CAI dalla Rocca di Lonato verso la Spia d\'Italia, punto strategico della Battaglia di Solferino (1859). Panorama sul basso lago.' },
+        { id:70, name:'Promontorio di San Fermo — Isola del Garda', type:'hiking', lat:45.5895, lng:10.5505, difficulty:'facile', km:3.2, elevation:85, descent:85, hours:'1:00', zone:'San Felice del Benaco', tags:['panoramico','vista-lago','culturale','famiglie','consigliato'], desc:'Breve escursione al Promontorio di San Fermo con vista spettacolare sull\'Isola del Garda e sul Monte Baldo. Belvedere più fotografato della Valtenesi.' },
+        { id:71, name:'Ciclabile Valtenesi — Soiano-Padenghe', type:'cycling', lat:45.5300, lng:10.5100, difficulty:'facile', km:10.4, elevation:197, descent:140, hours:'1:10', zone:'Soiano del Lago', tags:['vista-lago','ebike','famiglie','ristori','panoramico'], desc:'Ciclovia della Valtenesi da Soiano verso Padenghe su asfalto e sentieri dedicati. Panorami sulle colline moreniche con vigneti e uliveti.' },
+        { id:72, name:'CAI 801 — Polpenazze, Anello dei Vigneti', type:'hiking', lat:45.5507, lng:10.5047, difficulty:'media', km:11.0, elevation:264, descent:347, hours:'3:30', zone:'Polpenazze del Garda', tags:['panoramico','culturale','circolare','ombreggiato','consigliato'], desc:'Percorso CAI 801 tra Polpenazze e Padenghe sulle colline della DOC Valtenesi. Boschi, vigneti e panorama sul lago.' },
+        { id:73, name:'Ciclovia della Valtenesi — Lonato a Salò', type:'cycling', lat:45.4619, lng:10.4767, difficulty:'media', km:23.4, elevation:440, descent:550, hours:'2:30', zone:'Lonato del Garda', tags:['panoramico','culturale','ebike','consigliato'], desc:'Ciclovia BS02 attraverso tutte le colline moreniche da Lonato a Salò via Padenghe, Soiano, Polpenazze e Puegnago. Vigneti DOC e castelli.' },
     ];
 
     // Slugs per link a pagine single
-    var slugs = {1:'sentiero-del-ponale',2:'rocca-di-manerba',3:'sentiero-dei-limoni',4:'cima-comer-gargnano',5:'sentiero-del-ventrar',6:'monte-baldo-cresta',7:'punta-san-vigilio',8:'cascate-di-molina',9:'eremo-di-san-giorgio',10:'busatte-tempesta',11:'monte-brione',12:'rifugio-altissimo',13:'ciclabile-limone-riva',14:'ciclopista-del-mincio',15:'colline-moreniche',16:'ciclabile-vallagarina',17:'tremalzo-trail',18:'trail-601-monte-baldo',19:'ponale-mtb',20:'san-michele-monte-cas',21:'via-ferrata-cima-capi',22:'via-ferrata-monte-colodri',23:'via-ferrata-che-guevara',24:'windsurf-kitesurf-torbole',25:'sup-tour-sirmione',26:'vela-regate-del-garda',27:'canyoning-rio-nero',28:'punta-larici-pregasina',29:'sentiero-del-sole',30:'monte-tremalzo-corno-marogna',31:'ponte-tibetano-torri',32:'monte-luppia-petroglifi',33:'cima-valdritta-novezzina',34:'prada-alta-rifugio-mondini',35:'forte-naole-sentiero-662',36:'cresta-di-naole',37:'sentiero-della-salute-malcesine',38:'brenzone-nordic-walking',39:'rocca-di-garda-camaldolesi',40:'circuito-storico-rivoli',41:'mura-unesco-peschiera',42:'monte-moscal',43:'costermano-oliveti-memoriale',44:'cammina-custoza',45:'peschiera-sirmione-desenzano',46:'peschiera-garda-lungolago',47:'strada-vino-bardolino',48:'ciclovia-sole-rivoli-verona',49:'salo-valtenesi-loop',50:'ciclopedonale-brenzone-malcesine',51:'monte-baldo-red-tour',52:'prada-enduro-trails',53:'via-ferrata-gerardo-sega',54:'via-ferrata-delle-taccole',55:'strada-della-forra',56:'strada-panoramica-monte-baldo',57:'valvestino-cima-rest',58:'garda-trek-top-loop',59:'garda-trek-medium-loop',60:'garda-trek-low-loop',61:'grangarda-bikepacking'};
+    var slugs = {1:'sentiero-del-ponale',2:'rocca-di-manerba',3:'sentiero-dei-limoni',4:'cima-comer-gargnano',5:'sentiero-del-ventrar',6:'monte-baldo-cresta',7:'punta-san-vigilio',8:'cascate-di-molina',9:'eremo-di-san-giorgio',10:'busatte-tempesta',11:'monte-brione',12:'rifugio-altissimo',13:'ciclabile-limone-riva',14:'ciclopista-del-mincio',15:'colline-moreniche',16:'ciclabile-vallagarina',17:'tremalzo-trail',18:'trail-601-monte-baldo',19:'ponale-mtb',20:'san-michele-monte-cas',21:'via-ferrata-cima-capi',22:'via-ferrata-monte-colodri',23:'via-ferrata-che-guevara',24:'windsurf-kitesurf-torbole',25:'sup-tour-sirmione',26:'vela-regate-del-garda',27:'canyoning-rio-nero',28:'punta-larici-pregasina',29:'sentiero-del-sole',30:'monte-tremalzo-corno-marogna',31:'ponte-tibetano-torri',32:'monte-luppia-petroglifi',33:'cima-valdritta-novezzina',34:'prada-alta-rifugio-mondini',35:'forte-naole-sentiero-662',36:'cresta-di-naole',37:'sentiero-della-salute-malcesine',38:'brenzone-nordic-walking',39:'rocca-di-garda-camaldolesi',40:'circuito-storico-rivoli',41:'mura-unesco-peschiera',42:'monte-moscal',43:'costermano-oliveti-memoriale',44:'cammina-custoza',45:'peschiera-sirmione-desenzano',46:'peschiera-garda-lungolago',47:'strada-vino-bardolino',48:'ciclovia-sole-rivoli-verona',49:'salo-valtenesi-loop',50:'ciclopedonale-brenzone-malcesine',51:'monte-baldo-red-tour',52:'prada-enduro-trails',53:'via-ferrata-gerardo-sega',54:'via-ferrata-delle-taccole',55:'strada-della-forra',56:'strada-panoramica-monte-baldo',57:'valvestino-cima-rest',58:'garda-trek-top-loop',59:'garda-trek-medium-loop',60:'garda-trek-low-loop',61:'grangarda-bikepacking',62:'penisola-sirmione-grotte-catullo',63:'lungolago-desenzano',64:'lungolago-salo',65:'croce-di-salo',66:'castello-padenghe-santemiliano',67:'lungolago-moniga-padenghe',68:'anello-castelli-valtenesi',69:'rocca-lonato-spia-italia',70:'promontorio-san-fermo',71:'ciclabile-valtenesi-soiano',72:'polpenazze-anello-vigneti',73:'ciclovia-valtenesi-lonato-salo'};
     trails.forEach(function(t) { t.slug = slugs[t.id] || ''; });
 
     // OutdoorActive IDs per embed mappa con percorso + profilo altimetrico
-    var oaIds = {1:1481019, 2:1530226, 3:1505183, 4:1497954, 5:14352779, 6:215009748, 7:265353721, 8:58399382, 9:804061398, 10:1541894, 11:1490743, 12:14373302, 13:800639914, 14:56764715, 15:209343437, 16:8350452, 17:15856288, 18:17856272, 19:15866611, 20:235469274, 21:8270049, 22:1374487, 23:58397823};
+    var oaIds = {1:1481019, 2:1530226, 3:1505183, 4:1497954, 5:14352779, 6:215009748, 7:265353721, 8:58399382, 9:804061398, 10:1541894, 11:1490743, 12:14373302, 13:800639914, 14:56764715, 15:209343437, 16:8350452, 17:15856288, 18:17856272, 19:15866611, 20:235469274, 21:8270049, 22:1374487, 23:58397823, 28:28287877, 29:1505183, 30:1551137, 31:801575826, 32:1530225, 33:801473880, 35:801535338, 36:1498973, 37:53073019, 39:804061398, 42:1491373, 44:243348104, 45:104029601, 46:28038207, 49:58463625, 50:67046495, 51:67041852, 53:5408867, 54:15238458, 55:23324302, 56:11049411, 57:1376573, 58:21652784, 59:22593484, 60:22593445, 62:1549402};
     trails.forEach(function(t) { t.oaId = oaIds[t.id] || 0; });
+
+    var zoneSlugMap = {
+        'Riva del Garda':'riva-del-garda', 'Torbole':'torbole', 'Limone sul Garda':'limone-sul-garda',
+        'Tremosine':'tremosine-sul-garda', 'Tremosine sul Garda':'tremosine-sul-garda', 'Gargnano':'gargnano',
+        'Salò':'salo', 'Manerba del Garda':'manerba-del-garda', 'Desenzano del Garda':'desenzano-del-garda',
+        'Sirmione':'sirmione', 'Peschiera del Garda':'peschiera-del-garda', 'Bardolino':'bardolino',
+        'Garda':'garda', 'Torri del Benaco':'torri-del-benaco', 'Brenzone sul Garda':'brenzone-sul-garda',
+        'Malcesine':'malcesine', 'Arco':'arco', 'Toscolano-Maderno':'toscolano-maderno',
+        'Gardone Riviera':'gardone-riviera', 'Lazise':'lazise', 'Verona':'verona',
+        'Castelnuovo del Garda':'castelnuovo-del-garda', 'Valeggio sul Mincio':'valeggio-sul-mincio',
+        'Padenghe sul Garda':'padenghe-sul-garda', 'Moniga del Garda':'moniga-del-garda',
+        'Lonato del Garda':'lonato-del-garda', 'San Felice del Benaco':'san-felice-del-benaco',
+        'Soiano del Lago':'soiano-del-lago', 'Polpenazze del Garda':'polpenazze-del-garda'
+    };
+    var baseDestUrl = '<?php echo esc_url(home_url('/destinazione/')); ?>';
 
     var typeColors = { hiking:'#10B981', cycling:'#3B82F6', mtb:'#F59E0B', ferrata:'#EF4444', water:'#06B6D4', drive:'#8B5CF6' };
     var typeLabels = { hiking:'Trekking', cycling:'Ciclismo', mtb:'MTB', ferrata:'Via Ferrata', water:'Acquatici', drive:'Scenic Drive' };
@@ -442,30 +542,76 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ─── Mappa Leaflet (OpenTopoMap come pagine single) ───
-    var map = L.map('igTrailMap', { scrollWheelZoom: false }).setView([45.65, 10.72], 10);
+    // ─── Filtri pill: Zona ───
+    var activeZone = 'all';
+    var zoneMap = {
+        riva: ['Riva del Garda'],
+        torbole: ['Torbole'],
+        limone: ['Limone sul Garda'],
+        tremosine: ['Tremosine', 'Tremosine sul Garda'],
+        gargnano: ['Gargnano'],
+        salo: ['Salò'],
+        manerba: ['Manerba del Garda'],
+        desenzano: ['Desenzano del Garda'],
+        sirmione: ['Sirmione'],
+        peschiera: ['Peschiera del Garda'],
+        bardolino: ['Bardolino'],
+        garda: ['Garda'],
+        torri: ['Torri del Benaco'],
+        brenzone: ['Brenzone sul Garda'],
+        malcesine: ['Malcesine'],
+        baldo: ['Ferrara di Monte Baldo', 'San Zeno di Montagna', 'Brentonico', 'Caprino Veronese'],
+        arco: ['Arco', 'Pietramurata'],
+        padenghe: ['Padenghe sul Garda'],
+        moniga: ['Moniga del Garda'],
+        lonato: ['Lonato del Garda'],
+        sanfelice: ['San Felice del Benaco'],
+        valtenesi: ['Soiano del Lago', 'Polpenazze del Garda'],
+        entroterra: ['Fumane', 'Rivoli Veronese', 'Costermano sul Garda', 'Cavaion Veronese', 'Custoza', 'Avio', 'Lago di Garda']
+    };
+    document.querySelectorAll('#igFilterZone .ig-itin-filters__pill').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('#igFilterZone .ig-itin-filters__pill').forEach(function(b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+            activeZone = btn.getAttribute('data-zone');
+            applyFilters();
+        });
+    });
+
+    // ─── Mappa Leaflet (CartoDB Voyager — pulita e moderna) ───
+    var map = L.map('igTrailMap', { scrollWheelZoom: false, zoomControl: false }).setView([45.63, 10.72], 10);
+    L.control.zoom({ position: 'topright' }).addTo(map);
     map.setMaxBounds(L.latLngBounds([45.35,10.40],[45.95,11.05]).pad(0.1));
     map.setMinZoom(9);
-    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenTopoMap &copy; OSM', maxZoom: 17
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://osm.org/">OSM</a>',
+        maxZoom: 19, subdomains: 'abcd'
     }).addTo(map);
 
     var markers = [];
     function createMarker(t) {
         var color = typeColors[t.type];
         var icon = L.divIcon({
-            className: 'ig-trail-marker',
-            html: '<div style="background:'+color+'"><span>'+t.id+'</span></div>',
-            iconSize: [32,32], iconAnchor: [16,32], popupAnchor: [0,-34]
+            className: 'ig-dot-marker',
+            html: '<div style="background:'+color+';box-shadow:0 0 0 3px '+color+'33"></div>',
+            iconSize: [14,14], iconAnchor: [7,7], popupAnchor: [0,-10]
         });
         var m = L.marker([t.lat, t.lng], { icon: icon }).addTo(map);
         m.trailData = t;
         m.bindPopup(
-            '<div class="ig-trail-popup"><strong>'+t.name+'</strong>' +
-            '<div class="ig-trail-popup__meta"><span class="ig-trail-popup__badge" style="background:'+diffColors[t.difficulty]+'">'+t.difficulty+'</span> ' +
-            (t.km > 0 ? t.km+' km · ' : '') + (t.elevation > 0 ? '+'+t.elevation+'m · ' : '') + t.hours + '</div>' +
+            '<div class="ig-trail-popup">' +
+            '<strong>'+t.name+'</strong>' +
+            '<div class="ig-trail-popup__meta">' +
+                '<span class="ig-trail-popup__badge" style="background:'+color+'">'+typeLabels[t.type]+'</span>' +
+                '<span class="ig-trail-popup__badge" style="background:'+diffColors[t.difficulty]+'">'+t.difficulty+'</span>' +
+            '</div>' +
+            '<div class="ig-trail-popup__stats">' +
+                (t.km > 0 ? t.km+' km' : '') +
+                (t.elevation > 0 ? ' · +'+t.elevation+'m' : '') +
+                (t.hours !== '—' ? ' · '+t.hours : '') +
+            '</div>' +
             '<p>'+t.zone+'</p></div>',
-            { maxWidth: 280, className: 'ig-trail-popup-wrap' }
+            { maxWidth: 260, className: 'ig-trail-popup-wrap' }
         );
         m.on('click', function() {
             if (t.slug) { window.location.href = '<?php echo esc_url(home_url('/itinerario/')); ?>' + t.slug + '/'; }
@@ -483,6 +629,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (cat !== 'all' && t.type !== cat) return false;
             // Filtro difficoltà
             if (activeDiff !== 'all' && t.difficulty !== activeDiff) return false;
+            // Filtro zona
+            if (activeZone !== 'all') {
+                var zones = zoneMap[activeZone] || [];
+                if (zones.indexOf(t.zone) === -1) return false;
+            }
             // Filtro stagione
             if (activeSeason !== 'all') {
                 var seasons = typeSeasons[t.type] || ['primavera','estate','autunno'];
@@ -497,11 +648,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderCards(filtered) {
         grid.innerHTML = '';
-        filtered.forEach(function(t) {
+        filtered.forEach(function(t, idx) {
             var color = typeColors[t.type];
             var tagsHtml = '';
+            var shownTags = 0;
             t.tags.forEach(function(tag) {
-                if (tagLabels[tag]) tagsHtml += '<span class="ig-trail-card__tag">' + tagLabels[tag] + '</span>';
+                if (tagLabels[tag] && shownTags < 3) { tagsHtml += '<span class="ig-trail-card__tag">' + tagLabels[tag] + '</span>'; shownTags++; }
             });
 
             var statsHtml = '';
@@ -509,24 +661,101 @@ document.addEventListener('DOMContentLoaded', function() {
             if (t.elevation > 0) statsHtml += '<span class="ig-trail-card__stat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20l5-16 5 10 3-4 5 10"/></svg>+'+t.elevation+'m</span>';
             if (t.hours !== '—') statsHtml += '<span class="ig-trail-card__stat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+t.hours+'</span>';
 
+            // Mini profilo altimetrico SVG
+            var profileSvg = '';
+            if (t.elevation > 0 && t.km > 0) {
+                var maxElev = 1800;
+                var h = Math.min(t.elevation / maxElev, 1) * 50 + 10;
+                var dh = t.descent > 0 ? Math.min(t.descent / maxElev, 1) * 50 + 10 : h;
+                // Generare una curva morbida che simula il profilo
+                var pts = [];
+                var steps = 8;
+                for (var s = 0; s <= steps; s++) {
+                    var x = (s / steps) * 180;
+                    var progress = s / steps;
+                    var y;
+                    if (progress < 0.15) y = 60;
+                    else if (progress < 0.55) y = 60 - h * Math.sin((progress - 0.15) / 0.4 * Math.PI);
+                    else if (progress < 0.85) y = 60 - dh * Math.sin((0.85 - progress) / 0.3 * Math.PI * 0.5);
+                    else y = 60;
+                    pts.push(x.toFixed(0)+','+y.toFixed(0));
+                }
+                var pathD = 'M0,60 C' + pts.join(' ') + ' L180,60 Z';
+                profileSvg = '<svg class="ig-trail-card__profile" viewBox="0 0 180 65" preserveAspectRatio="none">' +
+                    '<defs><linearGradient id="pg'+t.id+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+color+'" stop-opacity=".3"/><stop offset="100%" stop-color="'+color+'" stop-opacity=".05"/></linearGradient></defs>' +
+                    '<path d="M'+pts.map(function(p,i){return (i===0?'M':'L')+p;}).join(' ')+' L180,60 L0,60 Z" fill="url(#pg'+t.id+')" />' +
+                    '<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+color+'" stroke-width="2" />' +
+                '</svg>';
+            }
+
+            // Descrizione breve (max 120 char)
+            var shortDesc = t.desc.length > 120 ? t.desc.substring(0, 117) + '...' : t.desc;
+
+            // Info extra per pannello destro
+            var rightStats = '';
+            if (t.elevation > 0) rightStats += '<div class="ig-trail-card__rstat"><span class="ig-trail-card__rstat-label">Salita</span><span class="ig-trail-card__rstat-val" style="color:'+color+'">+'+t.elevation+'m</span></div>';
+            if (t.descent > 0) rightStats += '<div class="ig-trail-card__rstat"><span class="ig-trail-card__rstat-label">Discesa</span><span class="ig-trail-card__rstat-val">-'+t.descent+'m</span></div>';
+            if (t.km > 0) rightStats += '<div class="ig-trail-card__rstat"><span class="ig-trail-card__rstat-label">Distanza</span><span class="ig-trail-card__rstat-val">'+t.km+' km</span></div>';
+            if (t.hours !== '—') rightStats += '<div class="ig-trail-card__rstat"><span class="ig-trail-card__rstat-label">Durata</span><span class="ig-trail-card__rstat-val">'+t.hours+'</span></div>';
+
             var card = document.createElement('div');
             card.className = 'ig-trail-card';
             card.innerHTML =
-                '<div class="ig-trail-card__top">' +
-                    '<span class="ig-trail-card__num" style="background:'+color+'">'+t.id+'</span>' +
-                    '<div><span class="ig-trail-card__type" style="color:'+color+'">'+typeLabels[t.type]+'</span>' +
-                    '<span class="ig-trail-card__diff" style="background:'+diffColors[t.difficulty]+'">'+t.difficulty+'</span></div>' +
+                '<div class="ig-trail-card__map" id="trailMini'+t.id+'"></div>' +
+                '<div class="ig-trail-card__body">' +
+                    '<div class="ig-trail-card__top">' +
+                        '<div><span class="ig-trail-card__type" style="color:'+color+'">'+typeLabels[t.type]+'</span>' +
+                        '<span class="ig-trail-card__diff" style="background:'+diffColors[t.difficulty]+'">'+t.difficulty+'</span></div>' +
+                    '</div>' +
+                    '<h3 class="ig-trail-card__title">'+t.name+'</h3>' +
+                    '<p class="ig-trail-card__excerpt">'+shortDesc+'</p>' +
+                    '<div class="ig-trail-card__tags">' +
+                        (zoneSlugMap[t.zone] ?
+                            '<a href="'+baseDestUrl+zoneSlugMap[t.zone]+'/" class="ig-trail-card__tag ig-trail-card__tag--loc" data-loc-link="1"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> '+t.zone+'</a>' :
+                            '<span class="ig-trail-card__tag ig-trail-card__tag--loc"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> '+t.zone+'</span>') +
+                        tagsHtml +
+                    '</div>' +
                 '</div>' +
-                '<h3 class="ig-trail-card__title">'+t.name+'</h3>' +
-                '<p class="ig-trail-card__zone"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> '+t.zone+'</p>' +
-                (tagsHtml ? '<div class="ig-trail-card__tags">'+tagsHtml+'</div>' : '') +
-                (statsHtml ? '<div class="ig-trail-card__stats">'+statsHtml+'</div>' : '') +
-                '<span class="ig-trail-card__cta">Scopri <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>';
+                '<div class="ig-trail-card__right">' +
+                    profileSvg +
+                    '<div class="ig-trail-card__rstats">'+rightStats+'</div>' +
+                '</div>';
 
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function(e) {
+                // Check if user clicked on the location link or any element inside it
+                var locLink = e.target.closest('[data-loc-link]');
+                if (locLink) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.location.href = locLink.getAttribute('href');
+                    return;
+                }
                 if (t.slug) { window.location.href = '<?php echo esc_url(home_url('/itinerario/')); ?>' + t.slug + '/'; }
             });
             grid.appendChild(card);
+
+            // Mini mappa con percorso
+            (function(trail, c, i) {
+                setTimeout(function() {
+                    var el = document.getElementById('trailMini'+trail.id);
+                    if (!el) return;
+                    var mm = L.map(el, {
+                        zoomControl: false, attributionControl: false,
+                        dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
+                        touchZoom: false, boxZoom: false, keyboard: false, tap: false
+                    }).setView([trail.lat, trail.lng], 13);
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {}).addTo(mm);
+                    // Se abbiamo le coordinate del percorso, disegnale
+                    if (trailRoutes[trail.id]) {
+                        var coords = trailRoutes[trail.id];
+                        L.polyline(coords, { color: c, weight: 3, opacity: 0.8 }).addTo(mm);
+                        mm.fitBounds(L.polyline(coords).getBounds().pad(0.15));
+                    } else {
+                        L.circleMarker([trail.lat, trail.lng], { radius: 6, fillColor: c, color: '#fff', weight: 2, fillOpacity: 1 }).addTo(mm);
+                    }
+                    miniMaps[trail.id] = mm;
+                }, i * 30);
+            })(t, color, idx);
         });
         countEl.textContent = filtered.length + ' itinerar' + (filtered.length === 1 ? 'io' : 'i') + (filtered.length < trails.length ? ' su ' + trails.length : '');
     }
@@ -581,6 +810,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('igTbarCat').value = urlTipo;
     }
 
+    // Coordinate percorsi per mini-mappe
+    var trailRoutes = {};
+    var miniMaps = {};
+
     // Init
     renderCards(urlTipo ? getFiltered() : trails);
 
@@ -611,6 +844,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (t.slug) window.location.href = '<?php echo esc_url(home_url('/itinerario/')); ?>' + t.slug + '/';
                     });
                     routePolylines[t.oaId] = { shadow: shadow, line: line, trailId: t.id };
+
+                    // Aggiorna mini-mappa con il percorso
+                    trailRoutes[t.id] = latlngs;
+                    if (miniMaps[t.id]) {
+                        var mm = miniMaps[t.id];
+                        L.polyline(latlngs, { color: color, weight: 3, opacity: 0.8 }).addTo(mm);
+                        mm.fitBounds(L.polyline(latlngs).getBounds().pad(0.15));
+                    }
                 });
             }).catch(function(){});
     }
@@ -708,26 +949,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </section>
 
-<!-- Filtro JS -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var btns = document.querySelectorAll('.ig-exp-filters__btn');
-    var items = document.querySelectorAll('.ig-exp-item[data-localita]');
-    btns.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var f = btn.getAttribute('data-filter');
-            btns.forEach(function(b) { b.classList.remove('is-active'); });
-            btn.classList.add('is-active');
-            items.forEach(function(item) {
-                if (f === 'tutti' || item.getAttribute('data-localita') === f) {
-                    item.classList.remove('is-hidden');
-                } else {
-                    item.classList.add('is-hidden');
-                }
-            });
-        });
-    });
-});
-</script>
+<!-- Old client-side filter removed: location filtering is now server-side via ?loc= -->
 
 <?php get_footer(); ?>

@@ -1572,90 +1572,80 @@ img { max-width: 100%; height: auto; display: block; }
    14. FOOTER
    ----------------------------------------------------------------- */
 .ig-footer {
-    background: #1C1C1E;
-    color: rgba(255,255,255,0.6);
-    padding: var(--sp-3xl) 0 var(--sp-xl);
+    background: #111113;
+    color: rgba(255,255,255,0.55);
+    padding: 64px 0 0;
 }
-
 .ig-footer__grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-    gap: var(--sp-xl);
-    margin-bottom: var(--sp-xl);
+    grid-template-columns: 1.5fr 1.5fr 1fr 1fr 1fr;
+    gap: 48px 32px;
+    padding-bottom: 48px;
 }
-
-.ig-footer__brand-desc {
-    font-size: var(--fs-sm);
-    line-height: 1.6;
-    margin-bottom: var(--sp-md);
+.ig-footer__col--brand { display: flex; flex-direction: column; gap: 20px; }
+.ig-footer__logo { display: flex; align-items: center; gap: 8px; text-decoration: none; color: white; }
+.ig-footer__desc { color: rgba(255,255,255,.45); font-size: .875rem; line-height: 1.65; max-width: 340px; margin: 0; }
+.ig-footer__contact { display: flex; flex-direction: column; gap: 10px; }
+.ig-footer__email {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,.5); font-size: .875rem; text-decoration: none;
+    transition: color .25s ease;
 }
-
-.ig-footer__social {
-    display: flex;
-    gap: 12px;
+.ig-footer__email:hover { color: #fff; }
+.ig-footer__social { display: flex; gap: 10px; }
+.ig-footer__social-link {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.45); transition: all .25s ease;
 }
-.ig-footer__social a {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255,255,255,0.5);
-    transition: all var(--duration) var(--ease);
+.ig-footer__social-link:hover { background: var(--ig-primary); border-color: var(--ig-primary); color: #fff; transform: translateY(-2px); }
+.ig-footer__heading {
+    color: #fff; font-size: .75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 18px;
 }
-.ig-footer__social a:hover {
-    background: var(--ig-primary);
-    color: var(--ig-white);
+.ig-footer__links { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+.ig-footer__links a {
+    color: rgba(255,255,255,.45); font-size: .875rem;
+    text-decoration: none; transition: color .2s ease;
 }
-
-.ig-footer__col h4 {
-    color: var(--ig-white);
-    font-size: var(--fs-sm);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--sp-md);
+.ig-footer__links a:hover { color: #fff; }
+.ig-footer__links--2col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px;
 }
-.ig-footer__col ul { list-style: none; }
-.ig-footer__col li { margin-bottom: var(--sp-sm); }
-.ig-footer__col a {
-    color: rgba(255,255,255,0.5);
-    font-size: var(--fs-sm);
-    transition: color var(--duration) var(--ease);
+.ig-footer__more {
+    display: inline-block; margin-top: 14px;
+    color: var(--ig-primary); font-size: .8rem; font-weight: 600;
+    text-decoration: none; transition: color .2s ease;
 }
-.ig-footer__col a:hover { color: var(--ig-white); }
-
-.ig-footer__contact {
-    list-style: none;
-}
-.ig-footer__contact li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: var(--sp-sm);
-    font-size: var(--fs-sm);
-    color: rgba(255,255,255,0.5);
-}
-
+.ig-footer__more:hover { color: #4da3ff; }
 .ig-footer__bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: var(--sp-xl);
-    border-top: 1px solid rgba(255,255,255,0.08);
-    font-size: var(--fs-sm);
+    border-top: 1px solid rgba(255,255,255,.06);
+    padding: 24px 0;
 }
-.ig-footer__legal {
-    display: flex;
-    gap: var(--sp-md);
+.ig-footer__bottom-inner {
+    display: flex; align-items: center; justify-content: space-between;
 }
+.ig-footer__copyright { color: rgba(255,255,255,.3); font-size: .8rem; margin: 0; }
+.ig-footer__legal { display: flex; gap: 24px; }
 .ig-footer__legal a {
-    color: rgba(255,255,255,0.4);
-    font-size: var(--fs-xs);
+    color: rgba(255,255,255,.3); font-size: .8rem;
+    text-decoration: none; transition: color .2s ease;
 }
-.ig-footer__legal a:hover { color: rgba(255,255,255,0.8); }
+.ig-footer__legal a:hover { color: rgba(255,255,255,.7); }
+
+/* Footer responsive */
+@media (max-width: 1024px) {
+    .ig-footer__grid { grid-template-columns: 1fr 1fr; gap: 40px 32px; }
+    .ig-footer__col--brand { grid-column: 1 / -1; }
+}
+@media (max-width: 767px) {
+    .ig-footer { padding: 48px 0 0; }
+    .ig-footer__grid { grid-template-columns: 1fr 1fr; gap: 28px 24px; }
+    .ig-footer__col--brand { grid-column: 1 / -1; }
+    .ig-footer__links--2col { grid-template-columns: 1fr 1fr; }
+    .ig-footer__bottom-inner { flex-direction: column; gap: 12px; text-align: center; }
+}
 
 /* -----------------------------------------------------------------
    15-16. DESTINATION DETAIL & ARCHIVE GRIDS
@@ -2816,6 +2806,46 @@ img { max-width: 100%; height: auto; display: block; }
     .ig-svg-map { padding: 24px 20px; }
     .ig-svg-map__pin svg { width: 14px; height: 18px; }
     .ig-svg-map__label { font-size: 8px; }
+}
+
+/* --- Leaflet Map Dots & Tooltips (Destinazioni) --- */
+.ig-dest-dot div {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.ig-dest-dot div:hover {
+    transform: scale(1.4);
+}
+.ig-dest-tooltip {
+    background: rgba(0,0,0,0.78) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 6px 12px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18) !important;
+}
+.ig-dest-tooltip::before {
+    border-top-color: rgba(0,0,0,0.78) !important;
+}
+.ig-map-legend {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 10px 16px;
+    border-radius: 10px;
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 
 /* --- Dest sidebar --- */
@@ -4805,75 +4835,107 @@ button.ig-info-strip__item--ai .ig-info-strip__value {
 #igTrailMap {
     height: 520px;
     width: 100%;
-    background: var(--ig-bg);
+    background: #f0f0f0;
 }
-
-/* Marker custom */
-.ig-trail-marker div {
-    width: 30px;
-    height: 30px;
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
+.ig-map-legend {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    z-index: 1000;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,.25);
-    border: 2px solid white;
-}
-.ig-trail-marker span {
-    transform: rotate(45deg);
-    color: white;
+    gap: 12px;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 8px 14px;
+    border-radius: var(--r-pill);
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
     font-size: 11px;
-    font-weight: 700;
-    line-height: 1;
+    color: var(--ig-text-muted);
 }
-.ig-trail-marker--lg div { width: 40px; height: 40px; }
-.ig-trail-marker--lg span { font-size: 14px; }
+.ig-map-legend__item { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.ig-map-legend__item i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+/* Dot marker — minimal */
+.ig-dot-marker { background: none !important; border: none !important; }
+.ig-dot-marker div {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid white;
+    transition: transform .2s ease, box-shadow .2s ease;
+    cursor: pointer;
+}
+.ig-dot-marker:hover div,
+.ig-dot-marker div:hover {
+    transform: scale(1.5);
+    z-index: 999 !important;
+}
 
 /* Popup mappa */
 .ig-trail-popup-wrap .leaflet-popup-content-wrapper {
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,.12);
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.15);
     padding: 0;
+    font-family: 'Poppins', sans-serif;
 }
-.ig-trail-popup-wrap .leaflet-popup-content { margin: 14px 16px; font-family: inherit; }
-.ig-trail-popup strong { font-size: 15px; display: block; margin-bottom: 4px; }
-.ig-trail-popup__meta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ig-text-muted); margin-bottom: 4px; }
-.ig-trail-popup__badge { color: white; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: var(--r-pill); text-transform: uppercase; letter-spacing: .3px; }
-.ig-trail-popup p { margin: 0; font-size: 12px; color: var(--ig-text-muted); }
+.ig-trail-popup-wrap .leaflet-popup-tip { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+.ig-trail-popup-wrap .leaflet-popup-content { margin: 16px 18px; font-family: inherit; }
+.ig-trail-popup strong { font-size: 14px; display: block; margin-bottom: 6px; color: var(--ig-text); line-height: 1.3; }
+.ig-trail-popup__meta { display: flex; align-items: center; gap: 5px; margin-bottom: 6px; flex-wrap: wrap; }
+.ig-trail-popup__badge { color: white; font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: var(--r-pill); text-transform: uppercase; letter-spacing: .4px; }
+.ig-trail-popup__stats { font-size: 12px; color: var(--ig-text-muted); margin-bottom: 4px; }
+.ig-trail-popup p { margin: 0; font-size: 11px; color: var(--ig-text-light); }
 
-/* ── Griglia card ── */
+/* ── Griglia card — Lista premium ── */
 .ig-trail-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--sp-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
 }
 .ig-trail-card {
     background: white;
-    border-radius: var(--r-md);
-    padding: 20px 22px;
+    border-radius: var(--r-lg);
     box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.04);
     cursor: pointer;
     transition: transform .2s ease, box-shadow .2s ease;
     border: 1px solid transparent;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    overflow: hidden;
 }
 .ig-trail-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 8px 28px rgba(0,0,0,.10);
     border-color: var(--ig-border);
 }
-.ig-trail-card__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.ig-trail-card__num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+.ig-trail-card__map {
+    width: 220px;
+    min-height: 180px;
+    flex-shrink: 0;
+    background: var(--ig-bg);
+}
+.ig-trail-card__map .leaflet-container { width: 100%; height: 100%; }
+.ig-trail-card__body {
+    flex: 1;
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+}
+.ig-trail-card__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
 .ig-trail-card__type { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-right: 6px; }
-.ig-trail-card__diff { font-size: 10px; font-weight: 700; color: white; padding: 2px 8px; border-radius: var(--r-pill); text-transform: uppercase; letter-spacing: .3px; display: inline-block; }
+.ig-trail-card__diff { font-size: 10px; font-weight: 700; color: #fff !important; padding: 2px 8px; border-radius: var(--r-pill); text-transform: uppercase; letter-spacing: .3px; display: inline-block; }
 .ig-trail-card__title { font-size: var(--fs-lg); font-weight: 700; margin: 0 0 4px; line-height: 1.3; }
 .ig-trail-card__zone { display: flex; align-items: center; gap: 4px; font-size: var(--fs-xs); color: var(--ig-text-muted); margin: 0 0 8px; }
 .ig-trail-card__zone svg { flex-shrink: 0; }
 
+/* Stats row */
+.ig-trail-card__stats { display: flex; gap: 16px; margin-bottom: 8px; }
+.ig-trail-card__stat { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--ig-text); }
+.ig-trail-card__stat svg { color: var(--ig-text-muted); }
+
 /* Tags */
-.ig-trail-card__tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.ig-trail-card__tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
 .ig-trail-card__tag {
     font-size: 10px;
     font-weight: 600;
@@ -4883,21 +4945,80 @@ button.ig-info-strip__item--ai .ig-info-strip__value {
     color: var(--ig-text-muted);
     border: 1px solid var(--ig-border);
 }
-
-/* Stats row */
-.ig-trail-card__stats { display: flex; gap: 14px; padding-top: 10px; border-top: 1px solid var(--ig-border); margin-top: auto; }
-.ig-trail-card__stat { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--ig-text); }
-.ig-trail-card__stat svg { color: var(--ig-text-muted); }
-
-/* CTA Scopri */
-.ig-trail-card__cta {
-    display: flex;
+.ig-trail-card__tag--loc {
+    display: inline-flex;
     align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    font-weight: 600;
+    gap: 3px;
+    background: rgba(0,122,255,.06);
     color: var(--ig-primary);
-    margin-top: 12px;
+    border-color: rgba(0,122,255,.15);
+}
+.ig-trail-card__tag--loc svg { flex-shrink: 0; }
+a.ig-trail-card__tag--loc { text-decoration: none; transition: background .2s, border-color .2s; position: relative; z-index: 2; cursor: pointer; }
+a.ig-trail-card__tag--loc:hover { background: rgba(0,122,255,.12); border-color: var(--ig-primary); }
+
+/* Excerpt */
+.ig-trail-card__excerpt {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ig-text-muted);
+    margin: 0 0 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Right panel — profilo + stats */
+.ig-trail-card__right {
+    width: 200px;
+    flex-shrink: 0;
+    padding: 18px 20px;
+    border-left: 1px solid var(--ig-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    background: var(--ig-bg);
+}
+.ig-trail-card__profile {
+    width: 100%;
+    height: 55px;
+}
+.ig-trail-card__rstats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.ig-trail-card__rstat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ig-trail-card__rstat-label {
+    font-size: 11px;
+    color: var(--ig-text-muted);
+}
+.ig-trail-card__rstat-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ig-text);
+}
+
+/* Mobile: card verticale */
+@media (max-width: 768px) {
+    .ig-trail-card { flex-direction: column; }
+    .ig-trail-card__map { width: 100%; min-height: 150px; }
+    .ig-trail-card__right {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--ig-border);
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 12px 18px;
+    }
+    .ig-trail-card__profile { width: 100%; height: 40px; }
+    .ig-trail-card__rstats { flex-direction: row; gap: 16px; flex-wrap: wrap; }
 }
 
 .ig-trail-count { text-align: center; font-size: var(--fs-sm); color: var(--ig-text-muted); margin-top: var(--sp-xl); }
@@ -5247,7 +5368,7 @@ button.ig-info-strip__item--ai .ig-info-strip__value {
     display: inline-block;
     padding: 3px 10px;
     border-radius: 20px;
-    color: white;
+    color: #fff !important;
     font-size: 12px;
     font-weight: 700;
     text-transform: capitalize;
@@ -5806,6 +5927,17 @@ button.ig-info-strip__item--ai .ig-info-strip__value {
     font-weight: 500;
     color: var(--ig-primary);
 }
+.ig-evt-tile__desc {
+    display: block;
+    margin-top: 6px;
+    font-size: .85rem;
+    line-height: 1.45;
+    color: var(--ig-text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
 /* Empty state */
 .ig-evt-empty {
@@ -5948,6 +6080,15 @@ button.ig-info-strip__item--ai .ig-info-strip__value {
     border-color: var(--ig-primary);
     font-weight: 600;
 }
+.ig-itin-filters__pills--scroll {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+}
+.ig-itin-filters__pills--scroll::-webkit-scrollbar { display: none; }
+.ig-itin-filters__pills--scroll .ig-itin-filters__pill { white-space: nowrap; flex-shrink: 0; }
 @media (max-width: 768px) {
     .ig-itin-filters__row { flex-direction: column; align-items: flex-start; gap: 6px; }
     .ig-itin-filters__pills { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
@@ -5982,5 +6123,1190 @@ button.ig-info-strip__item--ai .ig-info-strip__value {
     }
     .ig-seasonal__cta {
         transition: none;
+    }
+}
+
+/* =================================================================
+   UX IMPROVEMENTS — March 2026
+   Accessibility, micro-interactions, loading states, consistency
+   ================================================================= */
+
+/* -----------------------------------------------------------------
+   A. FOCUS STATES — Accessibility
+   ----------------------------------------------------------------- */
+/* Visible focus ring for keyboard navigation */
+:focus-visible {
+    outline: 2px solid var(--ig-primary);
+    outline-offset: 2px;
+    border-radius: var(--r-xs);
+}
+/* Remove outline on mouse click */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+/* Specific focus for buttons and links */
+.ig-btn:focus-visible,
+.ig-hero__cta:focus-visible,
+.ig-evt-hero-pill:focus-visible,
+.ig-evt-quick__btn:focus-visible,
+.ig-evt-cats__btn:focus-visible,
+.ig-itin-subnav__pill:focus-visible,
+.ig-itin-filters__pill:focus-visible,
+.ig-dest-filters__btn:focus-visible {
+    outline: 2px solid var(--ig-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(0,122,255,0.15);
+}
+/* Focus on cards */
+.ig-evt-tile:focus-visible,
+.ig-dest-card:focus-visible,
+.ig-vivi-card:focus-visible,
+.ig-featured-card:focus-visible,
+.ig-listing-card:focus-visible,
+.ig-blog-card:focus-visible {
+    outline: 2px solid var(--ig-primary);
+    outline-offset: 3px;
+    border-radius: var(--r-md);
+}
+/* Skip to content (screen reader) */
+.ig-skip-link {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    z-index: 10000;
+    padding: 12px 24px;
+    background: var(--ig-primary);
+    color: white;
+    border-radius: var(--r-pill);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    text-decoration: none;
+    transition: top 0.2s;
+}
+.ig-skip-link:focus {
+    top: 16px;
+}
+
+/* -----------------------------------------------------------------
+   B. TOUCH TARGETS — Mobile >= 44px
+   ----------------------------------------------------------------- */
+@media (max-width: 1023px) {
+    /* Filter pills minimum touch target */
+    .ig-evt-hero-pill,
+    .ig-evt-quick__btn,
+    .ig-evt-cats__btn,
+    .ig-itin-subnav__pill,
+    .ig-itin-filters__pill,
+    .ig-dest-filters__btn {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+    /* Navigation items */
+    .ig-mobile-menu__heading,
+    .ig-mobile-menu__link {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+    .ig-mobile-menu__submenu a {
+        min-height: 44px;
+    }
+    /* Social stats */
+    .ig-social-stat {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    /* Carousel nav */
+    .ig-dest-carousel__btn,
+    .ig-blog-carousel__btn {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* -----------------------------------------------------------------
+   C. SMOOTH SCROLL for filter sections
+   ----------------------------------------------------------------- */
+.ig-evt-hero-filters,
+.ig-evt-cats,
+.ig-itin-subnav__pills,
+.ig-itin-filters__pills {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.ig-evt-hero-filters::-webkit-scrollbar,
+.ig-evt-cats::-webkit-scrollbar,
+.ig-itin-subnav__pills::-webkit-scrollbar,
+.ig-itin-filters__pills::-webkit-scrollbar {
+    display: none;
+}
+/* Mobile: horizontal scroll for hero filters */
+@media (max-width: 768px) {
+    .ig-evt-hero-filters {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
+        margin: 0 -24px;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+    .ig-evt-hero-pill {
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+}
+
+/* -----------------------------------------------------------------
+   D. SKELETON LOADING — Placeholder shimmer
+   ----------------------------------------------------------------- */
+@keyframes igShimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+.ig-skeleton {
+    background: linear-gradient(90deg,
+        #f0f0f0 25%,
+        #e0e0e0 37%,
+        #f0f0f0 63%
+    );
+    background-size: 200% 100%;
+    animation: igShimmer 1.5s ease-in-out infinite;
+    border-radius: var(--r-sm);
+}
+.ig-skeleton--text {
+    height: 14px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+}
+.ig-skeleton--text-lg {
+    height: 20px;
+    width: 60%;
+    margin-bottom: 12px;
+    border-radius: 4px;
+}
+.ig-skeleton--img {
+    aspect-ratio: 3/2;
+    border-radius: var(--r-md);
+}
+.ig-skeleton--card {
+    border-radius: var(--r-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* -----------------------------------------------------------------
+   E. IMPROVED EMPTY STATES
+   ----------------------------------------------------------------- */
+.ig-evt-empty {
+    text-align: center;
+    padding: 80px 24px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+.ig-evt-empty svg {
+    opacity: 0.2;
+    margin-bottom: 8px;
+}
+.ig-evt-empty__title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--ig-text);
+    margin: 16px 0 8px;
+}
+.ig-evt-empty__sub {
+    font-size: 0.95rem;
+    color: var(--ig-text-muted);
+    line-height: 1.6;
+    margin: 0 0 20px;
+}
+
+/* -----------------------------------------------------------------
+   F. IMPROVED PLACEHOLDERS (no-image cards)
+   ----------------------------------------------------------------- */
+/* Cultura/Strutture: gradient placeholder with pattern */
+.ig-evt-tile__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+.ig-evt-tile__placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 40%);
+}
+.ig-evt-tile__placeholder svg {
+    position: relative;
+    z-index: 1;
+    opacity: 0.35;
+    transition: opacity 0.3s, transform 0.3s;
+}
+.ig-evt-tile:hover .ig-evt-tile__placeholder svg {
+    opacity: 0.5;
+    transform: scale(1.1);
+}
+
+/* Cultura-specific gradient */
+.ig-evt-tile__placeholder[style*="#06B6D4"],
+.ig-evt-tile__placeholder[style*="06B6D4"] {
+    background: linear-gradient(160deg, #06B6D4 0%, #0891B2 50%, #065f73 100%);
+}
+
+/* -----------------------------------------------------------------
+   G. CARD IMAGE ASPECT RATIO CONSISTENCY
+   ----------------------------------------------------------------- */
+/* Force consistent aspect ratio on all tile images */
+.ig-evt-tile__img {
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    border-radius: 0;
+    background: var(--ig-bg);
+    position: relative;
+}
+/* Smooth image load */
+.ig-evt-tile__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease), opacity 0.4s;
+}
+
+/* -----------------------------------------------------------------
+   H. MICRO-INTERACTIONS
+   ----------------------------------------------------------------- */
+/* Card lift on hover — unified across all card types */
+.ig-evt-tile {
+    transition: transform 0.3s var(--ease);
+}
+.ig-evt-tile:hover {
+    transform: translateY(-4px);
+}
+
+/* Title color transition */
+.ig-evt-tile__title {
+    transition: color 0.25s var(--ease);
+}
+
+/* Button press effect */
+.ig-btn:active,
+.ig-hero__cta:active,
+.ig-evt-hero-pill:active,
+.ig-evt-quick__btn:active,
+.ig-evt-cats__btn:active {
+    transform: scale(0.97);
+}
+
+/* Smooth badge entrance */
+.ig-dest-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: var(--r-pill);
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgba(255,255,255,0.9);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    margin-bottom: 16px;
+    transition: background 0.3s, transform 0.3s;
+}
+.ig-dest-hero__badge:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Scroll reveal stagger for grid children */
+.ig-evt-grid .ig-evt-tile {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: igCardReveal 0.5s var(--ease) forwards;
+}
+.ig-evt-grid .ig-evt-tile:nth-child(1) { animation-delay: 0.05s; }
+.ig-evt-grid .ig-evt-tile:nth-child(2) { animation-delay: 0.10s; }
+.ig-evt-grid .ig-evt-tile:nth-child(3) { animation-delay: 0.15s; }
+.ig-evt-grid .ig-evt-tile:nth-child(4) { animation-delay: 0.20s; }
+.ig-evt-grid .ig-evt-tile:nth-child(5) { animation-delay: 0.25s; }
+.ig-evt-grid .ig-evt-tile:nth-child(6) { animation-delay: 0.30s; }
+.ig-evt-grid .ig-evt-tile:nth-child(7) { animation-delay: 0.35s; }
+.ig-evt-grid .ig-evt-tile:nth-child(8) { animation-delay: 0.40s; }
+.ig-evt-grid .ig-evt-tile:nth-child(9) { animation-delay: 0.45s; }
+.ig-evt-grid .ig-evt-tile:nth-child(n+10) { animation-delay: 0.50s; }
+
+@keyframes igCardReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Location badge with icon */
+.ig-evt-tile__location {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.ig-evt-tile__location svg {
+    flex-shrink: 0;
+    opacity: 0.6;
+    color: inherit;
+}
+
+/* Empty state icon wrapper */
+.ig-evt-empty__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--sp-sm);
+}
+.ig-evt-empty__icon svg {
+    width: 56px;
+    height: 56px;
+    opacity: 0.15;
+    color: var(--ig-text-muted);
+}
+
+/* Info strip hover animation */
+.ig-info-strip__item--link {
+    transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.ig-info-strip__item--link:hover {
+    background: rgba(0,122,255,0.06);
+    transform: translateY(-1px);
+}
+
+/* -----------------------------------------------------------------
+   I. IMPROVED FILTER PILL ACTIVE STATE TRANSITIONS
+   ----------------------------------------------------------------- */
+/* Smooth color transitions on all filter pills */
+.ig-evt-hero-pill,
+.ig-evt-quick__btn,
+.ig-evt-cats__btn,
+.ig-itin-subnav__pill,
+.ig-itin-filters__pill,
+.ig-dest-filters__btn {
+    transition: all 0.25s var(--ease);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* -----------------------------------------------------------------
+   J. BETTER CONTRAST — Text on dark backgrounds
+   ----------------------------------------------------------------- */
+/* Ensure sufficient contrast on CTA sections */
+.ig-apple-section--cta {
+    background: linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 50%, #1C1C1E 100%);
+}
+.ig-apple-title--white {
+    color: #fff;
+    font-weight: 800;
+}
+.ig-apple-subtitle--white {
+    color: rgba(255,255,255,0.75);
+}
+
+/* -----------------------------------------------------------------
+   K. HERO FILTER SCROLL INDICATORS (mobile)
+   ----------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .ig-evt-hero-filters {
+        position: relative;
+    }
+    .ig-evt-hero-filters::after {
+        content: '';
+        position: sticky;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 40px;
+        flex-shrink: 0;
+        background: linear-gradient(to left, rgba(0,0,0,0.3), transparent);
+        pointer-events: none;
+        border-radius: 0 var(--r-pill) var(--r-pill) 0;
+    }
+}
+
+/* -----------------------------------------------------------------
+   L. NEWSLETTER FORM IMPROVEMENTS
+   ----------------------------------------------------------------- */
+.ig-newsletter__input {
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.ig-newsletter__input:focus {
+    border-color: rgba(255,255,255,0.8);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+}
+.ig-newsletter__submit {
+    position: relative;
+    overflow: hidden;
+}
+.ig-newsletter__submit::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(0,122,255,0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+.ig-newsletter__submit:active::after {
+    width: 200px;
+    height: 200px;
+}
+
+/* -----------------------------------------------------------------
+   M. IMPROVED DEST GRID CARDS
+   ----------------------------------------------------------------- */
+/* Archive destinazione cards: smooth border reveal */
+.ig-dest-grid .ig-dest-card {
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+.ig-dest-grid .ig-dest-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    border-color: transparent;
+}
+
+/* Dest card tagline visibility on hover */
+.ig-dest-card__tagline {
+    transition: color 0.3s var(--ease);
+}
+.ig-dest-grid .ig-dest-card:hover .ig-dest-card__tagline {
+    color: var(--ig-primary);
+}
+
+/* -----------------------------------------------------------------
+   N. BACK TO TOP BUTTON
+   ----------------------------------------------------------------- */
+.ig-back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ig-text);
+    cursor: pointer;
+    z-index: 900;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: all 0.3s var(--ease);
+}
+.ig-back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.ig-back-to-top:hover {
+    background: var(--glass-bg-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--glass-shadow-lg);
+}
+/* Adjust position when chat is open */
+.garda-chat-open .ig-back-to-top {
+    right: 420px;
+}
+@media (max-width: 767px) {
+    .ig-back-to-top {
+        bottom: 16px;
+        right: 16px;
+    }
+    .garda-chat-open .ig-back-to-top {
+        right: 16px;
+        bottom: 70px;
+    }
+}
+
+/* -----------------------------------------------------------------
+   O. IMPROVED APPLE SECTIONS SPACING
+   ----------------------------------------------------------------- */
+.ig-apple-section {
+    padding: var(--sp-3xl) 0;
+}
+.ig-apple-section--white {
+    background: white;
+}
+.ig-apple-section--light {
+    background: var(--ig-bg);
+}
+.ig-apple-section--dark {
+    background: #1C1C1E;
+    color: white;
+}
+.ig-apple-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 var(--sp-lg);
+}
+.ig-apple-container--wide {
+    max-width: 1280px;
+}
+.ig-apple-container--narrow {
+    max-width: 720px;
+}
+.ig-apple-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+.ig-apple-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--ig-text-muted);
+    line-height: 1.6;
+    max-width: 600px;
+}
+.ig-text-center { text-align: center; }
+.ig-text-center .ig-apple-subtitle { margin: 0 auto; }
+.ig-mt-xl { margin-top: var(--sp-xl); }
+
+/* Apple intro paragraph */
+.ig-apple-intro {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--ig-text);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.ig-apple-intro p {
+    margin: 0;
+}
+
+/* Apple body text */
+.ig-apple-body {
+    font-size: var(--fs-lg);
+    line-height: 1.8;
+    color: #4a4a4e;
+}
+.ig-apple-body p { margin-bottom: 1.5em; }
+.ig-apple-body h2 { font-size: var(--fs-2xl); font-weight: 700; margin: 2em 0 0.75em; color: var(--ig-text); }
+.ig-apple-body h3 { font-size: var(--fs-xl); font-weight: 600; margin: 1.5em 0 0.5em; color: var(--ig-text); }
+
+/* -----------------------------------------------------------------
+   P. APPLE FEATURE (alternating image + text)
+   ----------------------------------------------------------------- */
+.ig-apple-feature__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-2xl);
+    align-items: center;
+}
+.ig-apple-feature--reverse .ig-apple-feature__grid {
+    direction: rtl;
+}
+.ig-apple-feature--reverse .ig-apple-feature__grid > * {
+    direction: ltr;
+}
+.ig-apple-feature__visual {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+}
+.ig-apple-feature__img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    border-radius: var(--r-lg);
+}
+.ig-apple-feature__label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ig-primary);
+    margin-bottom: 8px;
+    display: block;
+}
+.ig-apple-feature__title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--ig-text);
+}
+.ig-apple-feature__excerpt {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    color: var(--ig-text);
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+.ig-apple-feature__desc {
+    font-size: var(--fs-base);
+    color: var(--ig-text-muted);
+    line-height: 1.7;
+}
+@media (max-width: 767px) {
+    .ig-apple-feature__grid {
+        grid-template-columns: 1fr;
+        gap: var(--sp-lg);
+    }
+    .ig-apple-feature--reverse .ig-apple-feature__grid {
+        direction: ltr;
+    }
+}
+
+/* -----------------------------------------------------------------
+   Q. EXPLORE CARDS (single destinazione)
+   ----------------------------------------------------------------- */
+.ig-explore-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+@media (min-width: 768px) {
+    .ig-explore-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.ig-explore-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 24px;
+    border-radius: var(--r-lg);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s var(--ease);
+    position: relative;
+    overflow: hidden;
+}
+.ig-explore-card:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+    color: white;
+}
+.ig-explore-card__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--r-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.1);
+}
+.ig-explore-card__icon svg { color: white; }
+.ig-explore-card__title {
+    font-size: var(--fs-base);
+    font-weight: 700;
+    margin: 0;
+}
+.ig-explore-card__desc {
+    font-size: var(--fs-sm);
+    color: rgba(255,255,255,0.6);
+    margin: 0;
+}
+.ig-explore-card__arrow {
+    position: absolute;
+    top: 24px;
+    right: 20px;
+    color: rgba(255,255,255,0.3);
+    transition: transform 0.3s, color 0.3s;
+}
+.ig-explore-card:hover .ig-explore-card__arrow {
+    color: rgba(255,255,255,0.7);
+    transform: translateX(4px);
+}
+
+/* -----------------------------------------------------------------
+   R. ITINERARY DETAIL STYLES
+   ----------------------------------------------------------------- */
+.ig-itin-detail {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--sp-2xl);
+    align-items: start;
+}
+.ig-itin-detail__main {
+    min-width: 0;
+}
+.ig-itin-detail__heading {
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    margin-bottom: var(--sp-lg);
+}
+.ig-itin-detail__subheading {
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    margin: var(--sp-xl) 0 var(--sp-md);
+}
+@media (max-width: 767px) {
+    .ig-itin-detail {
+        grid-template-columns: 1fr;
+        gap: var(--sp-xl);
+    }
+}
+
+/* Tags */
+.ig-itin-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.ig-itin-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: var(--r-pill);
+    background: rgba(16,185,129,0.08);
+    color: #10B981;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+}
+
+/* Sidebar card */
+.ig-itin-sidebar-card {
+    background: white;
+    border-radius: var(--r-lg);
+    padding: 24px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    border: 1px solid var(--ig-border);
+    position: sticky;
+    top: 100px;
+}
+.ig-itin-sidebar-card__title {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    margin-bottom: var(--sp-md);
+    padding-bottom: var(--sp-sm);
+    border-bottom: 1px solid var(--ig-border);
+}
+.ig-itin-sidebar-card__rows {
+    display: flex;
+    flex-direction: column;
+}
+.ig-itin-sidebar-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    font-size: var(--fs-sm);
+    color: var(--ig-text-muted);
+}
+.ig-itin-sidebar-card__row:last-child {
+    border-bottom: none;
+}
+.ig-itin-sidebar-card__row strong {
+    color: var(--ig-text);
+}
+
+/* Difficulty badge */
+.ig-itin-diff-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: var(--r-pill);
+    color: white;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+}
+
+/* Map wrap */
+.ig-itin-map-wrap {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+#igItinMap {
+    width: 100%;
+    height: 400px;
+}
+@media (max-width: 767px) {
+    #igItinMap { height: 300px; }
+}
+
+/* Elevation profile */
+.ig-itin-profile-wrap {
+    position: relative;
+    margin-top: var(--sp-lg);
+    background: white;
+    border-radius: var(--r-md);
+    padding: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.ig-itin-profile-tooltip {
+    display: none;
+    position: absolute;
+    top: 8px;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.85);
+    color: white;
+    border-radius: var(--r-xs);
+    font-size: var(--fs-xs);
+    pointer-events: none;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    z-index: 5;
+}
+
+/* Surface type bar */
+.ig-itin-surface {
+    margin-top: var(--sp-lg);
+    padding-top: var(--sp-md);
+    border-top: 1px solid var(--ig-border);
+}
+.ig-itin-surface__title {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin-bottom: var(--sp-sm);
+}
+.ig-itin-surface__bar {
+    display: flex;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: var(--sp-sm);
+}
+.ig-itin-surface__segment {
+    height: 100%;
+    transition: width 0.5s var(--ease);
+}
+.ig-itin-surface__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.ig-itin-surface__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--fs-xs);
+    color: var(--ig-text-muted);
+}
+.ig-itin-surface__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.ig-itin-surface__km {
+    font-weight: 600;
+    color: var(--ig-text);
+}
+
+/* Route markers */
+.ig-route-marker {
+    background: none;
+    border: none;
+}
+.ig-route-marker div {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.ig-route-marker--start div { background: #10B981; }
+.ig-route-marker--end div { background: #EF4444; }
+
+/* -----------------------------------------------------------------
+   S. TRAIL MAP / GRID (itinerari page)
+   ----------------------------------------------------------------- */
+.ig-trail-map-wrap {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    position: relative;
+}
+#igTrailMap {
+    width: 100%;
+    height: 500px;
+}
+@media (max-width: 767px) {
+    #igTrailMap { height: 350px; }
+}
+.ig-map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 12px 16px;
+    background: white;
+    font-size: var(--fs-xs);
+}
+.ig-map-legend__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--ig-text-muted);
+}
+.ig-map-legend__item i {
+    width: 12px;
+    height: 4px;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+/* Trail grid */
+.ig-trail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--sp-lg);
+}
+.ig-trail-count {
+    text-align: center;
+    margin-top: var(--sp-lg);
+    font-size: var(--fs-sm);
+    color: var(--ig-text-muted);
+}
+
+/* Trail detail overlay */
+.ig-td-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.ig-td-overlay.is-open {
+    display: flex;
+}
+.ig-td-overlay__bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.ig-td-modal {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    background: white;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.ig-td-modal__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.ig-td-modal__close:hover { background: rgba(0,0,0,0.7); }
+.ig-td-modal__map {
+    width: 100%;
+    height: 250px;
+}
+.ig-td-modal__content {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* -----------------------------------------------------------------
+   T. EXP LISTING (related itineraries)
+   ----------------------------------------------------------------- */
+.ig-exp-listing {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--sp-lg);
+}
+.ig-exp-item {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--ig-border);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+.ig-exp-item:hover {
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
+}
+.ig-exp-item__img {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+.ig-exp-item__img img,
+.ig-exp-item__img .ig-placeholder-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+.ig-exp-item:hover .ig-exp-item__img img { transform: scale(1.05); }
+.ig-exp-item__badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 12px;
+    border-radius: var(--r-pill);
+    color: white;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+}
+.ig-exp-item__body {
+    padding: 16px;
+}
+.ig-exp-item__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ig-text);
+    margin-bottom: 6px;
+    transition: color 0.3s;
+}
+.ig-exp-item:hover .ig-exp-item__title { color: var(--ig-primary); }
+.ig-exp-item__loc {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--fs-sm);
+    color: var(--ig-text-muted);
+    margin: 0;
+}
+.ig-exp-item__desc {
+    font-size: var(--fs-sm);
+    color: var(--ig-text-muted);
+    margin-top: 6px;
+}
+
+/* -----------------------------------------------------------------
+   U. INFO STRIP (weather/AI/directions bar)
+   ----------------------------------------------------------------- */
+.ig-info-strip {
+    background: white;
+    border-bottom: 1px solid var(--ig-border);
+}
+.ig-info-strip__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.ig-info-strip__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-right: 1px solid var(--ig-border);
+    font-family: var(--font);
+    text-decoration: none;
+    color: inherit;
+    background: none;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    cursor: default;
+    transition: background 0.25s;
+}
+.ig-info-strip__item:last-child { border-right: none; }
+.ig-info-strip__item--link {
+    cursor: pointer;
+}
+.ig-info-strip__item--link:hover {
+    background: rgba(0,122,255,0.04);
+}
+.ig-info-strip__item--ai {
+    cursor: pointer;
+}
+.ig-info-strip__item--ai:hover {
+    background: rgba(88,86,214,0.04);
+}
+.ig-info-strip__label {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--ig-text-muted);
+    font-weight: 500;
+}
+.ig-info-strip__value {
+    display: block;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ig-text);
+}
+.ig-info-strip__item svg {
+    flex-shrink: 0;
+    color: var(--ig-text-muted);
+}
+@media (max-width: 767px) {
+    .ig-info-strip__grid {
+        grid-template-columns: 1fr;
+    }
+    .ig-info-strip__item {
+        border-right: none;
+        border-bottom: 1px solid var(--ig-border);
+    }
+    .ig-info-strip__item:last-child { border-bottom: none; }
+}
+
+/* -----------------------------------------------------------------
+   V. DEST HERO SHORT VARIANT
+   ----------------------------------------------------------------- */
+.ig-dest-hero--short {
+    height: 320px;
+    min-height: 320px;
+}
+@media (max-width: 767px) {
+    .ig-dest-hero--short { height: 260px; min-height: 260px; }
+}
+
+/* -----------------------------------------------------------------
+   W. REDUCED MOTION UPDATES
+   ----------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .ig-evt-grid .ig-evt-tile {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+    .ig-skeleton {
+        animation: none;
+    }
+    .ig-back-to-top {
+        transition: opacity 0.1s, visibility 0.1s;
+    }
+    .ig-newsletter__submit::after {
+        display: none;
     }
 }

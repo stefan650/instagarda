@@ -30,8 +30,20 @@
                 <?php
                 $hero_dests = new WP_Query([
                     'post_type'      => 'destinazione',
+                    'posts_per_page' => -1,
+                    'orderby'        => 'title',
+                    'order'          => 'ASC',
+                    'fields'         => 'ids',
+                ]);
+                // Shuffle in PHP per evitare ORDER BY RAND() (pesante su MySQL)
+                $hero_ids = $hero_dests->posts;
+                shuffle($hero_ids);
+                $hero_ids = array_slice($hero_ids, 0, 6);
+                $hero_dests = new WP_Query([
+                    'post_type'      => 'destinazione',
+                    'post__in'       => $hero_ids,
                     'posts_per_page' => 6,
-                    'orderby'        => 'rand',
+                    'orderby'        => 'post__in',
                 ]);
                 if ($hero_dests->have_posts()):
                     while ($hero_dests->have_posts()): $hero_dests->the_post();
@@ -47,7 +59,7 @@
             <div class="ig-hero__suggestion-group" data-group="vivi">
                 <a href="<?php echo esc_url(home_url('/esperienze/attivita/')); ?>" class="ig-hero__pill">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-                    Attività & Tour
+                    Percorsi & Sport
                 </a>
                 <a href="<?php echo esc_url(home_url('/esperienze/cultura/')); ?>" class="ig-hero__pill">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
@@ -98,12 +110,12 @@
                         $subtitle = ig_get_meta('subtitle');
                         $regione  = ig_get_meta('regione');
                 ?>
-                <a href="<?php the_permalink(); ?>" class="ig-dest-card">
+                <a href="<?php the_permalink(); ?>" class="ig-dest-card" aria-label="<?php echo esc_attr(get_the_title()); ?>">
                     <?php if (has_post_thumbnail()): ?>
-                        <?php the_post_thumbnail('card-portrait'); ?>
+                        <?php the_post_thumbnail('card-portrait', ['loading' => 'lazy', 'alt' => esc_attr(get_the_title())]); ?>
                     <?php else: ?>
                         <div class="ig-placeholder-img">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                         </div>
                     <?php endif; ?>
                     <h3 class="ig-dest-card__title"><?php the_title(); ?></h3>
@@ -182,17 +194,17 @@
                     while ($blog_posts->have_posts()): $blog_posts->the_post();
                         $cats = get_the_category();
                 ?>
-                <a href="<?php the_permalink(); ?>" class="ig-blog-card">
+                <a href="<?php the_permalink(); ?>" class="ig-blog-card" aria-label="<?php echo esc_attr(get_the_title()); ?>">
                     <div class="ig-blog-card__body">
                         <?php if ($cats): ?>
                             <span class="ig-blog-card__cat"><?php echo esc_html($cats[0]->name); ?></span>
                         <?php endif; ?>
                         <h3 class="ig-blog-card__title"><?php the_title(); ?></h3>
-                        <p class="ig-blog-card__excerpt"><?php echo get_the_excerpt(); ?></p>
+                        <p class="ig-blog-card__excerpt"><?php echo esc_html(get_the_excerpt()); ?></p>
                     </div>
                     <div class="ig-blog-card__img">
                         <?php if (has_post_thumbnail()): ?>
-                            <?php the_post_thumbnail('card-wide'); ?>
+                            <?php the_post_thumbnail('card-wide', ['loading' => 'lazy', 'alt' => esc_attr(get_the_title())]); ?>
                         <?php else: ?>
                             <div class="ig-placeholder-img">
                                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
@@ -265,14 +277,14 @@
         <!-- Category Grid -->
         <div class="ig-vivi-grid">
 
-            <!-- Attività & Tour -->
+            <!-- Percorsi & Sport -->
             <div class="ig-vivi-card ig-vivi-card--teal">
                 <div class="ig-vivi-card__img"><?php echo wp_get_attachment_image(34, 'card-wide'); ?></div>
                 <div class="ig-vivi-card__body">
                     <div class="ig-vivi-card__icon ig-vivi-card__icon--teal">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                     </div>
-                    <h3 class="ig-vivi-card__title">Attività &amp; Tour</h3>
+                    <h3 class="ig-vivi-card__title">Percorsi &amp; Sport</h3>
                     <p class="ig-vivi-card__desc">Tour guidati, escursioni in barca, parchi e esperienze uniche.</p>
                     <div class="ig-vivi-card__tags">
                         <span class="ig-vivi-card__tag">Tour</span>
@@ -397,10 +409,10 @@
                         $tipo = get_the_terms(get_the_ID(), 'tipo_struttura');
                         $loc  = get_the_terms(get_the_ID(), 'localita');
                 ?>
-                <a href="<?php the_permalink(); ?>" class="ig-featured-card">
+                <a href="<?php the_permalink(); ?>" class="ig-featured-card" aria-label="<?php echo esc_attr(get_the_title()); ?>">
                     <div class="ig-featured-card__img">
                         <?php if (has_post_thumbnail()): ?>
-                            <?php the_post_thumbnail('listing-thumb'); ?>
+                            <?php the_post_thumbnail('listing-thumb', ['loading' => 'lazy', 'alt' => esc_attr(get_the_title())]); ?>
                         <?php else: ?>
                             <div class="ig-placeholder-img">
                                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
