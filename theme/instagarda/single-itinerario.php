@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
             L.marker([startLat, startLng]).addTo(map);
         });
 
-    // ─── Profilo altimetrico ───
+    // ─── Profilo altimetrico (stile Outdooractive) ───
     function drawElevationProfile(route) {
         var wrap = document.getElementById('igItinProfileWrap');
         var canvas = document.getElementById('igItinProfile');
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var ctx = canvas.getContext('2d');
         var dpr = window.devicePixelRatio || 1;
         var w = wrap.offsetWidth;
-        var h = 160;
+        var h = 180;
         canvas.width = w * dpr;
         canvas.height = h * dpr;
         canvas.style.width = w + 'px';
@@ -244,84 +244,153 @@ document.addEventListener('DOMContentLoaded', function() {
         var totalDist = distances[distances.length - 1];
 
         var elevs = route.map(function(p) { return p[2]; });
-        var minElev = Math.min.apply(null, elevs) - 20;
-        var maxElev = Math.max.apply(null, elevs) + 20;
-        var elevRange = maxElev - minElev || 1;
+        var rawMin = Math.min.apply(null, elevs);
+        var rawMax = Math.max.apply(null, elevs);
 
-        var padL = 50, padR = 16, padT = 16, padB = 30;
+        // Calcola step "belli" per l'asse Y
+        var rawRange = rawMax - rawMin || 1;
+        var niceStep = rawRange / 4;
+        var mag = Math.pow(10, Math.floor(Math.log10(niceStep)));
+        var residual = niceStep / mag;
+        if (residual <= 1.5) niceStep = mag;
+        else if (residual <= 3.5) niceStep = 2 * mag;
+        else if (residual <= 7.5) niceStep = 5 * mag;
+        else niceStep = 10 * mag;
+        niceStep = Math.max(niceStep, 1);
+
+        var minElev = Math.floor(rawMin / niceStep) * niceStep;
+        var maxElev = Math.ceil(rawMax / niceStep) * niceStep;
+        if (maxElev === minElev) maxElev = minElev + niceStep;
+        var elevRange = maxElev - minElev;
+        var elevSteps = Math.round(elevRange / niceStep);
+
+        var padL = 56, padR = 20, padT = 14, padB = 14;
         var chartW = w - padL - padR;
         var chartH = h - padT - padB;
 
-        // Griglia
-        ctx.strokeStyle = '#e5e7eb';
-        ctx.lineWidth = 1;
-        ctx.font = '11px -apple-system, sans-serif';
-        ctx.fillStyle = '#9ca3af';
+        // Sfondo area grafico
+        ctx.fillStyle = '#f5f6f8';
+        ctx.fillRect(padL, padT, chartW, chartH);
+
+        // Griglia orizzontale + etichette quota
+        ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
         ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
 
-        var elevSteps = 4;
         for (var s = 0; s <= elevSteps; s++) {
-            var elev = minElev + (elevRange * s / elevSteps);
+            var elev = minElev + niceStep * s;
             var y = padT + chartH - (chartH * s / elevSteps);
-            ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke();
-            ctx.fillText(Math.round(elev) + ' m', padL - 6, y + 4);
+            // Linea griglia sottile
+            ctx.strokeStyle = '#e0e2e6';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + chartW, y); ctx.stroke();
+            // Etichetta quota
+            ctx.fillStyle = '#6b7280';
+            ctx.fillText(Math.round(elev) + ' m', padL - 8, y);
         }
 
-        // Etichette distanza
-        ctx.textAlign = 'center';
-        var distSteps = Math.min(6, Math.floor(totalDist));
-        for (var d = 0; d <= distSteps; d++) {
-            var dist = totalDist * d / distSteps;
-            var x = padL + (chartW * d / distSteps);
-            ctx.fillText((dist).toFixed(1) + ' km', x, h - 6);
-        }
+        // Funzione per calcolare coordinate canvas
+        function toX(i) { return padL + (distances[i] / totalDist) * chartW; }
+        function toY(i) { return padT + chartH - ((elevs[i] - minElev) / elevRange) * chartH; }
 
-        // Area riempita
+        // Area riempita grigio chiaro (stile Outdooractive)
         ctx.beginPath();
         ctx.moveTo(padL, padT + chartH);
         for (var i = 0; i < route.length; i++) {
-            var x = padL + (distances[i] / totalDist) * chartW;
-            var y = padT + chartH - ((elevs[i] - minElev) / elevRange) * chartH;
-            ctx.lineTo(x, y);
+            ctx.lineTo(toX(i), toY(i));
         }
-        ctx.lineTo(padL + chartW, padT + chartH);
+        ctx.lineTo(toX(route.length - 1), padT + chartH);
         ctx.closePath();
-
-        var grad = ctx.createLinearGradient(0, padT, 0, padT + chartH);
-        grad.addColorStop(0, 'rgba(27,58,92,0.3)');
-        grad.addColorStop(1, 'rgba(27,58,92,0.05)');
-        ctx.fillStyle = grad;
+        ctx.fillStyle = '#d5d8de';
         ctx.fill();
 
-        // Linea profilo
+        // Linea profilo scura
         ctx.beginPath();
         for (var i = 0; i < route.length; i++) {
-            var x = padL + (distances[i] / totalDist) * chartW;
-            var y = padT + chartH - ((elevs[i] - minElev) / elevRange) * chartH;
-            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            if (i === 0) ctx.moveTo(toX(i), toY(i));
+            else ctx.lineTo(toX(i), toY(i));
         }
-        ctx.strokeStyle = trailColor;
-        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = '#2d3748';
+        ctx.lineWidth = 2;
+        ctx.lineJoin = 'round';
         ctx.stroke();
 
-        // Hover tooltip
+        // ─── Hover interattivo ───
+        var hoverLine = null;
         canvas.addEventListener('mousemove', function(e) {
             var rect = canvas.getBoundingClientRect();
-            var mx = e.clientX - rect.left;
-            if (mx < padL || mx > w - padR) { tooltip.style.display = 'none'; return; }
+            var mx = (e.clientX - rect.left);
+            if (mx < padL || mx > padL + chartW) { tooltip.style.display = 'none'; redraw(); return; }
+
             var ratio = (mx - padL) / chartW;
             var dist = ratio * totalDist;
-            // Trova punto più vicino
             var idx = 0;
             for (var i = 1; i < distances.length; i++) {
                 if (distances[i] >= dist) { idx = i; break; }
             }
             var elev = elevs[idx];
-            tooltip.innerHTML = '<strong>' + dist.toFixed(1) + ' km</strong><br>' + Math.round(elev) + ' m';
-            tooltip.style.display = 'block';
-            tooltip.style.left = mx + 'px';
+            var py = toY(idx);
+
+            // Ridisegna il grafico pulito + linea verticale + punto
+            redraw();
+            ctx.save();
+            ctx.strokeStyle = 'rgba(45,55,72,0.4)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([4, 3]);
+            ctx.beginPath(); ctx.moveTo(mx, padT); ctx.lineTo(mx, padT + chartH); ctx.stroke();
+            ctx.restore();
+
+            // Punto sul profilo
+            ctx.beginPath();
+            ctx.arc(mx, py, 4, 0, Math.PI * 2);
+            ctx.fillStyle = '#2d3748';
+            ctx.fill();
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            tooltip.innerHTML = '<strong>' + Math.round(elev) + ' m</strong><span style="color:rgba(255,255,255,.7);margin-left:8px">' + dist.toFixed(1) + ' km</span>';
+            tooltip.style.display = 'flex';
+            tooltip.style.left = Math.min(Math.max(mx, 60), w - 60) + 'px';
         });
-        canvas.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+        canvas.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; redraw(); });
+
+        function redraw() {
+            ctx.clearRect(0, 0, w, h);
+            // Sfondo
+            ctx.fillStyle = '#f5f6f8';
+            ctx.fillRect(padL, padT, chartW, chartH);
+            // Griglia
+            for (var s = 0; s <= elevSteps; s++) {
+                var elev = minElev + niceStep * s;
+                var y = padT + chartH - (chartH * s / elevSteps);
+                ctx.strokeStyle = '#e0e2e6';
+                ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + chartW, y); ctx.stroke();
+                ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#6b7280';
+                ctx.fillText(Math.round(elev) + ' m', padL - 8, y);
+            }
+            // Area
+            ctx.beginPath();
+            ctx.moveTo(padL, padT + chartH);
+            for (var i = 0; i < route.length; i++) ctx.lineTo(toX(i), toY(i));
+            ctx.lineTo(toX(route.length - 1), padT + chartH);
+            ctx.closePath();
+            ctx.fillStyle = '#d5d8de';
+            ctx.fill();
+            // Linea
+            ctx.beginPath();
+            for (var i = 0; i < route.length; i++) {
+                if (i === 0) ctx.moveTo(toX(i), toY(i)); else ctx.lineTo(toX(i), toY(i));
+            }
+            ctx.strokeStyle = '#2d3748';
+            ctx.lineWidth = 2;
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+        }
     }
 
     function haversine(lat1, lon1, lat2, lon2) {

@@ -5203,35 +5203,7 @@ a.ig-trail-card__tag--loc:hover { background: rgba(0,122,255,.12); border-color:
     width: 100%;
     height: 480px;
 }
-/* Profilo altimetrico */
-.ig-itin-profile-wrap {
-    position: relative;
-    margin-top: var(--sp-lg);
-    background: white;
-    border-radius: var(--r-md);
-    border: 1px solid var(--ig-border);
-    padding: 16px 8px 8px;
-    overflow: hidden;
-}
-.ig-itin-profile-wrap canvas {
-    display: block;
-    width: 100%;
-    cursor: crosshair;
-}
-.ig-itin-profile-tooltip {
-    display: none;
-    position: absolute;
-    top: 8px;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,.8);
-    color: white;
-    font-size: 12px;
-    padding: 6px 10px;
-    border-radius: 6px;
-    pointer-events: none;
-    white-space: nowrap;
-    line-height: 1.4;
-}
+/* Profilo altimetrico — override below */
 /* Marker Start/Fine */
 .ig-route-marker div {
     width: 28px;
@@ -6994,28 +6966,37 @@ a.ig-trail-card__tag--loc:hover { background: rgba(0,122,255,.12); border-color:
     #igItinMap { height: 300px; }
 }
 
-/* Elevation profile */
+/* Elevation profile — Outdooractive style */
 .ig-itin-profile-wrap {
     position: relative;
     margin-top: var(--sp-lg);
-    background: white;
+    background: #f5f6f8;
     border-radius: var(--r-md);
-    padding: 16px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 20px 12px 12px;
+    overflow: hidden;
+}
+.ig-itin-profile-wrap canvas {
+    display: block;
+    width: 100%;
+    cursor: crosshair;
 }
 .ig-itin-profile-tooltip {
     display: none;
+    align-items: center;
+    gap: 4px;
     position: absolute;
-    top: 8px;
-    padding: 6px 12px;
-    background: rgba(0,0,0,0.85);
+    top: 6px;
+    padding: 5px 12px;
+    background: #2d3748;
     color: white;
-    border-radius: var(--r-xs);
-    font-size: var(--fs-xs);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
     pointer-events: none;
     transform: translateX(-50%);
     white-space: nowrap;
     z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
 }
 
 /* Surface type bar */
