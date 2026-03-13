@@ -43,7 +43,7 @@ get_header();
                 <div class="ig-feature-card__icon ig-feature-card__icon--blue">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                 </div>
-                <h3 class="ig-feature-card__title">Garda AI</h3>
+                <h3 class="ig-feature-card__title">Garda Concierge</h3>
                 <p class="ig-feature-card__desc">Il nostro assistente AI conosce ogni angolo del Lago di Garda. Chiedigli qualsiasi cosa: dove mangiare, cosa vedere, come arrivare. Risponde in tempo reale, 24/7.</p>
             </div>
             <div class="ig-feature-card">
@@ -102,7 +102,7 @@ get_header();
                 <div class="ig-roadmap__content">
                     <span class="ig-roadmap__phase">Fase 2</span>
                     <h3>Endpoint WhatsApp</h3>
-                    <p>Garda AI accessibile direttamente su WhatsApp per assistenza istantanea ai turisti.</p>
+                    <p>Garda Concierge accessibile direttamente su WhatsApp per assistenza istantanea ai turisti.</p>
                 </div>
             </div>
             <div class="ig-roadmap__item">
@@ -176,7 +176,7 @@ get_header();
                     <p>Oppure chiedi direttamente al nostro AI:</p>
                     <button class="ig-btn ig-btn--primary ig-btn--lg" onclick="window.toggleGardaChat && window.toggleGardaChat()">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                        Chiedi a Garda AI
+                        Chiedi a Garda Concierge
                     </button>
                 </div>
             </div>

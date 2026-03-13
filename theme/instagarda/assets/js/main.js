@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Hero AI bar → opens Garda AI chat with query
+  // Hero AI bar → opens Garda Concierge chat with query
   const heroAIInput = document.getElementById('igHeroAI');
   const heroAISend = document.getElementById('igHeroAISend');
   if (heroAIInput && heroAISend) {

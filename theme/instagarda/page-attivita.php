@@ -95,7 +95,7 @@ $categorie = [
             <p style="color:var(--ig-text-muted);margin-bottom:var(--sp-lg)">Chiedi al nostro assistente AI — conosce tutte le attività del Lago di Garda!</p>
             <button class="ig-btn ig-btn--primary ig-btn--lg" style="width:100%" onclick="window.toggleGardaChat && window.toggleGardaChat()">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                Chiedi a Garda AI
+                Chiedi a Garda Concierge
             </button>
         </div>
     </div>

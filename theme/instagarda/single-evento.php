@@ -153,7 +153,7 @@ if ($check_date && $check_date < date('Y-m-d')) {
             <?php endif; ?>
             <button class="ig-btn ig-btn--outline ig-btn--lg" onclick="window.toggleGardaChat && window.toggleGardaChat()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                Chiedi info a Garda AI
+                Chiedi info a Garda Concierge
             </button>
         </div>
     </div>
@@ -254,7 +254,7 @@ $mesi_short = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov'
         <p class="ig-apple-subtitle ig-apple-subtitle--white">Il nostro assistente AI ti aiuta a trovare eventi, attività e ristoranti per la tua giornata perfetta.</p>
         <button class="ig-btn ig-btn--glass-outline ig-btn--lg" style="margin-top:var(--sp-lg)" onclick="window.toggleGardaChat && window.toggleGardaChat()">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-            Chiedi a Garda AI
+            Chiedi a Garda Concierge
         </button>
     </div>
 </section>

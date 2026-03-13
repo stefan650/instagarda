@@ -131,14 +131,14 @@ get_header();
     </div>
 </section>
 
-<!-- CTA Garda AI -->
+<!-- CTA Garda Concierge -->
 <section class="ig-apple-section ig-apple-section--cta">
     <div class="ig-apple-container ig-text-center">
         <h2 class="ig-apple-title ig-apple-title--white">Non sai da dove iniziare?</h2>
         <p class="ig-apple-subtitle ig-apple-subtitle--white">Raccontaci cosa ti piace e il nostro assistente AI ti aiuterà a pianificare la giornata perfetta.</p>
         <button class="ig-btn ig-btn--glass-outline ig-btn--lg" style="margin-top:var(--sp-lg)" onclick="window.toggleGardaChat && window.toggleGardaChat()">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-            Chiedi a Garda AI
+            Chiedi a Garda Concierge
         </button>
     </div>
 </section>

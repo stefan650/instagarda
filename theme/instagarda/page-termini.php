@@ -32,7 +32,7 @@ get_header();
                 <li>Informazioni su destinazioni, attivit&agrave;, percorsi e itinerari nella zona del Lago di Garda</li>
                 <li>Guide a ristoranti, strutture ricettive, eventi culturali e sportivi</li>
                 <li>Contenuti editoriali (articoli del blog/magazine)</li>
-                <li>Un assistente virtuale basato su intelligenza artificiale (Garda AI) per fornire informazioni turistiche</li>
+                <li>Un assistente virtuale basato su intelligenza artificiale (Garda Concierge) per fornire informazioni turistiche</li>
                 <li>Mappe interattive e tracce GPS per percorsi e itinerari</li>
             </ul>
             <p>I contenuti sono forniti a scopo puramente informativo e divulgativo.</p>
@@ -58,7 +58,7 @@ get_header();
             </ul>
 
             <h2>4. Contenuti Generati dall&rsquo;Intelligenza Artificiale</h2>
-            <p>Il Sito include un assistente virtuale (Garda AI) basato su intelligenza artificiale. In merito a questo servizio:</p>
+            <p>Il Sito include un assistente virtuale (Garda Concierge) basato su intelligenza artificiale. In merito a questo servizio:</p>
             <ul>
                 <li>Le risposte del chatbot sono generate automaticamente e potrebbero contenere imprecisioni</li>
                 <li>Le informazioni fornite dal chatbot hanno carattere puramente orientativo e non costituiscono consulenza professionale</li>
@@ -103,7 +103,7 @@ get_header();
                 <li>Utilizzare sistemi automatizzati (bot, scraper, crawler) per estrarre contenuti dal Sito senza autorizzazione</li>
                 <li>Interferire con il funzionamento del Sito o dei server che lo ospitano</li>
                 <li>Riprodurre, duplicare, copiare o rivendere qualsiasi parte del Sito senza autorizzazione</li>
-                <li>Utilizzare il chatbot Garda AI per scopi diversi dalla ricerca di informazioni turistiche, o tentare di manipolarne il funzionamento</li>
+                <li>Utilizzare il chatbot Garda Concierge per scopi diversi dalla ricerca di informazioni turistiche, o tentare di manipolarne il funzionamento</li>
             </ul>
 
             <h2>9. Modifiche ai Termini</h2>

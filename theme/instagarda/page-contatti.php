@@ -120,7 +120,7 @@ get_header();
                     <p>Vuoi una risposta immediata? Chiedi al nostro AI:</p>
                     <button class="ig-btn ig-btn--primary ig-btn--lg" onclick="window.toggleGardaChat && window.toggleGardaChat()">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                        Chiedi a Garda AI
+                        Chiedi a Garda Concierge
                     </button>
                 </div>
             </div>
@@ -187,7 +187,7 @@ get_header();
                 </div>
             </details>
             <details class="ig-faq__item">
-                <summary class="ig-faq__question">Garda AI è gratuito?</summary>
+                <summary class="ig-faq__question">Garda Concierge è gratuito?</summary>
                 <div class="ig-faq__answer">
                     <p>Sì, l'assistente AI è completamente gratuito per tutti i visitatori del sito. Puoi fare tutte le domande che vuoi sul Lago di Garda, 24 ore su 24.</p>
                 </div>

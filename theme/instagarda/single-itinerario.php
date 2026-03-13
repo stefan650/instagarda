@@ -56,9 +56,22 @@ $gradient = 'linear-gradient(135deg, ' . $color . ', ' . $color . 'cc)';
 ?>
 
 <!-- Hero -->
+<?php
+$hero_video = ig_get_meta('hero_video');
+$hero_video_mobile = ig_get_meta('hero_video_mobile');
+?>
 <section class="ig-dest-hero ig-dest-hero--compact">
     <div class="ig-dest-hero__bg">
-        <?php if (has_post_thumbnail()):
+        <?php if ($hero_video): ?>
+            <video class="ig-dest-hero__video" autoplay muted loop playsinline>
+                <source src="<?php echo esc_url(get_template_directory_uri() . '/assets/video/' . $hero_video); ?>" type="video/mp4">
+            </video>
+        <?php elseif ($hero_video_mobile && has_post_thumbnail()): ?>
+            <div class="ig-dest-hero__video ig-dest-hero__video--desktop"><?php the_post_thumbnail('hero'); ?></div>
+            <video class="ig-dest-hero__video ig-dest-hero__video--mobile" autoplay muted loop playsinline>
+                <source src="<?php echo esc_url(get_template_directory_uri() . '/assets/video/' . $hero_video_mobile); ?>" type="video/mp4">
+            </video>
+        <?php elseif (has_post_thumbnail()):
             the_post_thumbnail('hero');
         else: ?>
             <div class="ig-placeholder-img" style="background:<?php echo esc_attr($gradient); ?>">
@@ -95,7 +108,6 @@ $gradient = 'linear-gradient(135deg, ' . $color . ', ' . $color . 'cc)';
     <div class="ig-container">
         <div class="ig-info-strip__grid">
             <div class="ig-info-strip__item ig-info-strip__item--weather">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a5 5 0 00-5-5 5 5 0 00-5 5"/><circle cx="12" cy="9" r="4"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="19.78" y1="4.22" x2="18.36" y2="5.64"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
                 <div>
                     <span class="ig-info-strip__label">Meteo ora</span>
                     <span class="ig-info-strip__value" id="igWeather">Caricamento...</span>
@@ -104,7 +116,7 @@ $gradient = 'linear-gradient(135deg, ' . $color . ', ' . $color . 'cc)';
             <button class="ig-info-strip__item ig-info-strip__item--link ig-info-strip__item--ai" onclick="window.toggleGardaChat && window.toggleGardaChat()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                 <div>
-                    <span class="ig-info-strip__label">Garda AI</span>
+                    <span class="ig-info-strip__label">Garda Concierge</span>
                     <span class="ig-info-strip__value">Chiedi info su <?php the_title(); ?></span>
                 </div>
             </button>
@@ -766,7 +778,7 @@ $r_diff_colors = $diff_colors;
 <!-- CTA compatto -->
 <section class="ig-apple-section ig-apple-section--cta" style="padding:var(--sp-2xl) 0">
     <div class="ig-apple-container ig-text-center">
-        <p class="ig-apple-subtitle ig-apple-subtitle--white" style="margin:0">Hai bisogno di aiuto per pianificare? <button style="background:none;border:none;color:white;text-decoration:underline;font:inherit;cursor:pointer;padding:0" onclick="window.toggleGardaChat && window.toggleGardaChat()">Chiedi a Garda AI</button></p>
+        <p class="ig-apple-subtitle ig-apple-subtitle--white" style="margin:0">Hai bisogno di aiuto per pianificare? <button style="background:none;border:none;color:white;text-decoration:underline;font:inherit;cursor:pointer;padding:0" onclick="window.toggleGardaChat && window.toggleGardaChat()">Chiedi a Garda Concierge</button></p>
     </div>
 </section>
 

@@ -125,6 +125,37 @@ function ig_register_evento() {
 }
 add_action('init', 'ig_register_evento');
 
+// --- Meta Box: Work In Progress (tutti i CPT) ---
+function ig_wip_meta_box() {
+    $types = ['destinazione', 'itinerario', 'struttura', 'evento'];
+    foreach ($types as $t) {
+        add_meta_box('ig_wip', 'Stato Pagina', 'ig_wip_render', $t, 'side', 'high');
+    }
+}
+add_action('add_meta_boxes', 'ig_wip_meta_box');
+
+function ig_wip_render($post) {
+    $wip = get_post_meta($post->ID, '_ig_wip', true);
+    ?>
+    <label>
+        <input type="checkbox" name="ig_wip" value="1" <?php checked($wip, '1'); ?>>
+        <strong>Pagina in lavorazione</strong>
+    </label>
+    <p class="description">Mostra un avviso "in lavorazione" ai visitatori.</p>
+    <?php
+}
+
+function ig_wip_save($post_id) {
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (!current_user_can('edit_post', $post_id)) return;
+    if (isset($_POST['ig_wip'])) {
+        update_post_meta($post_id, '_ig_wip', '1');
+    } else {
+        delete_post_meta($post_id, '_ig_wip');
+    }
+}
+add_action('save_post', 'ig_wip_save');
+
 // --- Meta Boxes: Evento ---
 function ig_evento_meta_boxes() {
     add_meta_box('ig_evt_info', 'Info Evento', 'ig_evt_info_render', 'evento', 'normal', 'high');
@@ -431,3 +462,68 @@ function ig_str_save($post_id) {
     }
 }
 add_action('save_post_struttura', 'ig_str_save');
+
+// --- CPT: Attrazione ---
+function ig_register_attrazione() {
+    register_post_type('attrazione', [
+        'labels' => [
+            'name'               => 'Attrazioni',
+            'singular_name'      => 'Attrazione',
+            'add_new'            => 'Aggiungi Attrazione',
+            'add_new_item'       => 'Aggiungi Nuova Attrazione',
+            'edit_item'          => 'Modifica Attrazione',
+            'view_item'          => 'Vedi Attrazione',
+            'all_items'          => 'Tutte le Attrazioni',
+            'search_items'       => 'Cerca Attrazioni',
+            'not_found'          => 'Nessuna attrazione trovata',
+        ],
+        'public'        => true,
+        'has_archive'   => false,
+        'rewrite'       => ['slug' => 'attrazione'],
+        'menu_icon'     => 'dashicons-location-alt',
+        'supports'      => ['title', 'editor', 'thumbnail', 'excerpt'],
+        'show_in_rest'  => true,
+    ]);
+
+    register_taxonomy_for_object_type('localita', 'attrazione');
+}
+add_action('init', 'ig_register_attrazione');
+
+// --- Meta Boxes: Attrazione ---
+function ig_att_meta_boxes() {
+    add_meta_box('ig_att_info', 'Dati Attrazione', 'ig_att_info_render', 'attrazione', 'normal', 'high');
+}
+add_action('add_meta_boxes', 'ig_att_meta_boxes');
+
+function ig_att_info_render($post) {
+    wp_nonce_field('ig_att_save', 'ig_att_nonce');
+    $m = function($k) use ($post) { return get_post_meta($post->ID, '_ig_att_' . $k, true); };
+    ?>
+    <table class="form-table">
+        <tr><th><label>Video Hero</label></th><td>
+            <input type="text" name="ig_att_hero_video" value="<?php echo esc_attr($m('hero_video')); ?>" class="regular-text" placeholder="nome-file.mp4">
+            <p class="description">Nome file video in assets/video/</p>
+        </td></tr>
+        <tr><th><label>Categoria</label></th><td>
+            <select name="ig_att_category">
+                <?php foreach (['monumento'=>'Monumento','museo'=>'Museo','chiesa'=>'Chiesa','natura'=>'Natura','spiaggia'=>'Spiaggia','terme'=>'Terme','centro-storico'=>'Centro Storico','panorama'=>'Panorama'] as $v=>$l): ?>
+                <option value="<?php echo $v; ?>" <?php selected($m('category'), $v); ?>><?php echo $l; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </td></tr>
+        <tr><th><label>Latitudine</label></th><td><input type="text" name="ig_att_lat" value="<?php echo esc_attr($m('lat')); ?>" class="regular-text"></td></tr>
+        <tr><th><label>Longitudine</label></th><td><input type="text" name="ig_att_lng" value="<?php echo esc_attr($m('lng')); ?>" class="regular-text"></td></tr>
+    </table>
+    <?php
+}
+
+function ig_att_save($post_id) {
+    if (!isset($_POST['ig_att_nonce']) || !wp_verify_nonce($_POST['ig_att_nonce'], 'ig_att_save')) return;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    foreach (['hero_video', 'category', 'lat', 'lng'] as $k) {
+        if (isset($_POST['ig_att_' . $k])) {
+            update_post_meta($post_id, '_ig_att_' . $k, sanitize_text_field($_POST['ig_att_' . $k]));
+        }
+    }
+}
+add_action('save_post_attrazione', 'ig_att_save');

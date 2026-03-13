@@ -1,5 +1,5 @@
 /**
- * Garda AI — Chat Widget
+ * Garda Concierge — Chat Widget
  */
 (function() {
   'use strict';
@@ -13,7 +13,7 @@
     const widget = document.createElement('div');
     widget.id = 'gardaChat';
     widget.innerHTML = `
-      <button class="gc-fab" id="gcFab" aria-label="Apri Garda AI">
+      <button class="gc-fab" id="gcFab" aria-label="Apri Garda Concierge">
         <span class="gc-fab__icon gc-fab__icon--chat">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         </span>
@@ -29,7 +29,7 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
             </div>
             <div>
-              <h3 class="gc-panel__title">Garda AI</h3>
+              <h3 class="gc-panel__title">Garda Concierge</h3>
               <span class="gc-panel__status">Online</span>
             </div>
           </div>
@@ -41,7 +41,7 @@
           <div class="gc-msg gc-msg--bot">
             <div class="gc-msg__avatar">AI</div>
             <div class="gc-msg__bubble">
-              Ciao! Sono <strong>Garda AI</strong>, la tua guida al Lago di Garda. Chiedimi qualsiasi cosa: dove mangiare, cosa vedere, come arrivare, eventi e molto altro!
+              Ciao! Sono <strong>Garda Concierge</strong>, la tua guida al Lago di Garda. Chiedimi qualsiasi cosa: dove mangiare, cosa vedere, come arrivare, eventi e molto altro!
             </div>
           </div>
         </div>

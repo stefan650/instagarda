@@ -226,7 +226,7 @@ $cat = $categorie[$page_slug] ?? $categorie['attivita'];
         <div style="display:flex;gap:var(--sp-sm);justify-content:center;flex-wrap:wrap;margin-top:var(--sp-lg)">
             <button class="ig-btn ig-btn--glass-outline ig-btn--lg" onclick="window.toggleGardaChat && window.toggleGardaChat()">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                Chiedi a Garda AI
+                Chiedi a Garda Concierge
             </button>
             <a href="<?php echo esc_url(home_url('/contatti/')); ?>" class="ig-btn ig-btn--glass-outline ig-btn--lg">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -309,32 +309,13 @@ $cat = $categorie[$page_slug] ?? $categorie['attivita'];
             </div>
         </div>
         <div class="ig-itin-filters__row">
-            <span class="ig-itin-filters__label">Zona</span>
-            <div class="ig-itin-filters__pills ig-itin-filters__pills--scroll" id="igFilterZone">
-                <button class="ig-itin-filters__pill is-active" data-zone="all">Tutto il lago</button>
-                <button class="ig-itin-filters__pill" data-zone="riva">Riva del Garda</button>
-                <button class="ig-itin-filters__pill" data-zone="torbole">Torbole</button>
-                <button class="ig-itin-filters__pill" data-zone="limone">Limone</button>
-                <button class="ig-itin-filters__pill" data-zone="tremosine">Tremosine</button>
-                <button class="ig-itin-filters__pill" data-zone="gargnano">Gargnano</button>
-                <button class="ig-itin-filters__pill" data-zone="salo">Salò</button>
-                <button class="ig-itin-filters__pill" data-zone="manerba">Manerba</button>
-                <button class="ig-itin-filters__pill" data-zone="desenzano">Desenzano</button>
-                <button class="ig-itin-filters__pill" data-zone="sirmione">Sirmione</button>
-                <button class="ig-itin-filters__pill" data-zone="peschiera">Peschiera</button>
-                <button class="ig-itin-filters__pill" data-zone="bardolino">Bardolino</button>
-                <button class="ig-itin-filters__pill" data-zone="garda">Garda</button>
-                <button class="ig-itin-filters__pill" data-zone="torri">Torri del Benaco</button>
-                <button class="ig-itin-filters__pill" data-zone="brenzone">Brenzone</button>
-                <button class="ig-itin-filters__pill" data-zone="malcesine">Malcesine</button>
-                <button class="ig-itin-filters__pill" data-zone="baldo">Monte Baldo</button>
-                <button class="ig-itin-filters__pill" data-zone="padenghe">Padenghe</button>
-                <button class="ig-itin-filters__pill" data-zone="moniga">Moniga</button>
-                <button class="ig-itin-filters__pill" data-zone="lonato">Lonato</button>
-                <button class="ig-itin-filters__pill" data-zone="sanfelice">San Felice</button>
-                <button class="ig-itin-filters__pill" data-zone="valtenesi">Valtenesi</button>
-                <button class="ig-itin-filters__pill" data-zone="arco">Arco</button>
-                <button class="ig-itin-filters__pill" data-zone="entroterra">Entroterra</button>
+            <span class="ig-itin-filters__label">Area</span>
+            <div class="ig-itin-filters__pills" id="igFilterArea">
+                <button class="ig-itin-filters__pill is-active" data-area="all">Tutto il lago</button>
+                <button class="ig-itin-filters__pill" data-area="nord">Nord</button>
+                <button class="ig-itin-filters__pill" data-area="est">Est (Veronese)</button>
+                <button class="ig-itin-filters__pill" data-area="ovest">Ovest (Bresciana)</button>
+                <button class="ig-itin-filters__pill" data-area="sud">Sud</button>
             </div>
         </div>
     </div>
@@ -379,7 +360,19 @@ $cat = $categorie[$page_slug] ?? $categorie['attivita'];
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
+<?php
+// Genera mappa slug → thumbnail URL per le card
+$itin_thumbs = [];
+$itin_q = new WP_Query(['post_type'=>'itinerario','posts_per_page'=>-1,'fields'=>'ids','no_found_rows'=>true]);
+foreach ($itin_q->posts as $pid) {
+    $slug = get_post_field('post_name', $pid);
+    $thumb = get_the_post_thumbnail_url($pid, 'medium_large');
+    if ($thumb && $slug) $itin_thumbs[$slug] = $thumb;
+}
+wp_reset_postdata();
+?>
 <script>
+var trailThumbs = <?php echo json_encode($itin_thumbs); ?>;
 document.addEventListener('DOMContentLoaded', function() {
 
     // ─── Database itinerari Lago di Garda ───
@@ -388,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { id:2, name:'Rocca di Manerba', type:'hiking', lat:45.5520, lng:10.5530, difficulty:'facile', km:3.5, elevation:120, descent:120, hours:'1:15', zone:'Manerba del Garda', tags:['vista-lago','panoramico','circolare','famiglie','culturale','cani','balneabile'], desc:'Sentiero panoramico sulla penisola con resti del castello medievale e vista a 360° sul basso lago. Parco archeologico naturalistico con pannelli informativi. Percorso ad anello adatto a tutti.' },
         { id:3, name:'Sentiero dei Limoni', type:'hiking', lat:45.8090, lng:10.7900, difficulty:'facile', km:2.8, elevation:80, descent:80, hours:'1:00', zone:'Limone sul Garda', tags:['panoramico','famiglie','culturale','accessibile'], desc:'Passeggiata tra le antiche limonaie con terrazzamenti e viste sulla sponda bresciana. Percorso storico che racconta la tradizione agrumicola del Garda. Facile e adatto a tutti.' },
         { id:4, name:'Cima Comer da Gargnano', type:'hiking', lat:45.6940, lng:10.6460, difficulty:'difficile', km:12.5, elevation:1150, descent:1150, hours:'5:30', zone:'Gargnano', tags:['panoramico'], desc:'Salita impegnativa verso la Cima Comer (1279m). Sentiero nel bosco con tratti esposti nella parte finale. Dalla vetta si vede l\'intero lago, dal Trentino a Sirmione. Solo per escursionisti esperti.' },
-        { id:5, name:'Sentiero del Ventrar', type:'hiking', lat:45.7650, lng:10.7600, difficulty:'media', km:7.0, elevation:420, descent:420, hours:'3:00', zone:'Tremosine', tags:['panoramico','circolare'], desc:'Percorso panoramico sull\'altopiano di Tremosine. Vista vertiginosa sulla Strada della Forra e sul lago. Partenza da Pieve di Tremosine con ritorno ad anello tra borghi e uliveti.' },
+        { id:5, name:'Sentiero del Ventrar', type:'hiking', lat:45.7824, lng:10.8672, difficulty:'media', km:7.0, elevation:420, descent:420, hours:'3:00', zone:'Malcesine', tags:['panoramico','circolare'], desc:'Percorso panoramico sul versante occidentale del Monte Baldo. Vista spettacolare sul Lago di Garda con tratti aperti e sentieri nel bosco. Partenza dagli Zocchi Alti sopra Bocca di Navene.' },
         { id:6, name:'Monte Baldo — Cresta', type:'hiking', lat:45.7250, lng:10.8520, difficulty:'media', km:8.5, elevation:480, descent:480, hours:'3:30', zone:'Malcesine', tags:['vista-lago','panoramico','consigliato','mezzi'], desc:'Traversata in cresta sul Monte Baldo con vista lago e Dolomiti. Si sale in funivia da Malcesine (1760m) e si cammina lungo il crinale tra prati fioriti e panorami infiniti. Discesa a piedi o in funivia.' },
         { id:7, name:'Punta San Vigilio', type:'hiking', lat:45.5660, lng:10.7100, difficulty:'facile', km:4.0, elevation:50, descent:50, hours:'1:30', zone:'Garda', tags:['vista-lago','panoramico','famiglie','cani','consigliato','balneabile','ombreggiato'], desc:'Passeggiata tra uliveti e cipressi verso la punta più romantica del lago. Baia nascosta, villa cinquecentesca e locanda storica. Percorso pianeggiante adatto a tutti.' },
         { id:8, name:'Cascate di Molina', type:'hiking', lat:45.5850, lng:10.8450, difficulty:'media', km:6.0, elevation:350, descent:350, hours:'2:30', zone:'Fumane', tags:['panoramico','ristori'], desc:'Percorso nel Parco delle Cascate con passerelle sospese tra gole e salti d\'acqua. Tre percorsi di diversa lunghezza. Ingresso a pagamento. Fresco anche in estate.' },
@@ -436,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { id:44, name:'CamminaCustoza', type:'hiking', lat:45.3900, lng:10.7800, difficulty:'facile', km:8.0, elevation:150, descent:150, hours:'2:30', zone:'Custoza', tags:['panoramico','culturale','circolare'], desc:'Colline moreniche teatro del Risorgimento (1848 e 1866). Ossario, vigneti Custoza DOC, Forte Degenfeld a Pastrengo. Paesaggio dolce 100-250m.' },
 
         // Cycling — Nuovi
-        { id:45, name:'Peschiera — Sirmione — Desenzano', type:'cycling', lat:45.4400, lng:10.6900, difficulty:'facile', km:36.0, elevation:30, descent:30, hours:'2:30', zone:'Peschiera del Garda', tags:['vista-lago','famiglie','accessibile','ebike','consigliato'], desc:'Giro della sponda sud: Castello Scaligero di Sirmione, Grotte di Catullo, tre località top del Garda. Percorso piano, ideale per famiglie.' },
+        { id:45, name:'Peschiera — Sirmione — Garda', type:'cycling', lat:45.4400, lng:10.6900, difficulty:'facile', km:36.0, elevation:30, descent:30, hours:'2:30', zone:'Peschiera del Garda', tags:['vista-lago','famiglie','accessibile','ebike','consigliato'], desc:'Giro del lago tra Peschiera, Sirmione e Garda: Castello Scaligero, Grotte di Catullo e borghi rivieraschi. Percorso piano, ideale per famiglie.' },
         { id:46, name:'Peschiera — Garda Lungolago', type:'cycling', lat:45.4400, lng:10.6900, difficulty:'facile', km:18.0, elevation:30, descent:30, hours:'1:30', zone:'Peschiera del Garda', tags:['vista-lago','famiglie','accessibile','ebike'], desc:'Ciclabile della riviera veronese: fortezza UNESCO, Lazise medievale, vigneti di Bardolino, paese di Garda. Completamente piano.' },
         { id:47, name:'Strada del Vino Bardolino', type:'cycling', lat:45.5400, lng:10.7300, difficulty:'media', km:35.0, elevation:300, descent:300, hours:'2:30', zone:'Bardolino', tags:['panoramico','circolare','ebike','ristori','culturale'], desc:'16 comuni, 60+ cantine, Bardolino DOC. Cammino del Bardolino: 18 sentieri segnalati, 53 pannelli informativi. Degustazioni in cantina.' },
         { id:48, name:'Ciclovia del Sole — Rivoli — Verona', type:'cycling', lat:45.5800, lng:10.8200, difficulty:'facile', km:20.0, elevation:30, descent:30, hours:'1:30', zone:'Rivoli Veronese', tags:['famiglie','accessibile','ebike','culturale'], desc:'EuroVelo 7 lungo il Canale Biffis. Forti austriaci, chiuse storiche, dal campo di battaglia di Napoleone a Verona. Asfaltato e separato dal traffico.' },
@@ -486,7 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
     trails.forEach(function(t) { t.oaId = oaIds[t.id] || 0; });
 
     var zoneSlugMap = {
-        'Riva del Garda':'riva-del-garda', 'Torbole':'torbole', 'Limone sul Garda':'limone-sul-garda',
+        'Riva del Garda':'riva-del-garda', 'Torbole':'nago-torbole', 'Limone sul Garda':'limone-sul-garda',
         'Tremosine':'tremosine-sul-garda', 'Tremosine sul Garda':'tremosine-sul-garda', 'Gargnano':'gargnano',
         'Salò':'salo', 'Manerba del Garda':'manerba-del-garda', 'Desenzano del Garda':'desenzano-del-garda',
         'Sirmione':'sirmione', 'Peschiera del Garda':'peschiera-del-garda', 'Bardolino':'bardolino',
@@ -498,7 +491,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'Lonato del Garda':'lonato-del-garda', 'San Felice del Benaco':'san-felice-del-benaco',
         'Soiano del Lago':'soiano-del-lago', 'Polpenazze del Garda':'polpenazze-del-garda'
     };
-    var baseDestUrl = '<?php echo esc_url(home_url('/destinazione/')); ?>';
+    var baseDestUrl = '<?php echo esc_url(home_url('/destinazioni/')); ?>';
 
     var typeColors = { hiking:'#10B981', cycling:'#3B82F6', mtb:'#F59E0B', ferrata:'#EF4444', water:'#06B6D4', drive:'#8B5CF6' };
     var typeLabels = { hiking:'Trekking', cycling:'Ciclismo', mtb:'MTB', ferrata:'Via Ferrata', water:'Acquatici', drive:'Scenic Drive' };
@@ -515,6 +508,39 @@ document.addEventListener('DOMContentLoaded', function() {
         water:   ['estate'],
         drive:   ['primavera','estate','autunno','inverno']
     };
+
+    // ─── Mapping zona → area geografica ───
+    var zoneToArea = {
+        'Riva del Garda':'nord','Torbole':'nord','Arco':'nord','Limone sul Garda':'nord',
+        'Pietramurata':'nord','Brentonico':'nord',
+        'Malcesine':'est','Brenzone sul Garda':'est','Torri del Benaco':'est',
+        'Garda':'est','Bardolino':'est','Lazise':'est',
+        'Caprino Veronese':'est','San Zeno di Montagna':'est',
+        'Ferrara di Monte Baldo':'est','Costermano sul Garda':'est',
+        'Cavaion Veronese':'est','Rivoli Veronese':'est','Avio':'est',
+        'Tremosine':'ovest','Tremosine sul Garda':'ovest','Gargnano':'ovest',
+        'Gardone Riviera':'ovest','Salò':'ovest','Manerba del Garda':'ovest',
+        'San Felice del Benaco':'ovest','Padenghe sul Garda':'ovest',
+        'Moniga del Garda':'ovest','Polpenazze del Garda':'ovest',
+        'Soiano del Lago':'ovest','Campione del Garda':'ovest','Toscolano-Maderno':'ovest',
+        'Desenzano del Garda':'sud','Sirmione':'sud','Peschiera del Garda':'sud',
+        'Lonato del Garda':'sud','Valeggio sul Mincio':'sud','Custoza':'sud','Fumane':'sud'
+    };
+    var areaLabels = { nord:'Sponda Nord', est:'Sponda Est', ovest:'Sponda Ovest', sud:'Sponda Sud' };
+    var areaSubs = {
+        nord:'Riva del Garda, Torbole, Arco, Limone',
+        est:'Malcesine, Torri del Benaco, Garda, Bardolino',
+        ovest:'Gargnano, Salò, Manerba, Valtenesi',
+        sud:'Desenzano, Sirmione, Peschiera'
+    };
+    var areaOrder = ['nord','est','ovest','sud'];
+    var areaVideos = {
+        nord: '<?php echo esc_url(get_template_directory_uri()); ?>/assets/video/riva-hero.mp4',
+        est:  '<?php echo esc_url(get_template_directory_uri()); ?>/assets/video/malcesine-hero.mp4',
+        ovest:'<?php echo esc_url(get_template_directory_uri()); ?>/assets/video/gargnano-hero.mp4',
+        sud:  '<?php echo esc_url(get_template_directory_uri()); ?>/assets/video/sirmione-hero.mp4'
+    };
+    trails.forEach(function(t) { t.area = zoneToArea[t.zone] || 'nord'; });
 
     // ─── Filtri pill: Difficoltà ───
     var activeDiff = 'all';
@@ -538,38 +564,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ─── Filtri pill: Zona ───
-    var activeZone = 'all';
-    var zoneMap = {
-        riva: ['Riva del Garda'],
-        torbole: ['Torbole'],
-        limone: ['Limone sul Garda'],
-        tremosine: ['Tremosine', 'Tremosine sul Garda'],
-        gargnano: ['Gargnano'],
-        salo: ['Salò'],
-        manerba: ['Manerba del Garda'],
-        desenzano: ['Desenzano del Garda'],
-        sirmione: ['Sirmione'],
-        peschiera: ['Peschiera del Garda'],
-        bardolino: ['Bardolino'],
-        garda: ['Garda'],
-        torri: ['Torri del Benaco'],
-        brenzone: ['Brenzone sul Garda'],
-        malcesine: ['Malcesine'],
-        baldo: ['Ferrara di Monte Baldo', 'San Zeno di Montagna', 'Brentonico', 'Caprino Veronese'],
-        arco: ['Arco', 'Pietramurata'],
-        padenghe: ['Padenghe sul Garda'],
-        moniga: ['Moniga del Garda'],
-        lonato: ['Lonato del Garda'],
-        sanfelice: ['San Felice del Benaco'],
-        valtenesi: ['Soiano del Lago', 'Polpenazze del Garda'],
-        entroterra: ['Fumane', 'Rivoli Veronese', 'Costermano sul Garda', 'Cavaion Veronese', 'Custoza', 'Avio', 'Lago di Garda']
-    };
-    document.querySelectorAll('#igFilterZone .ig-itin-filters__pill').forEach(function(btn) {
+    // ─── Filtri pill: Area ───
+    var activeArea = 'all';
+    document.querySelectorAll('#igFilterArea .ig-itin-filters__pill').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            document.querySelectorAll('#igFilterZone .ig-itin-filters__pill').forEach(function(b) { b.classList.remove('is-active'); });
+            document.querySelectorAll('#igFilterArea .ig-itin-filters__pill').forEach(function(b) { b.classList.remove('is-active'); });
             btn.classList.add('is-active');
-            activeZone = btn.getAttribute('data-zone');
+            activeArea = btn.getAttribute('data-area');
             applyFilters();
         });
     });
@@ -621,16 +622,9 @@ document.addEventListener('DOMContentLoaded', function() {
         var cat = document.getElementById('igTbarCat').value;
 
         return trails.filter(function(t) {
-            // Filtro categoria (dalla sub-nav pill)
             if (cat !== 'all' && t.type !== cat) return false;
-            // Filtro difficoltà
             if (activeDiff !== 'all' && t.difficulty !== activeDiff) return false;
-            // Filtro zona
-            if (activeZone !== 'all') {
-                var zones = zoneMap[activeZone] || [];
-                if (zones.indexOf(t.zone) === -1) return false;
-            }
-            // Filtro stagione
+            if (activeArea !== 'all' && t.area !== activeArea) return false;
             if (activeSeason !== 'all') {
                 var seasons = typeSeasons[t.type] || ['primavera','estate','autunno'];
                 if (seasons.indexOf(activeSeason) === -1) return false;
@@ -644,60 +638,62 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderCards(filtered) {
         grid.innerHTML = '';
-        filtered.forEach(function(t, idx) {
+
+        // Ordina per area (nord → est → ovest → sud)
+        var sorted = filtered.slice().sort(function(a, b) {
+            return areaOrder.indexOf(a.area) - areaOrder.indexOf(b.area);
+        });
+
+        var lastArea = '';
+        var showHeaders = (activeArea === 'all' && sorted.length > 3);
+
+        sorted.forEach(function(t) {
             var color = typeColors[t.type];
+
+            // Intestazione area con video banner
+            if (showHeaders && t.area !== lastArea) {
+                lastArea = t.area;
+                var section = document.createElement('div');
+                section.className = 'ig-trail-section';
+                section.innerHTML =
+                    '<div class="ig-trail-section__video">' +
+                        '<video autoplay muted loop playsinline>' +
+                            '<source src="' + areaVideos[t.area] + '" type="video/mp4">' +
+                        '</video>' +
+                        '<div class="ig-trail-section__overlay">' +
+                            '<h2 class="ig-trail-section__title">' + areaLabels[t.area] + '</h2>' +
+                            '<p class="ig-trail-section__sub">' + areaSubs[t.area] + '</p>' +
+                        '</div>' +
+                    '</div>';
+                grid.appendChild(section);
+            }
+
             var tagsHtml = '';
             var shownTags = 0;
             t.tags.forEach(function(tag) {
                 if (tagLabels[tag] && shownTags < 3) { tagsHtml += '<span class="ig-trail-card__tag">' + tagLabels[tag] + '</span>'; shownTags++; }
             });
 
-            var statsHtml = '';
-            if (t.km > 0) statsHtml += '<span class="ig-trail-card__stat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18"/><path d="M8 6h10v10"/></svg>'+t.km+' km</span>';
-            if (t.elevation > 0) statsHtml += '<span class="ig-trail-card__stat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20l5-16 5 10 3-4 5 10"/></svg>+'+t.elevation+'m</span>';
-            if (t.hours !== '—') statsHtml += '<span class="ig-trail-card__stat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+t.hours+'</span>';
-
-            // Mini profilo altimetrico SVG
-            var profileSvg = '';
-            if (t.elevation > 0 && t.km > 0) {
-                var maxElev = 1800;
-                var h = Math.min(t.elevation / maxElev, 1) * 50 + 10;
-                var dh = t.descent > 0 ? Math.min(t.descent / maxElev, 1) * 50 + 10 : h;
-                // Generare una curva morbida che simula il profilo
-                var pts = [];
-                var steps = 8;
-                for (var s = 0; s <= steps; s++) {
-                    var x = (s / steps) * 180;
-                    var progress = s / steps;
-                    var y;
-                    if (progress < 0.15) y = 60;
-                    else if (progress < 0.55) y = 60 - h * Math.sin((progress - 0.15) / 0.4 * Math.PI);
-                    else if (progress < 0.85) y = 60 - dh * Math.sin((0.85 - progress) / 0.3 * Math.PI * 0.5);
-                    else y = 60;
-                    pts.push(x.toFixed(0)+','+y.toFixed(0));
-                }
-                var pathD = 'M0,60 C' + pts.join(' ') + ' L180,60 Z';
-                profileSvg = '<svg class="ig-trail-card__profile" viewBox="0 0 180 65" preserveAspectRatio="none">' +
-                    '<defs><linearGradient id="pg'+t.id+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+color+'" stop-opacity=".3"/><stop offset="100%" stop-color="'+color+'" stop-opacity=".05"/></linearGradient></defs>' +
-                    '<path d="M'+pts.map(function(p,i){return (i===0?'M':'L')+p;}).join(' ')+' L180,60 L0,60 Z" fill="url(#pg'+t.id+')" />' +
-                    '<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+color+'" stroke-width="2" />' +
-                '</svg>';
-            }
-
-            // Descrizione breve (max 120 char)
-            var shortDesc = t.desc.length > 120 ? t.desc.substring(0, 117) + '...' : t.desc;
-
-            // Info extra per pannello destro
+            // Dati tecnici compatti
             var rightStats = '';
             if (t.elevation > 0) rightStats += '<div class="ig-trail-card__rstat"><span class="ig-trail-card__rstat-label">Salita</span><span class="ig-trail-card__rstat-val" style="color:'+color+'">+'+t.elevation+'m</span></div>';
             if (t.descent > 0) rightStats += '<div class="ig-trail-card__rstat"><span class="ig-trail-card__rstat-label">Discesa</span><span class="ig-trail-card__rstat-val">-'+t.descent+'m</span></div>';
             if (t.km > 0) rightStats += '<div class="ig-trail-card__rstat"><span class="ig-trail-card__rstat-label">Distanza</span><span class="ig-trail-card__rstat-val">'+t.km+' km</span></div>';
             if (t.hours !== '—') rightStats += '<div class="ig-trail-card__rstat"><span class="ig-trail-card__rstat-label">Durata</span><span class="ig-trail-card__rstat-val">'+t.hours+'</span></div>';
 
+            // Descrizione breve
+            var shortDesc = t.desc.length > 120 ? t.desc.substring(0, 117) + '...' : t.desc;
+
+            // Thumbnail
+            var thumbUrl = (t.slug && trailThumbs[t.slug]) ? trailThumbs[t.slug] : '';
+            var imgHtml = thumbUrl
+                ? '<div class="ig-trail-card__img"><img src="'+thumbUrl+'" alt="'+t.name+'" loading="lazy"></div>'
+                : '<div class="ig-trail-card__img ig-trail-card__img--placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5"><path d="M3 20l5-16 5 10 3-4 5 10"/></svg></div>';
+
             var card = document.createElement('div');
             card.className = 'ig-trail-card';
             card.innerHTML =
-                '<div class="ig-trail-card__map" id="trailMini'+t.id+'"></div>' +
+                imgHtml +
                 '<div class="ig-trail-card__body">' +
                     '<div class="ig-trail-card__top">' +
                         '<div><span class="ig-trail-card__type" style="color:'+color+'">'+typeLabels[t.type]+'</span>' +
@@ -713,47 +709,51 @@ document.addEventListener('DOMContentLoaded', function() {
                     '</div>' +
                 '</div>' +
                 '<div class="ig-trail-card__right">' +
-                    profileSvg +
+                    '<div class="ig-trail-card__map" id="trailMini'+t.id+'"></div>' +
                     '<div class="ig-trail-card__rstats">'+rightStats+'</div>' +
                 '</div>';
 
-            card.addEventListener('click', function(e) {
-                // Check if user clicked on the location link or any element inside it
-                var locLink = e.target.closest('[data-loc-link]');
-                if (locLink) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    window.location.href = locLink.getAttribute('href');
-                    return;
-                }
-                if (t.slug) { window.location.href = '<?php echo esc_url(home_url('/itinerario/')); ?>' + t.slug + '/'; }
-            });
             grid.appendChild(card);
 
-            // Mini mappa con percorso
-            (function(trail, c, i) {
-                setTimeout(function() {
-                    var el = document.getElementById('trailMini'+trail.id);
-                    if (!el) return;
-                    var mm = L.map(el, {
-                        zoomControl: false, attributionControl: false,
-                        dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
-                        touchZoom: false, boxZoom: false, keyboard: false, tap: false
-                    }).setView([trail.lat, trail.lng], 13);
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {}).addTo(mm);
-                    // Se abbiamo le coordinate del percorso, disegnale
-                    if (trailRoutes[trail.id]) {
-                        var coords = trailRoutes[trail.id];
-                        L.polyline(coords, { color: c, weight: 3, opacity: 0.8 }).addTo(mm);
-                        mm.fitBounds(L.polyline(coords).getBounds().pad(0.15));
-                    } else {
-                        L.circleMarker([trail.lat, trail.lng], { radius: 6, fillColor: c, color: '#fff', weight: 2, fillOpacity: 1 }).addTo(mm);
-                    }
-                    miniMaps[trail.id] = mm;
-                }, i * 30);
-            })(t, color, idx);
+            // Click sulla località → pagina destinazione
+            var locEl = card.querySelector('[data-loc-link]');
+            if (locEl) {
+                locEl.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.location.href = this.getAttribute('href');
+                });
+            }
+            // Click sulla card (fuori dalla località) → pagina itinerario
+            card.addEventListener('click', function(e) {
+                if (e.target.closest('[data-loc-link]')) return;
+                if (t.slug) { window.location.href = '<?php echo esc_url(home_url('/itinerario/')); ?>' + t.slug + '/'; }
+            });
         });
         countEl.textContent = filtered.length + ' itinerar' + (filtered.length === 1 ? 'io' : 'i') + (filtered.length < trails.length ? ' su ' + trails.length : '');
+
+        // Inizializza mini-mappe Leaflet
+        Object.keys(miniMaps).forEach(function(k) { miniMaps[k].remove(); });
+        miniMaps = {};
+        setTimeout(function() {
+            sorted.forEach(function(t) {
+                var el = document.getElementById('trailMini' + t.id);
+                if (!el || el.offsetWidth === 0) return;
+                var mm = L.map(el, {
+                    zoomControl: false, attributionControl: false,
+                    dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
+                    touchZoom: false, boxZoom: false, keyboard: false, tap: false
+                }).setView([t.lat, t.lng], 12);
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(mm);
+                var color = typeColors[t.type] || '#10B981';
+                L.circleMarker([t.lat, t.lng], { radius: 5, fillColor: color, color: '#fff', weight: 2, fillOpacity: 1 }).addTo(mm);
+                if (trailRoutes[t.id]) {
+                    var poly = L.polyline(trailRoutes[t.id], { color: color, weight: 2.5, opacity: 0.8 }).addTo(mm);
+                    mm.fitBounds(poly.getBounds(), { padding: [10, 10] });
+                }
+                miniMaps[t.id] = mm;
+            });
+        }, 80);
     }
 
     function applyFilters() {
@@ -841,12 +841,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                     routePolylines[t.oaId] = { shadow: shadow, line: line, trailId: t.id };
 
-                    // Aggiorna mini-mappa con il percorso
                     trailRoutes[t.id] = latlngs;
+
+                    // Aggiorna mini-mappa se visibile
                     if (miniMaps[t.id]) {
-                        var mm = miniMaps[t.id];
-                        L.polyline(latlngs, { color: color, weight: 3, opacity: 0.8 }).addTo(mm);
-                        mm.fitBounds(L.polyline(latlngs).getBounds().pad(0.15));
+                        var poly = L.polyline(latlngs, { color: color, weight: 2.5, opacity: 0.8 }).addTo(miniMaps[t.id]);
+                        miniMaps[t.id].fitBounds(poly.getBounds(), { padding: [10, 10] });
                     }
                 });
             }).catch(function(){});
@@ -940,7 +940,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <p class="ig-apple-subtitle ig-apple-subtitle--white">Il nostro assistente AI conosce ogni angolo del Lago di Garda e può aiutarti a trovare l'esperienza perfetta.</p>
         <button class="ig-btn ig-btn--glass-outline ig-btn--lg" style="margin-top:var(--sp-lg)" onclick="window.toggleGardaChat && window.toggleGardaChat()">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-            Chiedi a Garda AI
+            Chiedi a Garda Concierge
         </button>
     </div>
 </section>

@@ -3,6 +3,9 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_template_directory_uri(); ?>/assets/images/apple-touch-icon.png">
     <script type="text/javascript" src="https://embeds.iubenda.com/widgets/4fbb9e6e-f17b-47a7-acd1-683b3bcd5e3c.js"></script>
     <?php wp_head(); ?>
 </head>
@@ -97,7 +100,7 @@
             <!-- AI Chat Button -->
             <button class="ig-header__ai-btn" onclick="window.toggleGardaChat && window.toggleGardaChat()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                <span>Garda AI</span>
+                <span>Garda Concierge</span>
             </button>
             <!-- Search Button -->
             <button class="ig-header__icon-btn" id="igSearchToggle" aria-label="Cerca">

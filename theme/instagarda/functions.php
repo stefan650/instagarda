@@ -37,6 +37,44 @@ remove_action('admin_print_scripts', 'print_emoji_detection_script');
 remove_action('wp_print_styles', 'print_emoji_styles');
 remove_action('admin_print_styles', 'print_emoji_styles');
 
+// --- Open Graph meta tags ---
+function ig_og_meta() {
+    $site_name = 'Instagarda';
+    $default_img = get_template_directory_uri() . '/assets/images/og-default.jpg';
+
+    if (is_front_page()) {
+        $title = 'Instagarda — La guida completa al Lago di Garda';
+        $desc = 'Scopri il Lago di Garda: destinazioni, percorsi, sport, ristoranti e cultura. La guida completa con AI per organizzare la tua vacanza.';
+        $url = home_url('/');
+        $img = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : $default_img;
+    } elseif (is_singular()) {
+        $title = get_the_title() . ' — ' . $site_name;
+        $desc = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 30, '...');
+        $url = get_permalink();
+        $img = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : $default_img;
+    } else {
+        $title = get_bloginfo('name') . ' — La guida completa al Lago di Garda';
+        $desc = 'Scopri il Lago di Garda: destinazioni, percorsi, sport, ristoranti e cultura. La guida completa con AI per organizzare la tua vacanza.';
+        $url = home_url('/');
+        $img = $default_img;
+    }
+
+    $desc = wp_strip_all_tags($desc);
+    echo '<meta property="og:type" content="website">' . "\n";
+    echo '<meta property="og:site_name" content="' . esc_attr($site_name) . '">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr($desc) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url($url) . '">' . "\n";
+    echo '<meta property="og:image" content="' . esc_url($img) . '">' . "\n";
+    echo '<meta property="og:image:width" content="1200">' . "\n";
+    echo '<meta property="og:image:height" content="630">' . "\n";
+    echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+    echo '<meta name="twitter:title" content="' . esc_attr($title) . '">' . "\n";
+    echo '<meta name="twitter:description" content="' . esc_attr($desc) . '">' . "\n";
+    echo '<meta name="twitter:image" content="' . esc_url($img) . '">' . "\n";
+}
+add_action('wp_head', 'ig_og_meta', 1);
+
 // --- Destinazioni: ordine alfabetico e mostra tutte ---
 function ig_destinazioni_order($query) {
     if (!is_admin() && $query->is_main_query() && is_post_type_archive('destinazione')) {
@@ -57,15 +95,15 @@ function instagarda_assets() {
 
     wp_enqueue_style('instagarda-style',
         get_template_directory_uri() . '/assets/css/main.css',
-        ['instagarda-fonts'], '1.0.3'
+        ['instagarda-fonts'], '1.0.5'
     );
 
     wp_enqueue_script('instagarda-js',
         get_template_directory_uri() . '/assets/js/main.js',
-        [], '1.0.3', true
+        [], '1.0.5', true
     );
 
-    // Garda AI Chat Widget
+    // Garda Concierge Chat Widget
     wp_enqueue_style('garda-chat',
         get_template_directory_uri() . '/assets/css/garda-chat.css',
         [], '1.0.3'
@@ -154,6 +192,19 @@ function ig_get_meta($key, $post_id = null) {
     if (!$post_id) $post_id = get_the_ID();
     return get_post_meta($post_id, '_ig_' . $key, true);
 }
+
+// --- Banner "In Lavorazione" per pagine WIP ---
+function ig_wip_banner($content) {
+    if (!is_singular()) return $content;
+    $wip = get_post_meta(get_the_ID(), '_ig_wip', true);
+    if ($wip !== '1') return $content;
+    $banner = '<div class="ig-wip-banner">'
+        . '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M3.6 20h16.8a1.6 1.6 0 001.37-2.41L13.37 4.18a1.6 1.6 0 00-2.74 0L2.23 17.59A1.6 1.6 0 003.6 20z"/></svg>'
+        . '<span>Questa pagina è ancora in lavorazione. Alcuni contenuti potrebbero essere incompleti.</span>'
+        . '</div>';
+    return $banner . $content;
+}
+add_filter('the_content', 'ig_wip_banner');
 
 // --- Invalida cache footer quando si modifica/elimina una destinazione ---
 function ig_invalidate_footer_cache($post_id) {
