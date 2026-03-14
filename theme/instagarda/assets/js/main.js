@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.addEventListener('click', () => {
       const isOpen = mobileMenu.classList.toggle('is-open');
       hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
       if (openIcon) openIcon.style.display = isOpen ? 'none' : '';
       if (closeIcon) closeIcon.style.display = isOpen ? '' : 'none';
     });
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         mobileMenu.classList.remove('is-open');
+        document.body.style.overflow = '';
         if (openIcon) openIcon.style.display = '';
         if (closeIcon) closeIcon.style.display = 'none';
       });
@@ -270,15 +272,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const reveals = document.querySelectorAll('.ig-reveal');
   if (reveals.length > 0 && 'IntersectionObserver' in window) {
-    // Tag child cards/items for staggered animation
+    // Tag child cards/items for staggered animation with eased delay
     reveals.forEach(section => {
       const children = section.querySelectorAll(
-        '.ig-dest-card, .ig-blog-card, .ig-vivi-card, .ig-featured-card, .ig-social-stat, .ig-reel, .ig-social-cta'
+        '.ig-dest-card, .ig-blog-card, .ig-vivi-card, .ig-featured-card, .ig-social-stat, .ig-reel, .ig-social-cta, .ig-newsletter__benefit'
       );
       children.forEach((child, i) => {
         child.classList.add('ig-reveal-child');
         if (!prefersReducedMotion) {
-          child.style.transitionDelay = (i * 0.08) + 's';
+          // Eased stagger: fast start, slows down (feels more natural)
+          const delay = Math.min(i * 0.06 + i * i * 0.005, 0.6);
+          child.style.transitionDelay = delay.toFixed(3) + 's';
         }
       });
     });
@@ -290,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
     reveals.forEach(el => revealObserver.observe(el));
   }
 
@@ -574,5 +578,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
       }
     });
+  }
+
+  // -------------------------------------------------------
+  // Smooth section parallax (subtle depth effect)
+  // -------------------------------------------------------
+  if (!prefersReducedMotion && window.innerWidth >= 768) {
+    const parallaxSections = document.querySelectorAll('.ig-section__header');
+    if (parallaxSections.length > 0) {
+      let pTicking = false;
+      window.addEventListener('scroll', () => {
+        if (!pTicking) {
+          requestAnimationFrame(() => {
+            parallaxSections.forEach(header => {
+              const rect = header.getBoundingClientRect();
+              const viewH = window.innerHeight;
+              if (rect.top < viewH && rect.bottom > 0) {
+                const progress = (viewH - rect.top) / (viewH + rect.height);
+                const shift = (progress - 0.5) * -15;
+                header.style.transform = 'translateY(' + shift.toFixed(1) + 'px)';
+              }
+            });
+            pTicking = false;
+          });
+          pTicking = true;
+        }
+      }, { passive: true });
+    }
+  }
+
+  // -------------------------------------------------------
+  // Glass header glow — intensify glass on deeper scroll
+  // -------------------------------------------------------
+  if (header) {
+    let gTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!gTicking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          if (scrollY > 50) {
+            const intensity = Math.min(scrollY / 400, 1);
+            const bg = 'rgba(255,255,255,' + (0.45 + intensity * 0.25).toFixed(2) + ')';
+            header.style.setProperty('--header-glass-bg', bg);
+            header.style.background = bg;
+          }
+          gTicking = false;
+        });
+        gTicking = true;
+      }
+    }, { passive: true });
   }
 });

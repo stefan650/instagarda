@@ -37,30 +37,55 @@ remove_action('admin_print_scripts', 'print_emoji_detection_script');
 remove_action('wp_print_styles', 'print_emoji_styles');
 remove_action('admin_print_styles', 'print_emoji_styles');
 
-// --- Open Graph meta tags ---
-function ig_og_meta() {
+// --- SEO: Meta description, canonical, Open Graph, Twitter Cards ---
+function ig_seo_meta() {
     $site_name = 'Instagarda';
     $default_img = get_template_directory_uri() . '/assets/images/og-default.jpg';
+    $og_type = 'website';
 
     if (is_front_page()) {
         $title = 'Instagarda — La guida completa al Lago di Garda';
-        $desc = 'Scopri il Lago di Garda: destinazioni, percorsi, sport, ristoranti e cultura. La guida completa con AI per organizzare la tua vacanza.';
+        $desc = 'Scopri il Lago di Garda: destinazioni, percorsi, sport, ristoranti e cultura. La guida completa per organizzare la tua vacanza al Garda.';
         $url = home_url('/');
         $img = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : $default_img;
     } elseif (is_singular()) {
         $title = get_the_title() . ' — ' . $site_name;
-        $desc = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 30, '...');
+        $raw_desc = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 30, '...');
+        $desc = wp_strip_all_tags($raw_desc);
         $url = get_permalink();
         $img = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : $default_img;
+        if (is_singular('post')) $og_type = 'article';
+    } elseif (is_post_type_archive('destinazione')) {
+        $title = 'Destinazioni Lago di Garda — ' . $site_name;
+        $desc = 'Esplora tutte le destinazioni del Lago di Garda: da Sirmione a Riva del Garda, scopri i borghi, le spiagge e i paesaggi del più grande lago d\'Italia.';
+        $url = get_post_type_archive_link('destinazione');
+        $img = $default_img;
+    } elseif (is_post_type_archive('evento')) {
+        $title = 'Eventi Lago di Garda — ' . $site_name;
+        $desc = 'Tutti gli eventi sul Lago di Garda: concerti, feste, sagre, mercatini, sport e cultura. Scopri cosa fare oggi e nei prossimi mesi.';
+        $url = get_post_type_archive_link('evento');
+        $img = $default_img;
+    } elseif (is_home()) {
+        $title = 'Magazine — ' . $site_name;
+        $desc = 'Articoli, guide e consigli sul Lago di Garda: itinerari, enogastronomia, sport, borghi e segreti del più grande lago d\'Italia.';
+        $url = get_permalink(get_option('page_for_posts')) ?: home_url('/blog/');
+        $img = $default_img;
     } else {
         $title = get_bloginfo('name') . ' — La guida completa al Lago di Garda';
-        $desc = 'Scopri il Lago di Garda: destinazioni, percorsi, sport, ristoranti e cultura. La guida completa con AI per organizzare la tua vacanza.';
-        $url = home_url('/');
+        $desc = 'Scopri il Lago di Garda: destinazioni, percorsi, sport, ristoranti e cultura. La guida completa per organizzare la tua vacanza al Garda.';
+        $url = home_url(add_query_arg([], false));
         $img = $default_img;
     }
 
-    $desc = wp_strip_all_tags($desc);
-    echo '<meta property="og:type" content="website">' . "\n";
+    $desc = mb_substr(wp_strip_all_tags($desc), 0, 160);
+
+    // Meta description (critical for SEO)
+    echo '<meta name="description" content="' . esc_attr($desc) . '">' . "\n";
+    // Canonical URL
+    echo '<link rel="canonical" href="' . esc_url($url) . '">' . "\n";
+    // Open Graph
+    echo '<meta property="og:type" content="' . esc_attr($og_type) . '">' . "\n";
+    echo '<meta property="og:locale" content="it_IT">' . "\n";
     echo '<meta property="og:site_name" content="' . esc_attr($site_name) . '">' . "\n";
     echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
     echo '<meta property="og:description" content="' . esc_attr($desc) . '">' . "\n";
@@ -68,12 +93,168 @@ function ig_og_meta() {
     echo '<meta property="og:image" content="' . esc_url($img) . '">' . "\n";
     echo '<meta property="og:image:width" content="1200">' . "\n";
     echo '<meta property="og:image:height" content="630">' . "\n";
+    // Twitter
     echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
     echo '<meta name="twitter:title" content="' . esc_attr($title) . '">' . "\n";
     echo '<meta name="twitter:description" content="' . esc_attr($desc) . '">' . "\n";
     echo '<meta name="twitter:image" content="' . esc_url($img) . '">' . "\n";
+    // Article-specific
+    if (is_singular('post')) {
+        echo '<meta property="article:published_time" content="' . esc_attr(get_the_date('c')) . '">' . "\n";
+        echo '<meta property="article:modified_time" content="' . esc_attr(get_the_modified_date('c')) . '">' . "\n";
+    }
 }
-add_action('wp_head', 'ig_og_meta', 1);
+add_action('wp_head', 'ig_seo_meta', 1);
+
+// --- SEO: Schema.org JSON-LD Structured Data ---
+function ig_schema_jsonld() {
+    $schemas = [];
+
+    // Global: Organization + WebSite (on every page)
+    $schemas[] = [
+        '@type' => 'Organization',
+        '@id'   => home_url('/#organization'),
+        'name'  => 'Instagarda',
+        'url'   => home_url('/'),
+        'logo'  => [
+            '@type' => 'ImageObject',
+            'url'   => get_template_directory_uri() . '/assets/images/logo-cropped.png',
+        ],
+        'sameAs' => [
+            'https://instagram.com/instagarda',
+            'https://facebook.com/instagarda',
+            'https://youtube.com/@instagarda',
+            'https://tiktok.com/@instagarda',
+        ],
+        'contactPoint' => [
+            '@type' => 'ContactPoint',
+            'email' => 'info@instagarda.net',
+            'contactType' => 'customer service',
+            'availableLanguage' => ['Italian', 'English'],
+        ],
+    ];
+
+    $schemas[] = [
+        '@type' => 'WebSite',
+        '@id'   => home_url('/#website'),
+        'name'  => 'Instagarda',
+        'url'   => home_url('/'),
+        'publisher' => ['@id' => home_url('/#organization')],
+        'inLanguage' => 'it-IT',
+    ];
+
+    // BreadcrumbList (not on homepage)
+    if (!is_front_page()) {
+        $crumbs = [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => home_url('/')]];
+        $pos = 2;
+        if (is_singular('destinazione')) {
+            $crumbs[] = ['@type' => 'ListItem', 'position' => $pos++, 'name' => 'Destinazioni', 'item' => get_post_type_archive_link('destinazione')];
+            $crumbs[] = ['@type' => 'ListItem', 'position' => $pos, 'name' => get_the_title()];
+        } elseif (is_singular('itinerario')) {
+            $crumbs[] = ['@type' => 'ListItem', 'position' => $pos++, 'name' => 'Percorsi & Sport', 'item' => home_url('/esperienze/attivita/')];
+            $crumbs[] = ['@type' => 'ListItem', 'position' => $pos, 'name' => get_the_title()];
+        } elseif (is_singular('post')) {
+            $crumbs[] = ['@type' => 'ListItem', 'position' => $pos++, 'name' => 'Magazine', 'item' => get_permalink(get_option('page_for_posts')) ?: home_url('/blog/')];
+            $crumbs[] = ['@type' => 'ListItem', 'position' => $pos, 'name' => get_the_title()];
+        } elseif (is_singular('evento')) {
+            $crumbs[] = ['@type' => 'ListItem', 'position' => $pos++, 'name' => 'Eventi', 'item' => home_url('/eventi/')];
+            $crumbs[] = ['@type' => 'ListItem', 'position' => $pos, 'name' => get_the_title()];
+        } elseif (is_singular('struttura')) {
+            $crumbs[] = ['@type' => 'ListItem', 'position' => $pos++, 'name' => 'Esperienze', 'item' => home_url('/esperienze/')];
+            $crumbs[] = ['@type' => 'ListItem', 'position' => $pos, 'name' => get_the_title()];
+        }
+        $schemas[] = ['@type' => 'BreadcrumbList', 'itemListElement' => $crumbs];
+    }
+
+    // Article schema for blog posts
+    if (is_singular('post')) {
+        $schemas[] = [
+            '@type' => 'Article',
+            'headline' => get_the_title(),
+            'description' => mb_substr(wp_strip_all_tags(has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 30)), 0, 160),
+            'image' => has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : '',
+            'datePublished' => get_the_date('c'),
+            'dateModified' => get_the_modified_date('c'),
+            'author' => ['@type' => 'Organization', 'name' => 'Instagarda'],
+            'publisher' => ['@id' => home_url('/#organization')],
+            'mainEntityOfPage' => get_permalink(),
+        ];
+    }
+
+    // TouristDestination for destinazioni
+    if (is_singular('destinazione')) {
+        $lat = get_post_meta(get_the_ID(), '_ig_lat', true);
+        $lng = get_post_meta(get_the_ID(), '_ig_lng', true);
+        $dest_schema = [
+            '@type' => 'TouristDestination',
+            'name' => get_the_title(),
+            'description' => mb_substr(wp_strip_all_tags(has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 40)), 0, 200),
+            'image' => has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : '',
+            'url' => get_permalink(),
+            'touristType' => ['Turisti', 'Famiglie', 'Sportivi', 'Coppie'],
+            'containedInPlace' => [
+                '@type' => 'Lake',
+                'name' => 'Lago di Garda',
+                'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 45.65, 'longitude' => 10.72],
+            ],
+        ];
+        if ($lat && $lng) {
+            $dest_schema['geo'] = ['@type' => 'GeoCoordinates', 'latitude' => (float)$lat, 'longitude' => (float)$lng];
+        }
+        $schemas[] = $dest_schema;
+    }
+
+    // SportsActivityLocation for itinerari
+    if (is_singular('itinerario')) {
+        $lat = get_post_meta(get_the_ID(), '_ig_itin_lat', true);
+        $lng = get_post_meta(get_the_ID(), '_ig_itin_lng', true);
+        $km = get_post_meta(get_the_ID(), '_ig_itin_km', true);
+        $hours = get_post_meta(get_the_ID(), '_ig_itin_hours', true);
+        $difficulty = get_post_meta(get_the_ID(), '_ig_itin_difficulty', true);
+        $itin_schema = [
+            '@type' => 'SportsActivityLocation',
+            'name' => get_the_title(),
+            'description' => mb_substr(wp_strip_all_tags(has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 40)), 0, 200),
+            'image' => has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : '',
+            'url' => get_permalink(),
+        ];
+        if ($lat && $lng) {
+            $itin_schema['geo'] = ['@type' => 'GeoCoordinates', 'latitude' => (float)$lat, 'longitude' => (float)$lng];
+        }
+        if ($km) $itin_schema['additionalProperty'][] = ['@type' => 'PropertyValue', 'name' => 'Distanza', 'value' => $km . ' km'];
+        if ($hours) $itin_schema['additionalProperty'][] = ['@type' => 'PropertyValue', 'name' => 'Durata', 'value' => $hours];
+        if ($difficulty) $itin_schema['additionalProperty'][] = ['@type' => 'PropertyValue', 'name' => 'Difficoltà', 'value' => $difficulty];
+        $schemas[] = $itin_schema;
+    }
+
+    // Event schema
+    if (is_singular('evento')) {
+        $start = get_post_meta(get_the_ID(), '_ig_evento_data_inizio', true);
+        $end = get_post_meta(get_the_ID(), '_ig_evento_data_fine', true);
+        $luogo = get_post_meta(get_the_ID(), '_ig_evento_luogo', true);
+        $evt_schema = [
+            '@type' => 'Event',
+            'name' => get_the_title(),
+            'description' => mb_substr(wp_strip_all_tags(has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 30)), 0, 200),
+            'image' => has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : '',
+            'url' => get_permalink(),
+            'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+            'organizer' => ['@type' => 'Organization', 'name' => 'Instagarda'],
+        ];
+        if ($start) $evt_schema['startDate'] = $start;
+        if ($end) $evt_schema['endDate'] = $end;
+        if ($luogo) $evt_schema['location'] = ['@type' => 'Place', 'name' => $luogo, 'address' => ['@type' => 'PostalAddress', 'addressRegion' => 'Lago di Garda, Italia']];
+        $schemas[] = $evt_schema;
+    }
+
+    // Output
+    $output = ['@context' => 'https://schema.org', '@graph' => $schemas];
+    echo '<script type="application/ld+json">' . wp_json_encode($output, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . '</script>' . "\n";
+}
+add_action('wp_head', 'ig_schema_jsonld', 2);
+
+// --- SEO: Remove duplicate title tag from wp_head if theme already handles it ---
+remove_action('wp_head', 'rel_canonical');
 
 // --- Destinazioni: ordine alfabetico e mostra tutte ---
 function ig_destinazioni_order($query) {

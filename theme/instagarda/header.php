@@ -175,6 +175,7 @@
             <div class="ig-mobile-menu__group">
                 <a href="<?php echo esc_url(get_post_type_archive_link('destinazione')); ?>" class="ig-mobile-menu__heading" data-toggle="mobile-dest">
                     Destinazioni
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </a>
                 <div class="ig-mobile-menu__submenu" id="mobile-dest">
                     <a href="<?php echo esc_url(home_url('/destinazioni/sirmione/')); ?>">Sirmione</a>
@@ -191,6 +192,7 @@
             <div class="ig-mobile-menu__group">
                 <a href="<?php echo esc_url(home_url('/esperienze/')); ?>" class="ig-mobile-menu__heading" data-toggle="mobile-vivi">
                     Esperienze
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </a>
                 <div class="ig-mobile-menu__submenu" id="mobile-vivi">
                     <a href="<?php echo esc_url(home_url('/esperienze/attivita/')); ?>">

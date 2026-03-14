@@ -420,8 +420,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { id:35, name:'Forte Naole — Sentiero 662', type:'hiking', lat:45.7300, lng:10.8800, difficulty:'media', km:10.0, elevation:600, descent:600, hours:'4:30', zone:'Ferrara di Monte Baldo', tags:['panoramico','culturale'], desc:'Salita lungo il sentiero 662 fino al Forte Naole (1675m), la più alta fortificazione militare italiana del sistema difensivo di Rivoli (1905-1913).' },
         { id:36, name:'Cresta di Naole', type:'hiking', lat:45.6600, lng:10.7800, difficulty:'media', km:12.0, elevation:650, descent:650, hours:'5:00', zone:'San Zeno di Montagna', tags:['panoramico','circolare','ristori'], desc:'Cresta alternativa meno affollata del Monte Baldo. Prati fioriti, Rifugio Fiori del Baldo e Rifugio Chierego. Vista su Garda e Val d\'Adige.' },
         { id:37, name:'Sentiero della Salute', type:'hiking', lat:45.7630, lng:10.8100, difficulty:'facile', km:8.0, elevation:250, descent:250, hours:'2:30', zone:'Malcesine', tags:['vista-lago','panoramico','famiglie','cani'], desc:'Anello tra lungolago Malcesine-Cassone e sentiero collinare. A Cassone il fiume Aril, il più corto del mondo (175m). Borghi di pescatori e oliveti.' },
-        { id:38, name:'Brenzone Nordic Walking Park', type:'hiking', lat:45.7200, lng:10.7700, difficulty:'facile', km:20.0, elevation:300, descent:300, hours:'3:00', zone:'Brenzone sul Garda', tags:['vista-lago','famiglie','circolare','cani'], desc:'Primo Nordic Walking Park del Garda. 4 anelli tra 16 borghi medievali: Verde (4km), Blu (6km), Rosso (7km), Nero (5km). Borgo di Campo con chiesa di San Pietro in Vincoli.' },
-        { id:39, name:'Rocca di Garda & Eremo Camaldolesi', type:'hiking', lat:45.5700, lng:10.7050, difficulty:'facile', km:7.0, elevation:200, descent:200, hours:'2:00', zone:'Garda', tags:['panoramico','culturale','circolare'], desc:'Anello sul promontorio tra Garda e Bardolino. Eremo dei Camaldolesi (1663). Panorama a 360° da Malcesine a Sirmione. Nome Garda dal germanico Warda (torre di guardia).' },
+        { id:38, name:'Brenzone Nordic Walking Park', type:'hiking', lat:45.7100, lng:10.7650, difficulty:'facile', km:20.0, elevation:300, descent:300, hours:'3:00', zone:'Brenzone sul Garda', tags:['vista-lago','famiglie','circolare','cani'], desc:'Primo Nordic Walking Park del Garda. 4 anelli tra 16 borghi medievali: Verde (4km), Blu (6km), Rosso (7km), Nero (5km). Borgo di Campo con chiesa di San Pietro in Vincoli.' },
+        { id:39, name:'Rocca di Garda & Eremo Camaldolesi', type:'hiking', lat:45.5780, lng:10.7120, difficulty:'facile', km:7.0, elevation:200, descent:200, hours:'2:00', zone:'Garda', tags:['panoramico','culturale','circolare'], desc:'Anello sul promontorio tra Garda e Bardolino. Eremo dei Camaldolesi (1663). Panorama a 360° da Malcesine a Sirmione. Nome Garda dal germanico Warda (torre di guardia).' },
         { id:40, name:'Circuito Storico di Rivoli Veronese', type:'hiking', lat:45.5800, lng:10.8100, difficulty:'facile', km:8.0, elevation:200, descent:200, hours:'3:00', zone:'Rivoli Veronese', tags:['culturale','circolare'], desc:'Battaglia di Napoleone 1797. Museo Napoleonico, Forte Wohlgemuth (1854), Tagliata di Incanale. Il forte ospita un museo della Prima Guerra Mondiale.' },
         { id:41, name:'Mura UNESCO di Peschiera', type:'hiking', lat:45.4400, lng:10.6900, difficulty:'facile', km:3.0, elevation:10, descent:10, hours:'1:00', zone:'Peschiera del Garda', tags:['culturale','famiglie','accessibile'], desc:'Mura veneziane pentagonali XVI-XVII secolo, Patrimonio UNESCO 2017. Camminamento di ronda tra 5 bastioni con vista sui canali e sul Mincio.' },
         { id:42, name:'Monte Moscal', type:'hiking', lat:45.5300, lng:10.7700, difficulty:'facile', km:8.0, elevation:250, descent:250, hours:'2:30', zone:'Cavaion Veronese', tags:['panoramico','circolare'], desc:'Colline moreniche con bunker NATO della Guerra Fredda in cima (434m). Panorama a 360° dal Garda alla Val d\'Adige. Val Sorda e borgo di Incaffi.' },
@@ -429,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { id:44, name:'CamminaCustoza', type:'hiking', lat:45.3900, lng:10.7800, difficulty:'facile', km:8.0, elevation:150, descent:150, hours:'2:30', zone:'Custoza', tags:['panoramico','culturale','circolare'], desc:'Colline moreniche teatro del Risorgimento (1848 e 1866). Ossario, vigneti Custoza DOC, Forte Degenfeld a Pastrengo. Paesaggio dolce 100-250m.' },
 
         // Cycling — Nuovi
-        { id:45, name:'Peschiera — Sirmione — Garda', type:'cycling', lat:45.4400, lng:10.6900, difficulty:'facile', km:36.0, elevation:30, descent:30, hours:'2:30', zone:'Peschiera del Garda', tags:['vista-lago','famiglie','accessibile','ebike','consigliato'], desc:'Giro del lago tra Peschiera, Sirmione e Garda: Castello Scaligero, Grotte di Catullo e borghi rivieraschi. Percorso piano, ideale per famiglie.' },
+        { id:45, name:'Peschiera — Sirmione — Desenzano', type:'cycling', lat:45.4400, lng:10.6900, difficulty:'facile', km:36.0, elevation:30, descent:30, hours:'2:30', zone:'Peschiera del Garda', tags:['vista-lago','famiglie','accessibile','ebike','consigliato'], desc:'Giro del basso lago tra Peschiera, Sirmione e Desenzano: Castello Scaligero, Grotte di Catullo e borghi rivieraschi. Percorso piano, ideale per famiglie.' },
         { id:46, name:'Peschiera — Garda Lungolago', type:'cycling', lat:45.4400, lng:10.6900, difficulty:'facile', km:18.0, elevation:30, descent:30, hours:'1:30', zone:'Peschiera del Garda', tags:['vista-lago','famiglie','accessibile','ebike'], desc:'Ciclabile della riviera veronese: fortezza UNESCO, Lazise medievale, vigneti di Bardolino, paese di Garda. Completamente piano.' },
         { id:47, name:'Strada del Vino Bardolino', type:'cycling', lat:45.5400, lng:10.7300, difficulty:'media', km:35.0, elevation:300, descent:300, hours:'2:30', zone:'Bardolino', tags:['panoramico','circolare','ebike','ristori','culturale'], desc:'16 comuni, 60+ cantine, Bardolino DOC. Cammino del Bardolino: 18 sentieri segnalati, 53 pannelli informativi. Degustazioni in cantina.' },
         { id:48, name:'Ciclovia del Sole — Rivoli — Verona', type:'cycling', lat:45.5800, lng:10.8200, difficulty:'facile', km:20.0, elevation:30, descent:30, hours:'1:30', zone:'Rivoli Veronese', tags:['famiglie','accessibile','ebike','culturale'], desc:'EuroVelo 7 lungo il Canale Biffis. Forti austriaci, chiuse storiche, dal campo di battaglia di Napoleone a Verona. Asfaltato e separato dal traffico.' },
@@ -475,7 +475,7 @@ document.addEventListener('DOMContentLoaded', function() {
     trails.forEach(function(t) { t.slug = slugs[t.id] || ''; });
 
     // OutdoorActive IDs per embed mappa con percorso + profilo altimetrico
-    var oaIds = {1:1481019, 2:1530226, 3:1505183, 4:1497954, 5:14352779, 6:215009748, 7:265353721, 8:58399382, 9:804061398, 10:1541894, 11:1490743, 12:14373302, 13:800639914, 14:56764715, 15:209343437, 16:8350452, 17:15856288, 18:17856272, 19:15866611, 20:235469274, 21:8270049, 22:1374487, 23:58397823, 28:28287877, 29:1505183, 30:1551137, 31:801575826, 32:1530225, 33:801473880, 35:801535338, 36:1498973, 37:53073019, 39:804061398, 42:1491373, 44:243348104, 45:104029601, 46:28038207, 49:58463625, 50:67046495, 51:67041852, 53:5408867, 54:15238458, 55:23324302, 56:11049411, 57:1376573, 58:21652784, 59:22593484, 60:22593445, 62:1549402};
+    var oaIds = {1:1481019, 2:1530226, 3:1505183, 4:1497954, 5:14352779, 6:215009748, 7:265353721, 8:58399382, 10:1541894, 11:1490743, 12:14373302, 13:800639914, 14:56764715, 15:209343437, 16:8350452, 17:15856288, 18:17856272, 19:15866611, 20:235469274, 21:8270049, 22:1374487, 23:58397823, 28:28287877, 29:1505183, 30:1551137, 31:801575826, 32:1530225, 33:801473880, 34:112218116, 35:801535338, 36:1498973, 37:53073019, 38:803644656, 42:1491373, 44:243348104, 45:104029601, 46:28038207, 48:28285820, 49:58463625, 50:67046495, 51:67041852, 53:5408867, 54:15238458, 55:23324302, 56:11049411, 57:1376573, 58:21652784, 59:22593484, 60:22593445, 62:1549402};
     trails.forEach(function(t) { t.oaId = oaIds[t.id] || 0; });
 
     var zoneSlugMap = {
@@ -524,7 +524,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'Moniga del Garda':'ovest','Polpenazze del Garda':'ovest',
         'Soiano del Lago':'ovest','Campione del Garda':'ovest','Toscolano-Maderno':'ovest',
         'Desenzano del Garda':'sud','Sirmione':'sud','Peschiera del Garda':'sud',
-        'Lonato del Garda':'sud','Valeggio sul Mincio':'sud','Custoza':'sud','Fumane':'sud'
+        'Lonato del Garda':'sud','Valeggio sul Mincio':'sud','Custoza':'sud','Fumane':'est'
     };
     var areaLabels = { nord:'Sponda Nord', est:'Sponda Est', ovest:'Sponda Ovest', sud:'Sponda Sud' };
     var areaSubs = {
@@ -769,15 +769,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 m.closePopup();
             }
         });
-        // Mostra/nascondi polyline
-        Object.keys(routePolylines).forEach(function(oaId) {
-            var rp = routePolylines[oaId];
-            if (ids.indexOf(rp.trailId) !== -1) {
-                if (!map.hasLayer(rp.line)) { rp.shadow.addTo(map); rp.line.addTo(map); }
-            } else {
-                map.removeLayer(rp.line); map.removeLayer(rp.shadow);
-            }
-        });
         // Fit bounds
         if (filtered.length > 0 && filtered.length < trails.length) {
             var bounds = L.latLngBounds(filtered.map(function(t) { return [t.lat, t.lng]; }));
@@ -813,44 +804,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Init
     renderCards(urlTipo ? getFiltered() : trails);
 
-    // ─── Carica e disegna percorsi (polyline) sulla mappa ───
-    var routePolylines = {}; // oaId -> L.polyline
+    // ─── Polyline sulla mappa principale: DISATTIVATE (solo punti) ───
+    var routePolylines = {};
     var ajaxUrl = '<?php echo admin_url('admin-ajax.php'); ?>';
-    var allOaIds = [];
-    trails.forEach(function(t) { if (t.oaId) allOaIds.push(t.oaId); });
-
-    if (allOaIds.length > 0) {
-        fetch(ajaxUrl + '?action=ig_all_trail_routes&ids=' + allOaIds.join(','))
-            .then(function(r) { return r.json(); })
-            .then(function(res) {
-                if (!res.success || !res.data) return;
-                trails.forEach(function(t) {
-                    if (!t.oaId || !res.data[t.oaId]) return;
-                    var latlngs = res.data[t.oaId];
-                    if (latlngs.length < 2) return;
-                    var color = typeColors[t.type] || '#10B981';
-                    // Bordo scuro + linea colorata
-                    var shadow = L.polyline(latlngs, { color: '#333', weight: 5, opacity: 0.25, className: 'ig-route-shadow' }).addTo(map);
-                    var line = L.polyline(latlngs, { color: color, weight: 3, opacity: 0.85, className: 'ig-route-line' }).addTo(map);
-                    // Hover: evidenzia
-                    line.on('mouseover', function() { line.setStyle({ weight: 5, opacity: 1 }); shadow.setStyle({ weight: 8, opacity: 0.4 }); });
-                    line.on('mouseout', function() { line.setStyle({ weight: 3, opacity: 0.85 }); shadow.setStyle({ weight: 5, opacity: 0.25 }); });
-                    // Click: vai alla pagina
-                    line.on('click', function() {
-                        if (t.slug) window.location.href = '<?php echo esc_url(home_url('/itinerario/')); ?>' + t.slug + '/';
-                    });
-                    routePolylines[t.oaId] = { shadow: shadow, line: line, trailId: t.id };
-
-                    trailRoutes[t.id] = latlngs;
-
-                    // Aggiorna mini-mappa se visibile
-                    if (miniMaps[t.id]) {
-                        var poly = L.polyline(latlngs, { color: color, weight: 2.5, opacity: 0.8 }).addTo(miniMaps[t.id]);
-                        miniMaps[t.id].fitBounds(poly.getBounds(), { padding: [10, 10] });
-                    }
-                });
-            }).catch(function(){});
-    }
 
     // Filtri auto-apply (nessun bottone "Cerca" necessario)
 

@@ -7,7 +7,7 @@
 ?>
 <section class="ig-hero">
     <div class="ig-hero__bg">
-        <video class="ig-hero__video" autoplay muted loop playsinline preload="auto">
+        <video class="ig-hero__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url(get_template_directory_uri() . '/assets/images/homepage/hero.jpg'); ?>">
             <source src="<?php echo esc_url(get_template_directory_uri() . '/assets/video/hero.mp4'); ?>" type="video/mp4">
         </video>
     </div>
@@ -80,6 +80,18 @@
                 <a href="<?php echo esc_url(home_url('/esperienze/bar-nightlife/')); ?>" class="ig-hero__pill">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M20 3H4l2 8h12l2-8z"/></svg>
                     Bar & Nightlife
+                </a>
+                <a href="<?php echo esc_url(home_url('/esperienze/enogastronomia/')); ?>" class="ig-hero__pill">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 010 8h-1"/><path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+                    Enogastronomia
+                </a>
+                <a href="<?php echo esc_url(home_url('/esperienze/benessere/')); ?>" class="ig-hero__pill">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c-4.97 0-9-2.69-9-6v-2c0-3.31 4.03-6 9-6s9 2.69 9 6v2c0 3.31-4.03 6-9 6z"/><path d="M12 8V2"/><path d="M8 4l4-2 4 2"/></svg>
+                    Benessere & Spa
+                </a>
+                <a href="<?php echo esc_url(home_url('/esperienze/tour/')); ?>" class="ig-hero__pill">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11.5" cy="8.5" r="5.5"/><path d="M11.5 14v8"/><path d="M15 18H8"/></svg>
+                    Tour & Escursioni
                 </a>
             </div>
         </div>
