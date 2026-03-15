@@ -4213,93 +4213,6 @@ img { max-width: 100%; height: auto; display: block; }
     }
 }
 
-/* -----------------------------------------------------------------
-   SINGLE DESTINATION — Info Strip
-   ----------------------------------------------------------------- */
-.ig-info-strip {
-    background: white;
-    border-bottom: 1px solid var(--ig-border);
-    padding: var(--sp-lg) 0;
-}
-.ig-info-strip__grid {
-    display: flex;
-    justify-content: center;
-    gap: var(--sp-2xl);
-    flex-wrap: wrap;
-}
-.ig-info-strip__item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-}
-.ig-info-strip__item svg {
-    flex-shrink: 0;
-    color: var(--ig-primary);
-    margin-top: 2px;
-}
-.ig-info-strip__label {
-    display: block;
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--ig-text-muted);
-    margin-bottom: 2px;
-}
-.ig-info-strip__value {
-    display: block;
-    font-size: var(--fs-sm);
-    font-weight: 500;
-    color: var(--ig-text);
-    line-height: 1.4;
-}
-@media (max-width: 480px) {
-    .ig-info-strip__grid {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--sp-md);
-    }
-    a.ig-info-strip__item--link,
-    button.ig-info-strip__item--ai {
-        margin: 0;
-        padding: 0;
-    }
-    .ig-info-strip__item > svg {
-        display: none;
-    }
-}
-a.ig-info-strip__item--link {
-    text-decoration: none;
-    color: inherit;
-    border-radius: var(--r-sm);
-    padding: 8px;
-    margin: -8px;
-    transition: background var(--duration) var(--ease);
-}
-a.ig-info-strip__item--link:hover {
-    background: var(--ig-bg);
-}
-a.ig-info-strip__item--link .ig-info-strip__value {
-    color: var(--ig-primary);
-}
-button.ig-info-strip__item--ai {
-    background: none;
-    border: none;
-    border-right: 1px solid rgba(0,0,0,.06);
-    cursor: pointer;
-    text-align: left;
-    font-family: inherit;
-    transition: background var(--duration) var(--ease);
-}
-button.ig-info-strip__item--ai:hover {
-    background: var(--ig-bg);
-}
-button.ig-info-strip__item--ai svg {
-    color: var(--ig-primary);
-}
-button.ig-info-strip__item--ai .ig-info-strip__value {
-    color: var(--ig-text);
-}
 
 /* -----------------------------------------------------------------
    APPLE-STYLE LAYOUT SYSTEM
@@ -6847,15 +6760,6 @@ a.ig-trail-card__tag--loc:hover { background: rgba(0,122,255,.12); border-color:
     color: var(--ig-text-muted);
 }
 
-/* Info strip hover animation */
-.ig-info-strip__item--link {
-    transition: background 0.25s var(--ease), transform 0.25s var(--ease);
-}
-.ig-info-strip__item--link:hover {
-    background: rgba(0,122,255,0.06);
-    transform: translateY(-1px);
-}
-
 /* -----------------------------------------------------------------
    I. IMPROVED FILTER PILL ACTIVE STATE TRANSITIONS
    ----------------------------------------------------------------- */
@@ -8856,3 +8760,1251 @@ a.ig-trail-card__tag--loc:hover { background: rgba(0,122,255,.12); border-color:
     }
 }
 
+
+/* ── Blog card: no-image variant ── */
+.ig-blog-card--no-img {
+    background: linear-gradient(145deg, #1d1d1f 0%, #2d3436 100%);
+    justify-content: center;
+}
+.ig-blog-card--no-img .ig-blog-card__body {
+    padding: 32px 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.ig-blog-card--no-img .ig-blog-card__cat {
+    color: rgba(255,255,255,.5);
+}
+.ig-blog-card--no-img .ig-blog-card__title {
+    color: #fff;
+    font-size: 1.5rem;
+}
+.ig-blog-card--no-img .ig-blog-card__excerpt {
+    color: rgba(255,255,255,.65);
+    margin-top: 8px;
+}
+
+/* ── Blog card title: prevent overflow ── */
+.ig-blog-card__title {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ig-blog-card__excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ── Blog grid: no-image card variant ── */
+.ig-blog-grid .ig-blog-card--no-img {
+    background: linear-gradient(145deg, #1d1d1f 0%, #2d3436 100%);
+}
+.ig-blog-grid .ig-blog-card--no-img .ig-blog-card__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.ig-blog-grid .ig-blog-card--no-img .ig-blog-card__date {
+    color: rgba(255,255,255,.4);
+}
+.ig-blog-grid .ig-blog-card--no-img .ig-blog-card__cat {
+    color: rgba(255,255,255,.5);
+}
+.ig-blog-grid .ig-blog-card--no-img .ig-blog-card__title,
+.ig-blog-grid .ig-blog-card--no-img .ig-blog-card__title a {
+    color: #fff;
+}
+.ig-blog-grid .ig-blog-card--no-img .ig-blog-card__excerpt {
+    color: rgba(255,255,255,.65);
+}
+.ig-blog-grid .ig-blog-card--no-img .ig-blog-card__link {
+    color: rgba(255,255,255,.7);
+}
+.ig-blog-grid .ig-blog-card--no-img .ig-blog-card__link:hover {
+    color: #fff;
+}
+
+/* ── Blog card: smaller sizing ── */
+.ig-blog-card {
+    flex: 0 0 280px !important;
+    height: 320px !important;
+}
+.ig-blog-card__body {
+    padding: 20px 20px 0 !important;
+}
+.ig-blog-card__title {
+    font-size: 1.1rem !important;
+    -webkit-line-clamp: 2 !important;
+}
+.ig-blog-card__excerpt {
+    font-size: .8rem !important;
+    -webkit-line-clamp: 2 !important;
+    line-height: 1.4 !important;
+}
+.ig-blog-card__cat {
+    font-size: .65rem !important;
+    margin-bottom: 4px !important;
+}
+.ig-blog-card--no-img .ig-blog-card__body {
+    padding: 24px 20px !important;
+}
+.ig-blog-card--no-img .ig-blog-card__title {
+    font-size: 1.15rem !important;
+}
+@media (max-width: 639px) {
+    .ig-blog-card {
+        flex: 0 0 240px !important;
+        height: 280px !important;
+    }
+    .ig-blog-card__title {
+        font-size: 1rem !important;
+    }
+}
+
+/* ── Vivi Carousel ── */
+.ig-vivi-carousel {
+    position: relative;
+    overflow: hidden;
+}
+.ig-vivi-carousel__track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 4px 4px 8px;
+}
+.ig-vivi-carousel__track::-webkit-scrollbar {
+    display: none;
+}
+.ig-vivi-carousel .ig-vivi-card {
+    flex: 0 0 320px;
+    scroll-snap-align: start;
+    min-height: 380px;
+}
+.ig-vivi-carousel__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,.15);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    transition: background .3s;
+}
+.ig-vivi-carousel__btn:hover {
+    background: rgba(0,0,0,.3);
+}
+.ig-vivi-carousel__btn--prev { left: 12px; }
+.ig-vivi-carousel__btn--next { right: 12px; }
+.ig-vivi-carousel__btn:disabled { opacity: .2; pointer-events: none; }
+@media (max-width: 639px) {
+    .ig-vivi-carousel .ig-vivi-card {
+        flex: 0 0 280px;
+        min-height: 340px;
+    }
+    .ig-vivi-carousel__btn { display: none; }
+}
+
+/* ── Hero: black background instead of poster image ── */
+.ig-hero__bg {
+    background: #000 !important;
+}
+.ig-hero__video {
+    background: #000 !important;
+}
+
+/* ══════════════════════════════════════
+   Vivi Card v2 — Full-bleed premium
+   ══════════════════════════════════════ */
+.ig-vivi-card2 {
+    position: relative;
+    flex: 0 0 320px;
+    height: 400px;
+    scroll-snap-align: start;
+    border-radius: 16px;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    transition: transform .45s cubic-bezier(.215,.61,.355,1),
+                box-shadow .45s cubic-bezier(.215,.61,.355,1);
+}
+.ig-vivi-card2:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 48px rgba(0,0,0,.2);
+}
+
+/* Image — full bleed */
+.ig-vivi-card2__img {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+.ig-vivi-card2__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .6s cubic-bezier(.33,1,.68,1);
+}
+.ig-vivi-card2:hover .ig-vivi-card2__img img {
+    transform: scale(1.08);
+}
+
+/* Gradient scrim */
+.ig-vivi-card2__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.15) 50%, transparent 100%);
+    transition: background .4s ease;
+}
+.ig-vivi-card2:hover .ig-vivi-card2__overlay {
+    background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,.05) 100%);
+}
+
+/* Text content — positioned at bottom */
+.ig-vivi-card2__body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Category sub-labels */
+.ig-vivi-card2__cat {
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    color: rgba(255,255,255,.6);
+    text-transform: uppercase;
+}
+
+/* Title */
+.ig-vivi-card2__title {
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0;
+    text-shadow: 0 2px 16px rgba(0,0,0,.6);
+    letter-spacing: -.01em;
+}
+
+/* Description */
+.ig-vivi-card2__desc {
+    font-size: .85rem;
+    line-height: 1.45;
+    color: rgba(255,255,255,.8);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* CTA — arrow slides in on hover */
+.ig-vivi-card2__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .85rem;
+    font-weight: 600;
+    color: #fff;
+    margin-top: 4px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .3s ease, transform .3s ease;
+}
+.ig-vivi-card2__cta svg {
+    transition: transform .3s ease;
+}
+.ig-vivi-card2:hover .ig-vivi-card2__cta {
+    opacity: 1;
+    transform: translateY(0);
+}
+.ig-vivi-card2:hover .ig-vivi-card2__cta svg {
+    transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 639px) {
+    .ig-vivi-card2 {
+        flex: 0 0 270px;
+        height: 360px;
+    }
+    .ig-vivi-card2__title {
+        font-size: 1.3rem;
+    }
+    .ig-vivi-card2__body {
+        padding: 20px;
+    }
+}
+
+/* ── Vivi Grid v2 (page esperienze) ── */
+.ig-vivi-grid2 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.ig-vivi-grid2 .ig-vivi-card2 {
+    flex: unset;
+    height: 380px;
+}
+@media (max-width: 900px) {
+    .ig-vivi-grid2 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 639px) {
+    .ig-vivi-grid2 { grid-template-columns: 1fr; }
+    .ig-vivi-grid2 .ig-vivi-card2 { height: 300px; }
+}
+
+/* ══════════════════════════════════════════════
+   Events Page v4 — Updated styles
+   ══════════════════════════════════════════════ */
+
+/* ── Section Titles (bigger, left-aligned) ── */
+.ig-evt3-section-title {
+    font-family: var(--font-display, 'SF Pro Display', -apple-system, sans-serif);
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 800;
+    color: #1d1d1f;
+    letter-spacing: -.03em;
+    margin: 0 0 var(--sp-lg);
+    line-height: 1.15;
+}
+
+/* ── Hero ── */
+.ig-evt3-hero {
+    position: relative;
+    min-height: 340px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: #0a0a0a;
+}
+.ig-evt3-hero__bg {
+    position: absolute;
+    inset: 0;
+}
+.ig-evt3-hero__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #1a1a2e 100%);
+    opacity: .95;
+}
+.ig-evt3-hero__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: var(--sp-2xl) 0 var(--sp-xl);
+}
+.ig-evt3-hero__title {
+    font-family: var(--font-display, 'SF Pro Display', -apple-system, sans-serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -.02em;
+    margin: 0;
+}
+.ig-evt3-hero__sub {
+    color: rgba(255,255,255,.7);
+    font-size: 1.1rem;
+    margin-top: 8px;
+    font-weight: 400;
+}
+.ig-evt3-hero__pills {
+    display: flex;
+    gap: 10px;
+    margin-top: var(--sp-lg);
+    flex-wrap: wrap;
+}
+
+/* Pills */
+.ig-evt3-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 100px;
+    color: #fff;
+    font-size: .9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background .25s ease, border-color .25s ease, transform .2s ease;
+    cursor: pointer;
+}
+.ig-evt3-pill:hover {
+    background: rgba(255,255,255,.18);
+    border-color: rgba(255,255,255,.3);
+    transform: translateY(-1px);
+}
+.ig-evt3-pill__count {
+    background: rgba(255,255,255,.2);
+    padding: 2px 9px;
+    border-radius: 100px;
+    font-size: .8rem;
+    font-weight: 600;
+    min-width: 24px;
+    text-align: center;
+}
+
+/* ── Carousel ── */
+.ig-evt3-carousel {
+    position: relative;
+}
+.ig-evt3-carousel__track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+}
+.ig-evt3-carousel__track::-webkit-scrollbar {
+    display: none;
+}
+
+/* ── Featured Cards ── */
+.ig-evt3-featured {
+    flex: 0 0 380px;
+    scroll-snap-align: start;
+    position: relative;
+    height: 280px;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+.ig-evt3-featured:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,.18);
+}
+.ig-evt3-featured__img {
+    position: absolute;
+    inset: 0;
+}
+.ig-evt3-featured__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s ease;
+}
+.ig-evt3-featured:hover .ig-evt3-featured__img img {
+    transform: scale(1.06);
+}
+.ig-evt3-featured__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,.15) 50%, transparent 100%);
+    z-index: 1;
+}
+.ig-evt3-featured__body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px;
+    z-index: 2;
+}
+.ig-evt3-featured__badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: .7rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 8px;
+}
+.ig-evt3-featured__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 6px;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ig-evt3-featured__meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: .8rem;
+    color: rgba(255,255,255,.8);
+}
+.ig-evt3-featured__meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ── Compact Cards ── */
+.ig-evt3-compact {
+    flex: 0 0 260px;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    text-decoration: none;
+    transition: transform .3s ease, box-shadow .3s ease;
+    border: 1px solid rgba(0,0,0,.06);
+}
+.ig-evt3-compact:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+}
+.ig-evt3-compact__img {
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+}
+.ig-evt3-compact__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+.ig-evt3-compact:hover .ig-evt3-compact__img img {
+    transform: scale(1.05);
+}
+.ig-evt3-compact__badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: .65rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    z-index: 2;
+}
+.ig-evt3-compact__body {
+    padding: 14px 16px 16px;
+    flex: 1;
+}
+.ig-evt3-compact__title {
+    font-size: .95rem;
+    font-weight: 650;
+    color: #1d1d1f;
+    margin: 0 0 4px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ig-evt3-compact__meta {
+    font-size: .78rem;
+    color: #86868b;
+    display: block;
+}
+
+/* ── Liquid Glass Filter Bar ── */
+.ig-evt3-filterbar--glass {
+    background: rgba(255,255,255,.45);
+    backdrop-filter: blur(20px) saturate(1.8);
+    -webkit-backdrop-filter: blur(20px) saturate(1.8);
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 20px;
+    padding: 14px 18px;
+    margin-bottom: var(--sp-xl);
+    box-shadow:
+        0 1px 3px rgba(0,0,0,.04),
+        0 8px 32px rgba(0,0,0,.06),
+        inset 0 1px 0 rgba(255,255,255,.7);
+}
+.ig-evt3-filterbar__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Glass select */
+.ig-evt3-select--glass {
+    padding: 10px 38px 10px 16px;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 14px;
+    font-size: .88rem;
+    color: #1d1d1f;
+    background: rgba(255,255,255,.6) url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2386868b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 14px center;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: border-color .2s, background .2s, box-shadow .2s;
+    flex-shrink: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.ig-evt3-select--glass:hover {
+    background-color: rgba(255,255,255,.8);
+    border-color: rgba(0,0,0,.15);
+}
+.ig-evt3-select--glass:focus {
+    outline: none;
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(0,113,227,.15);
+}
+
+/* Glass category pills */
+.ig-evt3-cats {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex: 1;
+    min-width: 0;
+}
+.ig-evt3-cats::-webkit-scrollbar { display: none; }
+
+.ig-evt3-cat-btn--glass {
+    flex-shrink: 0;
+    padding: 9px 18px;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 100px;
+    background: rgba(255,255,255,.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #424245;
+    font-size: .82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .25s ease;
+    white-space: nowrap;
+}
+.ig-evt3-cat-btn--glass:hover {
+    background: rgba(255,255,255,.8);
+    border-color: rgba(0,0,0,.15);
+    color: #1d1d1f;
+}
+.ig-evt3-cat-btn--glass.is-active {
+    background: rgba(0,0,0,.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+/* ── Layout: Calendar + Grid (wider calendar) ── */
+.ig-evt3-layout--wide {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 36px;
+    align-items: start;
+}
+
+/* ── Calendar Large ── */
+.ig-evt3-calendar--lg {
+    background: rgba(255,255,255,.6);
+    backdrop-filter: blur(20px) saturate(1.8);
+    -webkit-backdrop-filter: blur(20px) saturate(1.8);
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 20px;
+    padding: 24px;
+    position: sticky;
+    top: 100px;
+    box-shadow:
+        0 1px 3px rgba(0,0,0,.04),
+        0 8px 32px rgba(0,0,0,.06),
+        inset 0 1px 0 rgba(255,255,255,.7);
+}
+.ig-evt3-cal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    font-size: 1.05rem;
+    color: #1d1d1f;
+}
+.ig-evt3-cal__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,.08);
+    background: rgba(255,255,255,.5);
+    cursor: pointer;
+    color: #424245;
+    transition: all .2s;
+}
+.ig-evt3-cal__nav:hover {
+    background: rgba(255,255,255,.8);
+    border-color: rgba(0,0,0,.15);
+    color: #1d1d1f;
+}
+.ig-evt3-cal__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+}
+.ig-evt3-cal__dow {
+    font-size: .72rem;
+    font-weight: 600;
+    color: #86868b;
+    text-transform: uppercase;
+    padding: 6px 0 10px;
+}
+.ig-evt3-cal__empty {
+    padding: 8px 0;
+}
+.ig-evt3-cal__day {
+    font-size: .88rem;
+    padding: 8px 0;
+    border-radius: 10px;
+    cursor: default;
+    position: relative;
+    color: #86868b;
+    transition: background .2s, color .2s, transform .15s;
+}
+.ig-evt3-cal__day.has-event {
+    font-weight: 600;
+    color: #1d1d1f;
+    cursor: pointer;
+}
+.ig-evt3-cal__day.has-event:hover {
+    background: rgba(0,113,227,.08);
+    transform: scale(1.08);
+}
+.ig-evt3-cal__day.has-event::after {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #0071e3;
+}
+.ig-evt3-cal__day.is-today {
+    background: #0071e3;
+    color: #fff;
+    font-weight: 700;
+}
+.ig-evt3-cal__day.is-today.has-event::after {
+    background: #fff;
+}
+.ig-evt3-cal__day.is-selected {
+    background: #0071e3;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 10px;
+}
+.ig-evt3-cal__day.is-selected::after {
+    background: #fff;
+}
+.ig-evt3-cal__legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    font-size: .75rem;
+    color: #86868b;
+}
+.ig-evt3-cal__legend-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #0071e3;
+}
+
+/* ── Month Groups ── */
+.ig-evt3-month-group {
+    margin-bottom: var(--sp-xl);
+}
+.ig-evt3-month-label {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1d1d1f;
+    margin: 0 0 14px;
+    letter-spacing: -.01em;
+}
+.ig-evt3-month-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ── Grid Cards (with calendar badge) ── */
+.ig-evt3-grid-card {
+    display: grid;
+    grid-template-columns: 64px 90px 1fr;
+    gap: 0;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform .25s ease, box-shadow .25s ease;
+    border: 1px solid rgba(0,0,0,.06);
+}
+.ig-evt3-grid-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+.ig-evt3-grid-card__date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 0;
+    background: #fafafa;
+    border-right: 1px solid rgba(0,0,0,.04);
+    min-height: 80px;
+}
+.ig-evt3-grid-card__dow {
+    font-size: .6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #86868b;
+    letter-spacing: .05em;
+}
+.ig-evt3-grid-card__day {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1d1d1f;
+    line-height: 1.1;
+}
+.ig-evt3-grid-card__mon {
+    font-size: .65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #86868b;
+    letter-spacing: .04em;
+}
+.ig-evt3-grid-card__img {
+    width: 90px;
+    height: 100%;
+    overflow: hidden;
+}
+.ig-evt3-grid-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+.ig-evt3-grid-card:hover .ig-evt3-grid-card__img img {
+    transform: scale(1.06);
+}
+.ig-evt3-grid-card__body {
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+.ig-evt3-grid-card__type {
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 3px;
+}
+.ig-evt3-grid-card__title {
+    font-size: .95rem;
+    font-weight: 650;
+    color: #1d1d1f;
+    margin: 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ig-evt3-grid-card__loc {
+    font-size: .76rem;
+    color: #86868b;
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* ── Placeholders ── */
+.ig-evt3-featured .ig-placeholder-img,
+.ig-evt3-compact .ig-placeholder-img,
+.ig-evt3-grid-card .ig-placeholder-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,.4);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .ig-evt3-layout--wide {
+        grid-template-columns: 1fr;
+    }
+    .ig-evt3-calendar--lg {
+        position: static;
+        max-width: 400px;
+    }
+}
+
+
+/* ── Calendar Dropdown (Add to Calendar) ── */
+.ig-cal-dropdown {
+    position: relative;
+    display: inline-flex;
+}
+.ig-cal-dropdown__menu {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 16px;
+    padding: 6px;
+    box-shadow:
+        0 12px 40px rgba(0,0,0,.14),
+        0 2px 6px rgba(0,0,0,.06),
+        inset 0 1px 0 rgba(255,255,255,.8);
+    z-index: 200;
+}
+.ig-cal-dropdown__menu::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: rgba(255,255,255,.92);
+    border-right: 1px solid rgba(0,0,0,.08);
+    border-bottom: 1px solid rgba(0,0,0,.08);
+}
+.ig-cal-dropdown.is-open .ig-cal-dropdown__menu {
+    display: block;
+    animation: igCalDropIn .2s ease;
+}
+@keyframes igCalDropIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.ig-cal-dropdown__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    font-size: .88rem;
+    font-weight: 500;
+    color: #1d1d1f;
+    text-decoration: none;
+    transition: background .15s;
+    cursor: pointer;
+}
+.ig-cal-dropdown__item:hover {
+    background: rgba(0,113,227,.08);
+}
+.ig-cal-dropdown__item + .ig-cal-dropdown__item {
+    margin-top: 1px;
+}
+
+/* ── Info Strip fix for single-evento ── */
+.ig-info-strip__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+}
+.ig-info-strip__inner .ig-info-strip__item {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    border-right: 1px solid rgba(0,0,0,.06);
+}
+.ig-info-strip__inner .ig-info-strip__item:last-child {
+    border-right: none;
+}
+.ig-info-strip__inner .ig-info-strip__item svg {
+    flex-shrink: 0;
+    color: var(--ig-primary, #0071e3);
+}
+.ig-info-strip__inner .ig-info-strip__item small {
+    display: block;
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #86868b;
+    margin-bottom: 2px;
+}
+.ig-info-strip__inner .ig-info-strip__item strong {
+    display: block;
+    font-size: .92rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    line-height: 1.35;
+}
+@media (max-width: 768px) {
+    .ig-info-strip__inner {
+        flex-direction: column;
+    }
+    .ig-info-strip__inner .ig-info-strip__item {
+        border-right: none;
+        border-bottom: 1px solid rgba(0,0,0,.04);
+        padding: 12px 16px;
+    }
+    .ig-info-strip__inner .ig-info-strip__item:last-child {
+        border-bottom: none;
+    }
+}
+
+/* ── Events page mobile fixes ── */
+
+/* Reduce section spacing on mobile */
+@media (max-width: 768px) {
+    /* Tighter sections */
+    .ig-evt3-section-title {
+        margin-bottom: var(--sp-md);
+    }
+    
+    /* Hero full width fix */
+    .ig-evt3-hero {
+        min-height: 240px;
+    }
+    .ig-evt3-hero__bg,
+    .ig-evt3-hero__gradient {
+        width: 100%;
+    }
+    
+    /* Hide calendar on mobile — too much space */
+    .ig-evt3-calendar--lg {
+        display: none;
+    }
+    
+    /* Featured cards tighter */
+    .ig-evt3-featured {
+        flex: 0 0 280px;
+        height: 220px;
+    }
+    .ig-evt3-featured__body {
+        padding: 16px;
+    }
+    .ig-evt3-featured__title {
+        font-size: 1.05rem;
+    }
+    
+    /* Compact cards tighter */
+    .ig-evt3-compact {
+        flex: 0 0 200px;
+    }
+    .ig-evt3-compact__img {
+        height: 110px;
+    }
+    
+    /* Sections less padding */
+    #ig-evt3-grid.ig-section,
+    .ig-section.ig-reveal {
+        padding-top: var(--sp-xl);
+        padding-bottom: var(--sp-xl);
+    }
+    
+    /* Glass filterbar compact */
+    .ig-evt3-filterbar--glass {
+        padding: 10px 12px;
+        border-radius: 14px;
+    }
+    .ig-evt3-select--glass {
+        width: 100%;
+    }
+    
+    /* Grid cards no image on small */
+    .ig-evt3-grid-card {
+        grid-template-columns: 56px 1fr;
+    }
+    .ig-evt3-grid-card__img {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .ig-evt3-hero {
+        min-height: 200px;
+    }
+    .ig-evt3-hero__title {
+        font-size: 1.7rem;
+    }
+    .ig-evt3-hero__sub {
+        font-size: .95rem;
+    }
+    .ig-evt3-section-title {
+        font-size: 1.4rem;
+    }
+    .ig-evt3-featured {
+        flex: 0 0 250px;
+        height: 200px;
+    }
+    .ig-evt3-compact {
+        flex: 0 0 180px;
+    }
+    .ig-evt3-compact__img {
+        height: 95px;
+    }
+    .ig-evt3-compact__body {
+        padding: 10px 12px 12px;
+    }
+    .ig-evt3-compact__title {
+        font-size: .85rem;
+    }
+    .ig-evt3-cat-btn--glass {
+        padding: 7px 14px;
+        font-size: .78rem;
+    }
+}
+
+/* Fix category pills scroll clipping */
+.ig-evt3-cats {
+    padding-right: 20px;
+    -webkit-mask-image: linear-gradient(to right, #000 85%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 85%, transparent 100%);
+}
+@media (max-width: 768px) {
+    .ig-evt3-cats {
+        padding-right: 30px;
+        -webkit-mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+        mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+    }
+    .ig-evt3-filterbar__row {
+        gap: 10px;
+    }
+}
+
+/* Active hero pill */
+.ig-evt3-pill.is-active {
+    background: rgba(255,255,255,.3);
+    border-color: rgba(255,255,255,.5);
+    font-weight: 600;
+}
+
+/* Events hero image */
+.ig-evt3-hero__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+}
+.ig-evt3-hero__gradient {
+    background: linear-gradient(to top, rgba(10,10,30,.85) 0%, rgba(10,10,30,.5) 50%, rgba(10,10,30,.3) 100%);
+}
+
+/* ===== EVENT DATE BADGE ON ACTIVITY CARDS ===== */
+.ig-activity-card__date-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: white;
+    color: var(--ig-text, #1a1a2e);
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+    padding: 8px 10px 6px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 48px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+.ig-activity-card__date-badge small {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ig-text-muted, #666);
+}
+
+/* Attrazione: full-width when no sidebar */
+.ig-itin-detail--full { grid-template-columns: 1fr !important; max-width: 800px; }
+/* Attrazione sidebar map card */
+.ig-itin-sidebar-card #igAttMap { border-radius: var(--r-lg) var(--r-lg) 0 0; }
+
+/* Attrazione info rows — stacked label/value */
+.ig-att-info-rows { padding: 0; }
+.ig-att-info-row {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--ig-border);
+}
+.ig-att-info-row:last-child { border-bottom: none; }
+.ig-att-info-row__label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--ig-text-muted);
+    margin-bottom: 4px;
+}
+.ig-att-info-row__label svg { flex-shrink: 0; opacity: .6; }
+.ig-att-info-row__value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ig-text);
+    line-height: 1.4;
+}
+
+/* Attrazione content headings */
+.ig-att-content h2, .ig-att-content h3 {
+    font-weight: 700;
+    color: var(--ig-text);
+}
+
+/* Attrazione hero: taller on desktop */
+@media(min-width:768px) {
+    .single-attrazione .ig-dest-hero--compact { height: 65vh; min-height: 500px; }
+}

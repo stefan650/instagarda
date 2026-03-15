@@ -48,6 +48,22 @@ function ig_seo_meta() {
         $desc = 'Scopri il Lago di Garda: destinazioni, percorsi, sport, ristoranti e cultura. La guida completa per organizzare la tua vacanza al Garda.';
         $url = home_url('/');
         $img = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : $default_img;
+    } elseif (is_singular('page') && is_page(['esperienze', 'attivita', 'cultura', 'soggiorni', 'bar-nightlife', 'enogastronomia', 'benessere', 'tour'])) {
+        $esperienze_descs = [
+            'esperienze' => 'Tutte le esperienze sul Lago di Garda: sport, cultura, enogastronomia, benessere e nightlife. Trova l\'attività perfetta per la tua vacanza.',
+            'attivita' => 'Sport e attività all\'aria aperta sul Lago di Garda: trekking, ciclismo, MTB, vie ferrate, windsurf, vela e kayak. Percorsi per tutti i livelli.',
+            'cultura' => 'Cultura e storia sul Lago di Garda: musei, castelli, chiese, siti archeologici e borghi storici da scoprire tra Verona, Brescia e Trento.',
+            'soggiorni' => 'Dove dormire sul Lago di Garda: hotel, agriturismi, B&B, campeggi e appartamenti. Le migliori strutture selezionate per la tua vacanza.',
+            'bar-nightlife' => 'Locali, bar e vita notturna sul Lago di Garda: aperitivi, cocktail bar, discoteche e locali con musica dal vivo. Le serate migliori al Garda.',
+            'enogastronomia' => 'Enogastronomia sul Lago di Garda: ristoranti, trattorie, cantine, olio d\'oliva e vini locali. Scopri i sapori autentici del territorio.',
+            'benessere' => 'Benessere e terme sul Lago di Garda: spa, centri termali, massaggi e trattamenti. Relax e cura del corpo con vista lago.',
+            'tour' => 'Tour ed escursioni guidate sul Lago di Garda: visite culturali, degustazioni, gite in barca e avventure outdoor con guida esperta.',
+        ];
+        $slug = get_post_field('post_name', get_the_ID());
+        $title = get_the_title() . ' — ' . $site_name;
+        $desc = isset($esperienze_descs[$slug]) ? $esperienze_descs[$slug] : 'Esperienze e attività sul Lago di Garda. Scopri cosa fare durante la tua vacanza al Garda.';
+        $url = get_permalink();
+        $img = has_post_thumbnail() ? get_the_post_thumbnail_url(null, 'large') : $default_img;
     } elseif (is_singular()) {
         $title = get_the_title() . ' — ' . $site_name;
         $raw_desc = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 30, '...');
@@ -229,9 +245,9 @@ function ig_schema_jsonld() {
 
     // Event schema
     if (is_singular('evento')) {
-        $start = get_post_meta(get_the_ID(), '_ig_evento_data_inizio', true);
-        $end = get_post_meta(get_the_ID(), '_ig_evento_data_fine', true);
-        $luogo = get_post_meta(get_the_ID(), '_ig_evento_luogo', true);
+        $start = get_post_meta(get_the_ID(), '_ig_data_inizio', true);
+        $end = get_post_meta(get_the_ID(), '_ig_data_fine', true);
+        $luogo = get_post_meta(get_the_ID(), '_ig_luogo', true);
         $evt_schema = [
             '@type' => 'Event',
             'name' => get_the_title(),
@@ -244,6 +260,7 @@ function ig_schema_jsonld() {
         if ($start) $evt_schema['startDate'] = $start;
         if ($end) $evt_schema['endDate'] = $end;
         if ($luogo) $evt_schema['location'] = ['@type' => 'Place', 'name' => $luogo, 'address' => ['@type' => 'PostalAddress', 'addressRegion' => 'Lago di Garda, Italia']];
+        $evt_schema['eventStatus'] = 'https://schema.org/EventScheduled';
         $schemas[] = $evt_schema;
     }
 
@@ -255,6 +272,7 @@ add_action('wp_head', 'ig_schema_jsonld', 2);
 
 // --- SEO: Remove duplicate title tag from wp_head if theme already handles it ---
 remove_action('wp_head', 'rel_canonical');
+remove_action('wp_head', 'wp_generator');
 
 // --- Destinazioni: ordine alfabetico e mostra tutte ---
 function ig_destinazioni_order($query) {
@@ -482,3 +500,115 @@ setTimeout(function(){o.disconnect();},15000);
 </script>
 <?php }
 add_action('wp_footer', 'ig_iubenda_glass', 99);
+
+// ── ICS Calendar Download for Events ──
+function ig_evento_ics_download() {
+    if (!isset($_GET['ics']) || $_GET['ics'] !== '1') return;
+    if (!is_singular('evento')) return;
+
+    $post_id = get_the_ID();
+    $title = get_the_title($post_id);
+    $url = get_permalink($post_id);
+    $desc = wp_strip_all_tags(get_the_excerpt($post_id) ?: get_the_content(null, false, $post_id));
+    $desc = mb_substr($desc, 0, 500);
+
+    $data_inizio = get_post_meta($post_id, '_ig_data_inizio', true);
+    $data_fine = get_post_meta($post_id, '_ig_data_fine', true) ?: $data_inizio;
+    $orario = get_post_meta($post_id, '_ig_orario', true);
+    $luogo = get_post_meta($post_id, '_ig_luogo', true);
+    $loc = get_the_terms($post_id, 'localita');
+    $loc_name = ($loc && !is_wp_error($loc)) ? $loc[0]->name : '';
+    $location = $luogo ?: $loc_name;
+    if ($location) $location .= ', Lago di Garda';
+
+    // Parse start time
+    $start_hour = 0; $start_min = 0; $has_time = false;
+    if ($orario && preg_match('/(\d{1,2})[:\.](\d{2})/', $orario, $m)) {
+        $start_hour = (int)$m[1]; $start_min = (int)$m[2]; $has_time = true;
+    }
+
+    if ($has_time) {
+        $dtstart = date('Ymd', strtotime($data_inizio)) . 'T' . sprintf('%02d%02d00', $start_hour, $start_min);
+        $dtend_date = $data_fine === $data_inizio ? $data_inizio : $data_fine;
+        $dtend = date('Ymd', strtotime($dtend_date)) . 'T' . sprintf('%02d%02d00', min($start_hour + 3, 23), $start_min);
+    } else {
+        $dtstart = date('Ymd', strtotime($data_inizio));
+        $dtend = date('Ymd', strtotime($data_fine . ' +1 day'));
+    }
+
+    // Escape for ICS
+    $esc = function($s) { return str_replace([',', ';', "\n"], ['\\,', '\;', '\\n'], $s); };
+
+    $uid = 'evento-' . $post_id . '@instagarda.net';
+    $now = gmdate('Ymd\THis\Z');
+
+    $ics = "BEGIN:VCALENDAR\r\n";
+    $ics .= "VERSION:2.0\r\n";
+    $ics .= "PRODID:-//Instagarda//Eventi//IT\r\n";
+    $ics .= "CALSCALE:GREGORIAN\r\n";
+    $ics .= "METHOD:PUBLISH\r\n";
+    $ics .= "BEGIN:VEVENT\r\n";
+    $ics .= "UID:{$uid}\r\n";
+    $ics .= "DTSTAMP:{$now}\r\n";
+    if ($has_time) {
+        $ics .= "DTSTART;TZID=Europe/Rome:{$dtstart}\r\n";
+        $ics .= "DTEND;TZID=Europe/Rome:{$dtend}\r\n";
+    } else {
+        $ics .= "DTSTART;VALUE=DATE:{$dtstart}\r\n";
+        $ics .= "DTEND;VALUE=DATE:{$dtend}\r\n";
+    }
+    $ics .= "SUMMARY:" . $esc($title) . "\r\n";
+    if ($desc) $ics .= "DESCRIPTION:" . $esc($desc . "\\n\\nInfo: " . $url) . "\r\n";
+    if ($location) $ics .= "LOCATION:" . $esc($location) . "\r\n";
+    $ics .= "URL:" . $url . "\r\n";
+    $ics .= "STATUS:CONFIRMED\r\n";
+    $ics .= "END:VEVENT\r\n";
+    $ics .= "END:VCALENDAR\r\n";
+
+    $filename = sanitize_file_name($title) . '.ics';
+    header('Content-Type: text/calendar; charset=utf-8');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    echo $ics;
+    exit;
+}
+add_action('template_redirect', 'ig_evento_ics_download');
+
+// Helper: generate Google Calendar URL for an event
+function ig_evento_gcal_url($post_id) {
+    $title = get_the_title($post_id);
+    $url = get_permalink($post_id);
+    $desc = wp_strip_all_tags(get_the_excerpt($post_id) ?: '');
+    $desc = mb_substr($desc, 0, 300);
+
+    $data_inizio = get_post_meta($post_id, '_ig_data_inizio', true);
+    $data_fine = get_post_meta($post_id, '_ig_data_fine', true) ?: $data_inizio;
+    $orario = get_post_meta($post_id, '_ig_orario', true);
+    $luogo = get_post_meta($post_id, '_ig_luogo', true);
+    $loc = get_the_terms($post_id, 'localita');
+    $loc_name = ($loc && !is_wp_error($loc)) ? $loc[0]->name : '';
+    $location = $luogo ?: $loc_name;
+
+    $has_time = false;
+    if ($orario && preg_match('/(\d{1,2})[:\.](\d{2})/', $orario, $m)) {
+        $start_hour = (int)$m[1]; $start_min = (int)$m[2]; $has_time = true;
+    }
+
+    if ($has_time) {
+        $dates = date('Ymd', strtotime($data_inizio)) . 'T' . sprintf('%02d%02d00', $start_hour, $start_min);
+        $end_date = $data_fine === $data_inizio ? $data_inizio : $data_fine;
+        $dates .= '/' . date('Ymd', strtotime($end_date)) . 'T' . sprintf('%02d%02d00', min($start_hour + 3, 23), $start_min);
+    } else {
+        $dates = date('Ymd', strtotime($data_inizio)) . '/' . date('Ymd', strtotime($data_fine . ' +1 day'));
+    }
+
+    $params = [
+        'action' => 'TEMPLATE',
+        'text' => $title,
+        'dates' => $dates,
+        'details' => $desc . "\n\nInfo: " . $url,
+        'location' => $location,
+        'ctz' => 'Europe/Rome',
+    ];
+
+    return 'https://calendar.google.com/calendar/render?' . http_build_query($params);
+}

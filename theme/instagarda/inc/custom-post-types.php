@@ -513,6 +513,14 @@ function ig_att_info_render($post) {
         </td></tr>
         <tr><th><label>Latitudine</label></th><td><input type="text" name="ig_att_lat" value="<?php echo esc_attr($m('lat')); ?>" class="regular-text"></td></tr>
         <tr><th><label>Longitudine</label></th><td><input type="text" name="ig_att_lng" value="<?php echo esc_attr($m('lng')); ?>" class="regular-text"></td></tr>
+        <tr><th><label>Indirizzo</label></th><td><input type="text" name="ig_att_indirizzo" value="<?php echo esc_attr($m('indirizzo')); ?>" class="regular-text" placeholder="Via Roma 1, Sirmione (BS)"></td></tr>
+        <tr><th><label>Orari</label></th><td>
+            <textarea name="ig_att_orari" rows="3" class="large-text" placeholder="Mar-Dom 8:30-17:00&#10;Chiuso lunedì"><?php echo esc_textarea($m('orari')); ?></textarea>
+        </td></tr>
+        <tr><th><label>Prezzo</label></th><td><input type="text" name="ig_att_prezzo" value="<?php echo esc_attr($m('prezzo')); ?>" class="regular-text" placeholder="10€ intero, 2€ ridotto"></td></tr>
+        <tr><th><label>URL Biglietti</label></th><td><input type="url" name="ig_att_biglietti_url" value="<?php echo esc_attr($m('biglietti_url')); ?>" class="regular-text" placeholder="https://..."></td></tr>
+        <tr><th><label>Telefono</label></th><td><input type="text" name="ig_att_telefono" value="<?php echo esc_attr($m('telefono')); ?>" class="regular-text" placeholder="030 916157"></td></tr>
+        <tr><th><label>Sito Web</label></th><td><input type="url" name="ig_att_sito_web" value="<?php echo esc_attr($m('sito_web')); ?>" class="regular-text" placeholder="https://..."></td></tr>
     </table>
     <?php
 }
@@ -520,7 +528,7 @@ function ig_att_info_render($post) {
 function ig_att_save($post_id) {
     if (!isset($_POST['ig_att_nonce']) || !wp_verify_nonce($_POST['ig_att_nonce'], 'ig_att_save')) return;
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-    foreach (['hero_video', 'category', 'lat', 'lng'] as $k) {
+    foreach (['hero_video', 'category', 'lat', 'lng', 'indirizzo', 'orari', 'prezzo', 'biglietti_url', 'telefono', 'sito_web'] as $k) {
         if (isset($_POST['ig_att_' . $k])) {
             update_post_meta($post_id, '_ig_att_' . $k, sanitize_text_field($_POST['ig_att_' . $k]));
         }

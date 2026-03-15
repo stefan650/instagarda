@@ -453,6 +453,74 @@ if (!empty($itinerari)):
 
 
 
+<!-- Eventi in zona -->
+<?php
+$today_str = date('Y-m-d');
+$dest_loc_term = get_term_by('slug', $slug, 'localita');
+if ($dest_loc_term && !is_wp_error($dest_loc_term)):
+    $eventi_q = new WP_Query([
+        'post_type'      => 'evento',
+        'posts_per_page' => 12,
+        'meta_key'       => '_ig_data_fine',
+        'orderby'        => 'meta_value',
+        'order'          => 'ASC',
+        'meta_query'     => [['key' => '_ig_data_fine', 'value' => $today_str, 'compare' => '>=', 'type' => 'DATE']],
+        'tax_query'      => [['taxonomy' => 'localita', 'terms' => $dest_loc_term->term_id]],
+    ]);
+    if ($eventi_q->have_posts()):
+        $mesi_it = ['01'=>'Gen','02'=>'Feb','03'=>'Mar','04'=>'Apr','05'=>'Mag','06'=>'Giu','07'=>'Lug','08'=>'Ago','09'=>'Set','10'=>'Ott','11'=>'Nov','12'=>'Dic'];
+?>
+<section class="ig-apple-section ig-apple-section--white ig-reveal" style="padding: var(--sp-xl) 0">
+    <div class="ig-apple-container">
+        <h2 style="font-family:var(--font-heading);font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;color:var(--ig-text);margin:0 0 4px">Prossimi eventi</h2>
+        <p style="color:var(--ig-text-muted);font-size:0.95rem;margin:0 0 var(--sp-lg)">Cosa succede a <?php the_title(); ?></p>
+        <div class="ig-activity-carousel">
+            <?php while ($eventi_q->have_posts()): $eventi_q->the_post();
+                $ev_inizio = get_post_meta(get_the_ID(), '_ig_data_inizio', true);
+                $ev_fine   = get_post_meta(get_the_ID(), '_ig_data_fine', true);
+                $ev_luogo  = get_post_meta(get_the_ID(), '_ig_luogo', true);
+                $ev_tipo   = get_the_terms(get_the_ID(), 'tipo_evento');
+                $ev_tipo_name = ($ev_tipo && !is_wp_error($ev_tipo)) ? $ev_tipo[0]->name : '';
+                $ev_day   = $ev_inizio ? date('j', strtotime($ev_inizio)) : '';
+                $ev_month = $ev_inizio ? ($mesi_it[date('m', strtotime($ev_inizio))] ?? '') : '';
+                $tipo_colors = ['Concerto & Musica'=>'#8B5CF6','Sport & Regata'=>'#3B82F6','Enogastronomia'=>'#F59E0B','Mostra & Arte'=>'#EC4899','Sagra & Festival'=>'#10B981','Mercatino'=>'#F97316','Teatro & Spettacolo'=>'#EF4444'];
+                $badge_color = $tipo_colors[$ev_tipo_name] ?? '#6B7280';
+            ?>
+            <a href="<?php the_permalink(); ?>" class="ig-activity-card">
+                <div class="ig-activity-card__img">
+                    <?php if (has_post_thumbnail()): the_post_thumbnail('card-wide', ['loading'=>'lazy']); else: ?>
+                    <div class="ig-placeholder-img"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+                    <?php endif; ?>
+                    <?php if ($ev_day): ?>
+                    <span class="ig-activity-card__date-badge"><?php echo $ev_day; ?><small><?php echo $ev_month; ?></small></span>
+                    <?php endif; ?>
+                    <?php if ($ev_tipo_name): ?>
+                    <span class="ig-activity-card__badge" style="background:<?php echo $badge_color; ?>"><?php echo esc_html($ev_tipo_name); ?></span>
+                    <?php endif; ?>
+                </div>
+                <div class="ig-activity-card__body">
+                    <h3 class="ig-activity-card__title"><?php the_title(); ?></h3>
+                    <?php if ($ev_luogo): ?>
+                    <p class="ig-activity-card__desc">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-1px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <?php echo esc_html($ev_luogo); ?>
+                    </p>
+                    <?php endif; ?>
+                    <?php if ($ev_inizio && $ev_fine && $ev_inizio !== $ev_fine): ?>
+                    <div class="ig-activity-card__meta"><span><?php echo date('j', strtotime($ev_inizio)) . ' ' . $mesi_it[date('m', strtotime($ev_inizio))]; ?> — <?php echo date('j', strtotime($ev_fine)) . ' ' . $mesi_it[date('m', strtotime($ev_fine))]; ?></span></div>
+                    <?php endif; ?>
+                </div>
+            </a>
+            <?php endwhile; wp_reset_postdata(); ?>
+        </div>
+        <div style="text-align:center;margin-top:var(--sp-lg)">
+            <a href="<?php echo esc_url(home_url('/eventi/')); ?>" class="ig-btn ig-btn--outline" style="font-size:0.9rem;padding:10px 28px">Tutti gli eventi →</a>
+        </div>
+    </div>
+</section>
+<?php endif; endif; ?>
+
+
 <!-- Strutture correlate -->
 <?php
 $loc_terms = get_the_terms(get_the_ID(), 'localita');
